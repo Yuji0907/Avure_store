@@ -1,0 +1,234 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+
+{%- assign collection = collections["routines-duos"]-%}
+
+<section class="routines-slider" id="RoutinesSlider-{{ section.id }}">
+    <div class="routines-slider__content">
+        <div class="routines-slider__header">
+            <h2 class="routines-slider__title">{{ section.settings.heading | escape }}</h2>
+            
+            {% if collection != blank %}
+                <a class="routines-slider__link" href="pages/routines-duos">
+                    {{ section.settings.link_label | escape }}
+                </a>
+            {% endif %}
+
+        </div >
+        <div class ="routines-slider__track">
+
+            {% for product in collection.products %}
+                {% comment %} <pre>{{product |json  }}</pre> {% endcomment %}
+                <div class="routin-product__card">
+                    <div class="product-image__container">
+                        {{ 
+                            product.featured_image | image_url: width: 500 | image_tag :
+                            class:"product-image"
+                        }}
+                    </div>
+
+                    {%- assign rating =  product.metafields.custom.rating.value.rating |  times: 1  -%}
+                    <div class="routin-details__container">
+                        
+                        <div class="row-flex__group">
+                            <h1>{{ product.title }}</h1>
+                            {%- render 'rating', rating: rating -%}
+                        </div>
+
+                        <p>{{ product.description }}</p>
+
+                        <span class="price">
+                            {{ product.price | money }}
+                            {% if product.compare_at_price > product.price %}
+                                <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+                            {% endif %}
+                    </span>
+                    </div>
+                    
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+    {
+        "name": "Routines & duos slider",
+    "tag": "section",
+    "settings": [
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading",
+                "default": "routines & duos"
+            },
+            {
+                "type": "text",
+                "id": "link_label",
+                "label": "View all link label",
+                "default": "view all"
+            },
+            {
+                "type": "range",
+                "id": "products_to_show",
+                "min": 2,
+                "max": 12,
+                "step": 1,
+                "default": 8,
+                "label": "Products to show"
+            }
+    ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+        "presets": [{"name": "Routines & duos slider"}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+    .routines-slider { width: 100%; }
+    .routines-slider__content { width: 90%; margin: 6rem auto; }
+    .routines-slider__header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+    .routines-slider__title {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        margin: 0 auto 0 0;
+        color: var(--text-color-dark);
+        font-family: var(--text-primary);
+        font-size: 3.5rem;
+        font-weight: 500;
+    }
+    .routines-slider__title::before {
+        content: "";
+        width: 1rem;
+        aspect-ratio: 1;
+        flex: 0 0 1rem;
+        border-radius: 50%;
+        background: var(--bg-dark);
+    }
+
+    .routines-slider__link{
+        font-size: 1rem;
+        text-decoration: underline;
+        font-family: var( --text-secondary);
+        color: var(--text-color-dark);
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+    .routines-slider__track {
+        width:100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        gap: 2rem;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 48%;
+        padding-bottom: 1rem;
+
+
+
+
+        .routin-product__card{
+            display: flex;
+            flex-direction: column;
+
+
+            .product-image__container{
+                position: relative;
+                width: 100%;
+                aspect-ratio: 4/3;
+                      overflow: hidden;
+                .product-image{
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;        /* crops to fill without stretching */
+                    object-position: center;
+                }
+            }
+            .routin-details__container{
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .row-flex__group{
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    padding-top: 1rem ;
+                    align-items: center;
+                    >h1{
+                        font-size: var(--text-h4);
+                        font-family: var( --text-secondary);
+                        text-transform: uppercase;
+                        color: var(--text-color-secondary);
+                        font-weight: 600;
+                    }
+                }
+                >p,.price{
+                    font-size: var(--text-body);
+                    font-family: var( --text-secondary);
+                    text-transform: capitalize;
+                    color: var(--text-color-muted);
+                    font-weight: 500;
+                }
+                .price{
+                    color: var(--text-color-secondary);
+                    font-weight: 600;
+                    display: flex;
+                    gap: .2rem;
+                .compare-at-price{
+                    color: var(--text-color-disabled);
+                    font-size: var(--text-sm);
+                    font-weight: 500;
+
+                }
+                }
+
+
+            }
+        }
+    }
+
+{% endstylesheet %}
+
+<script>
+    (() => {
+        const slider = document.getElementById('RoutinesSlider-{{ section.id }}');
+        if (!slider) return;
+
+        slider.querySelectorAll('.routines-slider__button').forEach((button) => {
+            button.addEventListener('click', () => {
+                const track = slider.querySelector('[data-slider-track]');
+                if (!track) return;
+                const direction = button.dataset.direction === 'next' ? 1 : -1;
+                track.scrollBy({ left: direction * track.clientWidth * 0.8, behavior: 'smooth' });
+            });
+        });
+    })();
+</script>

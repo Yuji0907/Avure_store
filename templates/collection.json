@@ -1,0 +1,36 @@
+{
+	"sections": {
+        
+		"main": {
+			"type": "main-product-grid",
+			"settings": {
+				
+			}
+		},
+		"skincare_steps": {
+			"type": "skincare-steps",
+			"settings": {
+				
+			}
+		},
+		"testimonials": {
+			"type": "testimonials",
+			"settings": {
+				
+			}
+		}
+		,
+		"customer_feedbacks": {
+			"type": "customer-feedbacks",
+			"settings": {
+				
+			}
+		}
+	},
+	"order": [
+		"main",
+		"skincare_steps",
+		"testimonials",
+		"customer_feedbacks",
+	]
+}

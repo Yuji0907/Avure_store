@@ -1,0 +1,410 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+<nav class="header-drawer__panel">
+  <div class="menue-image__cover">
+    {%- if section.settings.main_menu_image != blank -%}
+      {{
+        section.settings.main_menu_image
+        | image_url: width: 400
+        | image_tag: alt: 'main_menu_image', loading: 'eager', class: 'menu-image'
+      }}
+    {%- else -%}
+      <img class="menu-image" src="{{ 'main_menu_image.png' | asset_url }}" width="400" height="auto" alt="logo">
+    {%- endif -%}
+    {%- if section.settings.menu_label != blank -%}
+      {%- assign first_word = section.settings.menu_label | split: ' ' | first -%}
+      <p class="menu-label">
+        {{ first_word -}}
+        <br>
+        {{ section.settings.menu_label | remove_first: first_word | strip }}
+      </p>
+      <button id="close-menu">
+        {%- render 'close-icon' -%}
+      </button>
+    {%- endif -%}
+  </div>
+  <ul class=" link-group ">
+    {%- for link in linklists['main-menu'].links -%}
+      <span class="full-link">
+        <a
+          href="{{ link.url }}"
+          class="main-links"
+          data-sub-target="sub-{{ link.handle }}"
+          data-close-target="close-{{ link.handle }}"
+          aria-expanded="false"
+        >
+          {{ link.title }}
+        </a>
+
+        {%- if link.handle == 'all-products' -%}
+          <ul class="sub-links" id="sub-{{ link.handle }}">
+            <div class="menue-image__cover">
+              {%- if section.settings.main_menu_image != blank -%}
+                {{
+                  section.settings.main_menu_image
+                  | image_url: width: 400
+                  | image_tag: alt: 'main_menu_image', loading: 'eager', class: 'menu-image'
+                }}
+              {%- else -%}
+                <img class="menu-image" src="{{ 'all_products.png' | asset_url }}" width="400" height="auto" alt="logo">
+              {%- endif -%}
+              {%- if section.settings.menu_label != blank -%}
+                <p class="sub-menu-label">all products</p>
+              {%- endif -%}
+              <button id="close-{{ link.handle }}">
+                {%- render 'close-icon' -%}
+              </button>
+            </div>
+
+            <div class="all-liks__container">
+              {%- for collection in collections -%}
+                {%- unless collection.handle == 'frontpage'
+                  or collection.handle == 'all'
+                  or collection.title == 'routines-duos'
+                -%}
+                  <li>
+                    <span class="list-number">0{{ forloop.index0 | plus: 1 }}.</span
+                    ><a class="main-links" href="{{ collection.url }}">{{ collection.title }}</a>
+                  </li>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          </ul>
+          <span>
+            {%- render 'chevron', color: 'black' -%}
+          </span>
+
+        {%- elsif link.handle == 'routines-duos' -%}
+          <ul class="sub-links" id="sub-{{ link.handle }}">
+            <div class="menue-image__cover">
+              {%- if section.settings.main_menu_image != blank -%}
+                {{
+                  section.settings.main_menu_image
+                  | image_url: width: 400
+                  | image_tag: alt: 'main_menu_image', loading: 'eager', class: 'menu-image'
+                }}
+              {%- else -%}
+                <img class="menu-image" src="{{ 'kit.png' | asset_url }}" width="400" height="auto" alt="logo">
+              {%- endif -%}
+              {%- if section.settings.menu_label != blank -%}
+                <p class="sub-menu-label">
+                  routines & <br>
+                  duos
+                </p>
+                <button id="close-{{ link.handle }}">
+                  {%- render 'close-icon' -%}
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="all-liks__container">
+              {%- for collection in collections -%}
+                {%- unless collection.handle == 'frontpage'
+                  or collection.handle == 'all'
+                  or collection.title != 'routines-duos'
+                -%}
+                  {% for product in collection.products %}
+                    <li>
+                      <a class="main-links" href="{{ product.url }}">{{ product.title }}</a>
+                    </li>
+                  {% endfor %}
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          </ul>
+          <span>
+            {%- render 'chevron', color: 'black' -%}
+          </span>
+
+        {%- elsif link.handle == 'by-concern' -%}
+          <ul class="sub-links" id="sub-{{ link.handle }}">
+            {% assign concerns = shop.metaobjects.concerns.values %}
+            <div class="menue-image__cover">
+              {%- if section.settings.main_menu_image != blank -%}
+                {{
+                  section.settings.main_menu_image
+                  | image_url: width: 400
+                  | image_tag: alt: 'main_menu_image', loading: 'eager', class: 'menu-image'
+                }}
+              {%- else -%}
+                <img class="menu-image" src="{{ 'by_concern.png' | asset_url }}" width="400" height="auto" alt="logo">
+              {%- endif -%}
+              {%- if section.settings.menu_label != blank -%}
+                <p class="sub-menu-label">by concern</p>
+                <button id="close-{{ link.handle }}">
+                  {%- render 'close-icon' -%}
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="all-liks__container">
+              {%- for concern in concerns -%}
+                <li>
+                  <a class="main-links" href="{{concern.system.url }}">{{ concern.lable }}</a>
+                </li>
+              {%- endfor -%}
+            </div>
+          </ul>
+          <span>
+            {%- render 'chevron', color: 'black' -%}
+          </span>
+        {%- endif -%}
+      </span>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+<script>
+  (()=>{
+    var panel = document.querySelector('.header-drawer__panel');
+    var root = document.documentElement;
+    {% comment %} root.classList.add('no-scroll'); {% endcomment %}
+    var closeMenu = document.getElementById("close-menu");
+    closeMenu.style.display="block"
+    closeMenu.addEventListener('click', function (e) {
+        panel.classList.remove('header-drawer-open');
+        root.classList.remove('no-scroll');
+        closeAllSubs()
+    });
+
+  function closeAllSubs() {
+    closeMenu.style.display="block"
+
+        panel.querySelectorAll('.sub-links-open').forEach(function (s) {
+          s.classList.remove('sub-links-open');
+        });
+        panel.querySelectorAll('[data-sub-target]').forEach(function (b) {
+          b.setAttribute('aria-expanded', 'false');
+        });
+
+      }
+  function scroll_on() {
+
+        panel.classList.remove('header-drawer-open');
+        root.classList.remove('no-scroll');
+      }
+    {% comment %} root.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.querySelector('.sub-links-open')) {
+          e.stopPropagation();
+      panel.classList.remove('header-drawer-open');
+      root.classList.remove('no-scroll');
+      closeAllSubs()
+        }
+      }); {% endcomment %}
+
+    console.log("==============")
+    console.log(panel)
+
+    panel.querySelectorAll('[data-sub-target]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var sub = document.getElementById(btn.dataset.subTarget);
+        var close = document.getElementById(btn.dataset.closeTarget);
+
+        var sub = document.getElementById(btn.dataset.subTarget);
+        if (!sub){
+          scroll_on()
+          return;
+
+        }
+        e.preventDefault();
+        {% comment %} e.preventDefault();   {% endcomment %}
+        sub.classList.add('sub-links-open');
+        closeMenu.style.display="none"
+        btn.setAttribute('aria-expanded', 'true');
+            close.addEventListener('click', function () {
+          console.log(btn)
+          closeAllSubs();
+        });
+        });
+      });
+
+
+      panel.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.querySelector('.sub-links-open')) {
+          e.stopPropagation();
+          console.log("btn==========")
+          closeAllSubs();
+        }
+      });
+  })()
+</script>
+{%- stylesheet -%}
+  .chevron {
+    path {
+      fill: black;
+    }
+  }
+  .link-group {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 1rem;
+    .main-links,
+    .list-number {
+      font-size: var(--text-h1);
+      font-weight: 600;
+      font-family: var(--text-font-primary);
+      text-transform: capitalize;
+      width: 100%;
+    }
+    .list-number {
+      font-family: var(--text-font-accent);
+    }
+    .full-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+  }
+  .header-drawer__panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    /* justify-content: center; */
+    inset: 0;
+    z-index: 100;
+    height: 100dvh;
+    background-color: var(--bg-light);
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s ease, visibility 0.3s ease;
+    button {
+      background-color: transparent;
+      border: none;
+      filter: invert();
+      position: absolute;
+
+      right: 5%;
+      z-index: 1000;
+      top: 10%;
+      .close-icon {
+        path {
+          fill: var(--color-light);
+          mix-blend-mode: difference;
+        }
+      }
+    }
+    .menue-image__cover {
+      position: relative;
+      .menu-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .menu-label,
+      .sub-menu-label {
+        width: 50%;
+        overflow-wrap: normal;
+        position: absolute;
+        bottom: 20%;
+        left: 10%;
+        font-size: var(--text-h3);
+        font-weight: 700;
+        color: var(--text-color-brand);
+        font-family: var(--text-font-accent);
+        text-transform: capitalize;
+      }
+      .sub-menu-label {
+        font-size: var(--text-h1);
+        font-family: var(--text-font-secondary);
+        color: var(--text-color-secondary);
+        font-weight: 700;
+        bottom: 0%;
+        top: 20%;
+      }
+    }
+  }
+  .sub-links {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    background-color: var(--bg-light);
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s ease, visibility 0.3s ease;
+    .all-liks__container {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .sub-links-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .header-drawer-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  html.no-scroll,
+  html.no-scroll body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+{%- endstylesheet -%}
+
+{% schema %}
+{
+  "name": "Navigation drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_label",
+      "label": "Menu label",
+      "default": "//Skincare for Sensitive Skin."
+    }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ]
+}
+{% endschema %}

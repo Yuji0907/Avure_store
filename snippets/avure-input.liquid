@@ -1,0 +1,73 @@
+{%- liquid
+	assign input_type = type | default: 'text'
+	assign input_id = id | default: name
+	assign error_id = input_id | append: '-error'
+-%}
+
+{%- if label != blank -%}
+	<label for="{{ input_id | escape }}">{{ label | escape }}</label>
+{%- endif -%}
+
+<input
+	type="{{ input_type | escape }}"
+	{% if name != blank %}name="{{ name | escape }}"{% endif %}
+	{% if input_id != blank %}id="{{ input_id | escape }}"{% endif %}
+	{% if value != nil %}value="{{ value | escape }}"{% endif %}
+	{% if placeholder != blank %}placeholder="{{ placeholder | escape }}"{% endif %}
+	{% if autocomplete != blank %}autocomplete="{{ autocomplete | escape }}"{% endif %}
+	{% if inputmode != blank %}inputmode="{{ inputmode | escape }}"{% endif %}
+	{% if min != blank %}min="{{ min | escape }}"{% endif %}
+	{% if max != blank %}max="{{ max | escape }}"{% endif %}
+	{% if step != blank %}step="{{ step | escape }}"{% endif %}
+	{% if minlength != blank %}minlength="{{ minlength | escape }}"{% endif %}
+	{% if maxlength != blank %}maxlength="{{ maxlength | escape }}"{% endif %}
+	{% if pattern != blank %}pattern="{{ pattern | escape }}"{% endif %}
+	{% if accept != blank %}accept="{{ accept | escape }}"{% endif %}
+	{% if multiple %}multiple{% endif %}
+	{% if required %}required{% endif %}
+	{% if disabled %}disabled{% endif %}
+	{% if readonly %}readonly{% endif %}
+	{% if checked %}checked{% endif %}
+	{% if autofocus %}autofocus{% endif %}
+	{% if custom_pattern != blank %}data-custom-pattern="{{ custom_pattern | escape }}"{% endif %}
+	{% if custom_validation != blank %}data-custom-validation="{{ custom_validation | escape }}"{% endif %}
+	{% if custom_pattern != blank or custom_validation != blank %}aria-describedby="{{ error_id | escape }}"{% endif %}
+	{% if attributes != blank %}{{ attributes }}{% endif %}
+>
+{% if custom_pattern != blank or custom_validation != blank %}
+	<span id="{{ error_id | escape }}" class="avure-input-error" aria-live="polite"></span>
+	<script>
+		(function () {
+			if (window.avureInputValidationReady) return;
+			window.avureInputValidationReady = true;
+
+			function validate(input) {
+				var message = input.getAttribute('data-custom-validation') || '';
+				var customPattern = input.getAttribute('data-custom-pattern');
+				var value = input.value;
+				input.setCustomValidity('');
+
+				if (customPattern && value && !(new RegExp(customPattern)).test(value)) {
+					input.setCustomValidity(message || 'Please enter a valid value.');
+				}
+
+				var error = input.id && document.getElementById(input.id + '-error');
+				if (error) error.textContent = input.validity.valid ? '' : (message || input.validationMessage);
+			}
+
+			document.addEventListener('input', function (event) {
+				if (event.target.matches('[data-custom-pattern], [data-custom-validation]')) validate(event.target);
+			});
+			document.addEventListener('change', function (event) {
+				if (event.target.matches('[data-custom-pattern], [data-custom-validation]')) validate(event.target);
+			});
+			document.addEventListener('invalid', function (event) {
+				var input = event.target;
+				if (!input.matches('[data-custom-pattern], [data-custom-validation]')) return;
+				validate(input);
+				var error = input.id && document.getElementById(input.id + '-error');
+				if (error) error.textContent = input.getAttribute('data-custom-validation') || input.validationMessage;
+			}, true);
+		})();
+	</script>
+{% endif %}

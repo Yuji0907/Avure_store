@@ -1,0 +1,13 @@
+{
+  "sections": {
+		"shop_concern":{
+			"type":"concern-page",
+			"name":"shop by concern"	
+		},
+		"skincare_steps":{
+			"type":"skincare-steps",
+			"name":"skincare steps"	
+		},
+  },
+  "order": ["shop_concern","skincare_steps"]
+}

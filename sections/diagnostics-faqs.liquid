@@ -1,0 +1,34 @@
+{% assign diagnostics_faqs = shop.metaobjects.diagnostics_faqs.values %}
+
+<div class="diagnostics-faqs">
+
+    <div class="diagnostics-faqs__accordions">
+        {% for faq in diagnostics_faqs %}
+            {% assign is_last_faq = false %}
+            {% if forloop.last %}
+                {% assign is_last_faq = true %}
+            {% endif %}
+            {%- render 'accordion', title:faq.question.value, items:faq.answers.value, last:is_last_faq -%}
+        {% endfor %}
+    </div>
+</div>
+{%- stylesheet -%}
+  
+    .diagnostics-faqs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+    .diagnostics-faqs__accordions{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* gap: 1.5rem; */
+        margin-top: 1.5rem;
+        width: 90%;
+        font-family: var(--text-font-primary);
+        font-size: var(--text-h3);
+    }
+{%- endstylesheet -%}

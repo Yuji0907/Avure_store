@@ -1,0 +1,110 @@
+<li class="routines-card_container">
+    {% comment %} <a href=""></a> {% endcomment %}
+    <a href="{{ product.url }}" class="routines-card-image_container">
+        <div class="routines-card_header">
+            <div class="shopping-cart-add_container">
+                {% assign badge = product.metafields.custom.variant_badge.value %}
+                {% render 'shopping-cart-add' %}
+            </div>
+            <p class="badge-title">{{badge}}</p>
+        </div>
+
+        {{ product.featured_image | image_url: width: 500 | image_tag :
+            class:"routines-card-image"
+        }}
+        
+    </a>
+    <div class="routines-card-info">
+        <h1 >{{product.title}}</h1>
+        <p >{{product.description}}</p>
+        <span class="price">
+            {{ product.price | money }}
+            {% if product.compare_at_price > product.price %}
+                <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+            {% endif %}
+        </span>
+    </div>
+</li>
+
+{%- stylesheet -%}
+    .routines-card_container{
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: .6rem;
+      /* height: 10vh; */
+        .routines-card-image_container{
+            /* position: relative; */
+            /* aspect-ratio: 2/3; */
+            /* max-height: 500px; */
+            .routines-card_header{
+                position: absolute;
+                    right:0;
+                    left:0;
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                justify-content: space-between;
+                margin: 1.5rem;
+                    .badge-title{
+                        font-size: 1.2rem;
+                        font-family: var( --text-primary);
+                        text-transform: uppercase;
+                        color: var(--text-color-brand);
+                        font-weight: 600;
+                    }
+                .shopping-cart-add_container{
+                    background-color: var(--surface-icon);
+                    padding: .8rem;
+                    border-radius: .8rem;
+                    /* width: 100%; */
+
+                    .shopping-cart-add{
+                        /* padding: 2rem; */
+                    }
+                }
+            }
+
+            .routines-card-image{
+                    width: 100%;
+                    height: auto;
+                    /* height: 100%; */
+                object-fit: contain;
+            }
+        }
+        .routines-card-info{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-family: var(--text-font-secondary);
+            /* text-align: center; */
+            >h1{
+                font-size: 1.8rem;
+                font-family: var( --text-font-secondary);
+                text-transform: uppercase;
+                color: var(--text-color-secondary);
+                font-weight: 600;
+            }
+            >p{
+                font-family: var(--text-font-primary);
+                color: var(--text-color-muted);
+                font-size: 1.3rem;
+
+            }
+            .price{
+                font-size: 1.5rem;
+                color: var(--text-color-secondary);
+                font-weight: 600;
+
+            }
+            .compare-at-price{
+                color: var(--text-color-disabled);
+                font-weight: 400;
+                scale: .5;
+
+            }
+        }
+    }
+
+{%- endstylesheet -%}

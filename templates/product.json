@@ -1,0 +1,37 @@
+
+
+
+ {
+  "sections": {
+    "main": {
+      "type": "product-wrapper",
+      "settings": {}
+    },
+    "product_info": {
+      "type": "product-info",
+      "settings": {}
+    },
+    "product_about": {
+      "type": "product-about",
+      "settings": {}
+    },
+    "product_ingredients": {
+      "type": "product-ingredients",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "customer_feedbacks": {
+      "type": "customer-feedbacks",
+      "settings": {}
+    },
+    "best_sellers": {
+      "type": "best-sellers",
+      "settings": {}
+    },
+  },
+  "order": ["main", "product_info","product_about",
+  "product_ingredients","testimonials","customer_feedbacks","best_sellers"]
+}

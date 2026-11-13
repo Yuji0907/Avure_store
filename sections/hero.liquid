@@ -1,0 +1,294 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+<section class="section-hero">
+  <div class="hero-container">
+    {%- if section.settings.video != blank -%}
+      {{
+        section.settings.video
+        | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'hero-video'
+      }}
+    {%- else -%}
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="{{ 'video.mp4' | asset_url }}" type="video/mp4">
+      </video>
+    {%- endif -%}
+
+    <div class="hero-content">
+      {%- if section.settings.label != blank -%}
+        <p class="hero-label">{{ section.settings.label }}</p>
+      {%- endif -%}
+      <div class="heading-container">
+        {%- if section.settings.hero_title != blank -%}
+          <h1 class="hero-heading">{{ section.settings.hero_title }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="hero-subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .section-hero {
+    width: 100%;
+    display: flex;
+    font-family: var(--text-font-accent);
+  }
+  .hero-container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    inset: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-video {
+    display: block;
+    position: relative;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-content {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-color-primary);
+    width: 80%;
+    height: 100%;
+    margin-bottom: 10rem;
+  }
+
+  .hero-label,
+  .hero-heading,
+  .hero-subheading {
+    width: 100%;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .heading-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Label */
+  .hero-label {
+    font-family: 'JetBrainsMono';
+    font-size: {{ section.settings.label_size | divided_by: 16.0 }}rem;
+    letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.label_alignment }};
+  }
+
+  /* Title (fluid: scales down to 60% of the chosen size on small screens) */
+  .hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: clamp(
+      {{ section.settings.heading_size | times: 0.6 | divided_by: 16.0 }}rem,
+      5vw,
+      {{ section.settings.heading_size | divided_by: 16.0 }}rem
+    );
+    letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  /* Subheading */
+  .hero-subheading {
+    font-size: {{ section.settings.subheading_size | divided_by: 16.0 }}rem;
+    letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.subheading_alignment }};
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "hero",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Shopify-hosted video (MP4)" },
+
+    { "type": "header", "content": "Content" },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "// Skincare for Sensitive Skin."
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "Build a routine your skin can live with."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A clear approach to daily skincare, shaped by dermo-cosmetic expertise."
+    },
+
+    { "type": "header", "content": "Label typography" },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "label_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    {
+      "type": "text_alignment",
+      "id": "label_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Title typography" },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 24,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "text_alignment",
+      "id": "subheading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+  "presets": [{ "name": "hero" }]
+}
+{% endschema %}

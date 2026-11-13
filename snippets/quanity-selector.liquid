@@ -1,0 +1,48 @@
+
+
+<div class="quantity-selector_container" style="--quantity-selector-size: {{ size | default: '2rem' }};">
+{%- render 'icon-button', icon:"plus"  -%}
+<input 
+    class="quanity-input"
+    type="number" 
+    name="quanity"
+    value="1"
+    min="1"
+    step="1"
+    max=""
+    aria-label="Quanity"
+>
+{%- render 'icon-button',icon:"minus" -%}
+
+</div>
+
+{%- stylesheet -%}
+    .quantity-selector_container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-dark-muted);
+    }
+    .quanity-input:focus{
+        outline: none;
+    border: none;
+  }
+  .quanity-input{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: calc(var(--quantity-selector-size) * 1.5);
+    height: var(--quantity-selector-size);
+    appearance: textfield;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    font-size: var(--text-h3);
+  }
+.quantity-selector_container input[type="number"]::-webkit-inner-spin-button,
+.quantity-selector_container input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    background-color: red;
+    margin: 0;
+}
+{%- endstylesheet -%}

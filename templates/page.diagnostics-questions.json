@@ -1,0 +1,10 @@
+{
+  "sections": {
+		"diagnostics_questions":{
+			"type":"diagnostics-questions",
+			"name":"diagnostics questions"     	
+		},
+
+  },
+  "order": ["diagnostics_questions"]
+}

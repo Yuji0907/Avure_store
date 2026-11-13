@@ -1,0 +1,196 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+<section class="skincare-steps__wrapper">
+    <div class="skincare-steps__container">
+        <span class="skincare-steps__heading"> 
+            {{ section.settings.heading | escape }}
+         </span> 
+        {% assign collection_count = 0 %}
+
+        <div class="step-selector">
+
+            {% for collection in collections %}
+                {% unless collection.handle == 'routines-duos' %}
+                {% assign collection_count = collection_count | plus: 1 %}
+                <h2 
+                    class="{% if collection_count == 1 %}selected{% endif %}"
+                    role="button" 
+                    tabindex="0" 
+                    data-category = {{ collection.title | handleize }}
+                    aria-pressed=
+                    "{% if collection_count == 1 %}true{% else %}false{% endif %}"
+                    >
+                    {{ collection.title | escape }}
+                    </h2>
+                {% endunless %}
+            {% endfor %}
+        </div>
+
+        <div>
+        {% for collection in collections %}
+        {% unless collection.handle == 'routines-duos' %}
+        {% if collection.products.size > 0 %}
+            <ul data-category = {{ collection.title | handleize }} class="all-collections__products"  role="list">
+                {% for product in collection.products %}
+                {%- render 'product-card', product: product -%}
+                {% endfor %}
+            </ul>
+            
+        {% else %}
+            <p>No products in this collection.</p>
+        {% endif %}
+        {% endunless %}
+        {% endfor %}
+        </div>
+
+        <a class="skincare-steps__link" href="/collections/all">View all</a>
+
+    </div>
+</section>
+<script>
+    var product_list = document.querySelectorAll('.all-collections__products');
+    headings = document.querySelectorAll('.skincare-steps__wrapper .step-selector h2[role="button"]');
+    var cat = headings[0].dataset.category  ;
+    console.log(cat)
+    const hide_all = () =>{
+        product_list.forEach((item, index)=>{
+                item.hidden = index !== 0
+            })
+
+    }
+    const filter_products = () => {
+        product_list.forEach((item) => {
+            item.hidden = item.dataset.category !== cat;
+            Array.from(item.children).forEach((product, index) => {
+                product.hidden = index >= 2;
+            });
+        });
+    };
+    
+    filter_products()
+    
+    headings.forEach((heading) => {
+        const selectHeading = () => {
+            const selector = heading.closest('.step-selector');
+            selector.querySelectorAll('h2[role="button"]').forEach((item) => {
+                const isSelected = item === heading;
+                cat = heading.dataset.category;
+                console.log(heading.innerHTML)
+                filter_products()
+                item.classList.toggle('selected', isSelected);
+                item.setAttribute('aria-pressed', isSelected);
+            });
+        };
+
+
+        heading.addEventListener('click', selectHeading);
+
+    });
+
+</script>
+{%- stylesheet -%}
+    .skincare-steps__wrapper{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+        margin-block: 2rem;
+
+        .skincare-steps__heading{
+            font-family: var(--text-font-accent);
+            color:var(--text-color-dark);
+            font-size: var(--text-body);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .all-collections__products[hidden]{
+            display: none;
+        }
+
+    }
+    .skincare-steps__container{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* margin: 2rem; */
+        .step-selector{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            .selected{
+                --color:var(--color-dark);
+            }
+
+            h2{
+                --color:var(--color-dark-disabled);
+                border-bottom: .5rem  solid ;
+                border-color:var(--color) ;
+                font-family: var(--text-font-accent);
+                font-weight: 800;
+                stroke-linecap: round;
+                color: var(--color);
+                flex-grow: 1;
+                text-align: center;
+                user-select: none;
+                cursor: pointer;
+                /* width: 90%; */
+                ::before{
+                    content: "";
+                }
+
+            }
+
+
+        }
+        .skincare-steps__link{
+                text-decoration: underline;
+                font-family: var(--text-font-accent);
+                color:var(--text-color-dark);
+                font-size: var(--text-body);
+                text-transform: uppercase;
+            }
+    }
+{%- endstylesheet -%}
+{% schema %}
+  {
+    "name": "skin care steps",
+    "tag": "section",
+    "settings": [
+      	{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading",
+			"default": "five (05) skincare steps"
+		},
+    
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ]
+  }
+{% endschema %}

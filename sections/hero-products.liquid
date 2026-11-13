@@ -1,0 +1,104 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+
+<div class="products-hero_container">
+    <div class="products-hero_content">
+        <div class="products-hero_header">
+            <h2 class="products-hero_title">
+                Best Seller
+            </h2>
+            <a class="products-hero_link" href="/collections/all">
+                view all
+            </a>
+        </div>
+        {%- render 'products-slider',category:"best sellers"-%}
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "hero products",
+    "tag": "section",
+    "class": "hero-products",
+    "settings": [
+    
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+    "presets": [{"name": "hero products"}]
+  }
+{% endschema %}
+
+ {%- stylesheet -%}
+    .products-hero_container{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+    }
+    .products-hero_content{
+        width: 90%;
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+        margin-block: 6rem;
+    /* background-color: red; */
+    .products-hero_header{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .products-hero_title{
+        font-size: 3.5rem;
+        font-family: var( --text-primary);
+        color: var(--text-color-dark);
+        font-weight: 500;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    .products-hero_title::before{
+        content: "";
+        --size:1rem;
+        width: var(--size);
+        aspect-ratio: 1/1;
+        border-radius: var(--size);
+        background-color: var(--bg-dark);
+        
+
+    }
+    .products-hero_link{
+        font-size: 1rem;
+        text-decoration: underline;
+        font-family: var( --text-secondary);
+        color: var(--text-color-dark);
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+  }
+{%- endstylesheet -%} 

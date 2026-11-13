@@ -1,0 +1,77 @@
+{% assign card_image = concern.image | default: concern.featured_image %}
+
+<li class="concern-card">
+    <a href="{{ concern.system.url }}" class="concern-card__link">
+        <div class="concern-card__image-wrap">
+
+            {% if card_image != blank %}
+                {{ card_image | image_url: width: 700 | image_tag: class: 'concern-card__image', loading: 'lazy' }}
+            {% endif %}
+        </div>
+
+        <div class="concern-card__info">
+            <h2 class="concern-card__title">{{ concern.lable }}</h2>
+            {% if concern.symptoms != blank %}
+                <p class="concern-card__description">
+                    {% for symptom in concern.symptoms.value   %}
+                        <span>{{ symptom }},</span>
+                    {% endfor %}
+                    
+                </p>
+            {% endif %}
+        </div>
+    </a>
+</li>
+
+{%- stylesheet -%}
+    .concern-card {
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1;
+        gap: 2rem;
+
+
+        .concern-card__link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .concern-card__image-wrap {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+
+            .concern-card__image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .concern-card__info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-family: var(--text-font-secondary);
+            /* gap: 1rem; */
+            .concern-card__title {
+                width: 100%;
+                font-size:var(--text-h4);
+                font-family: var(--text-primary);
+                text-transform: uppercase;
+                color: var(--text-color-secondary);
+                font-weight: 600;
+            }
+
+            .concern-card__description {
+                width: 100%;
+                font-family: var(--text-font-primary);
+                color: var(--text-color-muted);
+                font-size: var(--text-sm);
+            }
+        }
+    }
+
+{%- endstylesheet -%}

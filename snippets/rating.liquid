@@ -1,0 +1,21 @@
+{% assign rating_value = rating | default: 0 | plus: 0 | floor%}
+<div class="rating">
+      {% for star in (1..5) %}
+            {%- if star <= rating_value -%}
+              {%- render 'filled-star' -%}
+            {%- else -%}
+              {%- render 'empty-star' -%}
+                
+            {%- endif -%}
+    {% endfor %}
+            
+</div>
+{%- stylesheet -%}
+  .rating{
+    display: flex;
+    gap: .1rem;
+  }
+  .filled{
+    /* fill: red; */
+  }
+{%- endstylesheet -%}

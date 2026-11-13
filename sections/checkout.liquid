@@ -1,0 +1,260 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+{%- assign wilayas = section.settings.wilayas | newline_to_br | split: '<br />' -%}
+
+<section class="checkout-info" id="CheckoutInfo-{{ section.id }}">
+  <header class="checkout-info__header">
+    <a href="{{ routes.cart_url }}" aria-label="Back to bag">
+        <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.6667 8.33464H5L10.4833 2.85132C10.6395 2.69638 10.7635 2.51204 10.8482 2.30895C10.9328 2.10585 10.9763 1.888 10.9763 1.66799C10.9763 1.44797 10.9328 1.23012 10.8482 1.02702C10.7635 0.823926 10.6395 0.639592 10.4833 0.484654C10.1711 0.174236 9.74864 0 9.30833 0C8.86802 0 8.4456 0.174236 8.13333 0.484654L0.983334 7.65131C0.357354 8.27356 0.00372132 9.11868 0 10.0013V10.0013C0.00811098 10.8781 0.361407 11.7165 0.983334 12.3346L8.13333 19.5013C8.28873 19.6556 8.473 19.7778 8.67562 19.8609C8.87823 19.944 9.09523 19.9863 9.31423 19.9856C9.53322 19.9848 9.74991 19.9409 9.95194 19.8564C10.154 19.7718 10.3374 19.6484 10.4917 19.493C10.646 19.3376 10.7682 19.1533 10.8512 18.9507C10.9343 18.7481 10.9767 18.5311 10.9759 18.3121C10.9752 18.0931 10.9313 17.8764 10.8467 17.6744C10.7622 17.4723 10.6387 17.2889 10.4833 17.1346L5 11.668H21.6667C22.1087 11.668 22.5326 11.4924 22.8452 11.1798C23.1577 10.8673 23.3333 10.4433 23.3333 10.0013C23.3333 9.55928 23.1577 9.13536 22.8452 8.8228C22.5326 8.51024 22.1087 8.33464 21.6667 8.33464Z" fill="#003865"/>
+        </svg>
+
+    </a>
+    <h1>Your bag ({{ cart.item_count }})</h1>
+  </header>
+
+  <form class="checkout-info__form" data-checkout-info novalidate
+        data-locations="{{ 'algeria.json' | asset_url }}">
+
+    <h2>Contact</h2>
+
+    <input class="avure-input" type="email" name="email" placeholder="Email" aria-label="Email"
+           autocomplete="email" value="{{ cart.attributes.email | default: customer.email | escape }}">
+
+    <label class="check">
+      <input type="checkbox" name="marketing_email" value="yes" checked>
+      <span class="check__box"></span>
+      <span>Email me with news and offers.</span>
+    </label>
+
+    <h2>Shipping details</h2>
+
+    <div class="field">
+      <input class="avure-input" type="text" name="full_name" placeholder="Full name *"
+             aria-label="Full name" autocomplete="name" required value="{{ cart.attributes.full_name | escape }}">
+      <small class="field__error">Please enter your full name</small>
+    </div>
+
+    <div class="field" data-field="wilaya">
+      {%- render 'avure-combo', name: 'wilaya', combo_placeholder: 'Wilaya *', options: wilayas -%}
+      <small class="field__error">Please select your wilaya</small>
+    </div>
+    
+    <div class="field">  
+        {%- render 'avure-combo', name: 'commune', combo_placeholder: 'Commune *',  -%}
+      {% comment %} <input class="avure-input" type="text" name="commune" placeholder="Commune *" aria-label="Commune"
+             list="communes-{{ section.id }}" autocomplete="off" required disabled
+             value="{{ cart.attributes.commune | escape }}">
+      <datalist id="communes-{{ section.id }}"></datalist> {% endcomment %}
+      <small class="field__error">Please enter your commune</small>
+    </div>
+
+    <div class="field">
+      <input class="avure-input" type="text" name="address1" placeholder="Address *" aria-label="Address"
+             autocomplete="street-address" required value="{{ cart.attributes.address1 | escape }}">
+      <small class="field__error">Please enter your address</small>
+    </div>
+
+    <div class="field">
+      <input class="avure-input" type="tel" name="phone" placeholder="Phone number *" aria-label="Phone number"
+             inputmode="tel" autocomplete="tel" required value="{{ cart.attributes.phone | escape }}">
+      <small class="field__error">Please enter a valid phone number</small>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" name="marketing_whatsapp" value="yes" checked>
+      <span class="check__box"></span>
+      <span>Send me news and offers via WhatsApp.</span>
+    </label>
+
+    <textarea class="avure-area" name="note" rows="2" placeholder="Order note (optional)"
+              aria-label="Order note">{{ cart.note }}</textarea>
+
+    <button class="avure-button" type="submit">{{ section.settings.button_label | escape }}</button>
+  </form>
+</section>
+
+{%- stylesheet -%}
+  .checkout-info {
+     margin: 0 auto; 
+     padding: 2.5rem; 
+     font-family: 
+     var(--text-font-primary); }
+  .checkout-info__header { display: grid; grid-template-columns: 3rem 1fr 3rem; align-items: center; margin-bottom: 2rem; text-align: center; }
+  .checkout-info__header a { font-size: 2rem; text-decoration: none; color: inherit; }
+  .checkout-info__header h1 { grid-column: 2; font-size: var(--text-h3); text-transform: uppercase; font-weight: 500; }
+  .checkout-info__form { display: grid; gap: 1.2rem; }
+  .checkout-info__form h2 { font-size: var(--text-h3); font-weight: 700; text-transform: uppercase; margin-top: 1rem; }
+
+  .field { display: grid; gap: .4rem; }
+  .field__error { display: none; font-size: 1.1rem; color: #e5322d; }
+  .field.is-invalid .field__error { display: block; }
+  .field.is-invalid .avure-input,
+  .field.is-invalid .avure-combo { border-color: #e5322d; }
+
+  .check { 
+    position: relative; 
+    display: flex; 
+    align-items: center;
+     gap: 1rem; cursor: pointer;
+      font-size: var(--text-h3); 
+      color: var( --text-color-muted );
+    }
+  .check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .check__box { 
+    width: 1.8rem; 
+    height: 1.8rem;
+     flex-shrink: 0;
+      display: grid;
+       place-items:
+        center;
+    border: 1px solid var(--color-dark); border-radius: .3rem;
+ }
+  .check__box::after { 
+    content: ""; 
+    width: .45rem; height: .9rem;
+     border: solid var(--color-light, #fff);
+    border-width: 0 2px 2px 0; rotate:
+     45deg; scale: 0; translate: 0 -.1rem; 
+     transition: scale .15s
+     ; }
+  .check input:checked + .check__box { background: var(--bg-dark, #111); }
+  .check input:checked + .check__box::after { scale: 1; }
+  .check input:focus-visible + .check__box { outline: 2px solid var(--color-dark); outline-offset: 2px; }
+
+  .checkout-info .avure-button:disabled { opacity: .5; cursor: wait; }
+{%- endstylesheet -%}
+
+<script>
+  (() => {
+    const form = document.querySelector('#CheckoutInfo-{{ section.id }} [data-checkout-info]');
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = 'true';
+
+    const wilaya = form.elements.wilaya;   
+    console.log('wilaya element:', wilaya);
+    const commune = form.elements.commune;
+    const list = form.querySelector('datalist');
+    let locations = {};
+
+    const loadCommunes = () => {
+    const communes = locations[wilaya.value.trim()] || [];
+    const  communeDropdown=form.querySelector('#commune-dropdown')
+    // same markup the combo snippet outputs
+    communeDropdown.innerHTML = communes
+        .map((name) => `<div class="combo-option">${name}</div>`)
+        .join('');
+
+    commune.value = '';
+    commune.disabled = communes.length === 0;
+    };
+
+    fetch(form.dataset.locations).then((r) => r.json()).then((data) => { locations = data; loadCommunes(); });
+
+    wilaya.addEventListener('change', () => { 
+        console.log('wilaya changed', wilaya.value);
+        commune.value = ''; 
+        loadCommunes(); 
+    });
+
+    const clear = (e) => e.target.closest('.field')?.classList.remove('is-invalid');
+    form.addEventListener('input', clear);
+    form.addEventListener('change', clear);
+
+    const validPhone = (v) => /^(\+?213|0)[567]\d{8}$/.test(v.replace(/[\s.-]/g, ''));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let firstBad = null;
+
+      form.querySelectorAll('[required]').forEach((f) => {
+        let ok = f.value.trim() !== '';
+        if (f.name === 'phone' && ok) ok = validPhone(f.value);
+        f.closest('.field')?.classList.toggle('is-invalid', !ok);
+        if (!ok && !firstBad) firstBad = f;
+      });
+      // wilaya is a hidden input, so check it separately
+      if (!wilaya.value) {
+        form.querySelector('[data-field="wilaya"]').classList.add('is-invalid');
+        firstBad = firstBad || form.querySelector('[data-field="wilaya"]');
+      }
+      if (firstBad) return firstBad.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
+      const d = Object.fromEntries(new FormData(form));
+      const [first, ...rest] = d.full_name.trim().split(/\s+/);
+      const last = rest.join(' ') || first;
+      const submit = form.querySelector('[type="submit"]');
+      submit.disabled = true;
+
+      try {
+        const { note, ...attributes } = {
+          ...d, email: d.email || '',
+          marketing_email: d.marketing_email || 'no',
+          marketing_whatsapp: d.marketing_whatsapp || 'no'
+        };
+        const res = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ note: note || '', attributes })
+        });
+        if (!res.ok) throw new Error('save failed');
+
+        // ---- hand-off: replace this block if you use a COD app (see notes) ----
+        const p = new URLSearchParams();
+        if (d.email) p.set('checkout[email]', d.email);
+        p.set('checkout[shipping_address][first_name]', first);
+        p.set('checkout[shipping_address][last_name]', last);
+        p.set('checkout[shipping_address][address1]', d.address1);
+        p.set('checkout[shipping_address][address2]', d.wilaya);
+        p.set('checkout[shipping_address][city]', d.commune);
+        p.set('checkout[shipping_address][phone]', d.phone);
+        p.set('checkout[shipping_address][country]', 'Algeria');
+        window.location.href = `${window.Shopify.routes.root}checkout?${p}`;
+      } catch (err) {
+        console.error(err);
+        submit.disabled = false;
+        alert('Something went wrong, please try again.');
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Checkout info",
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Validate the payment" },
+    {
+      "type": "textarea",
+      "id": "wilayas",
+      "label": "Wilayas (one per line)",
+      "default": "16 - Alger\n31 - Oran\n25 - Constantine"
+    }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+  "presets": [{ "name": "Checkout info" }]
+}
+{% endschema %}

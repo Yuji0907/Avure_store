@@ -1,0 +1,222 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+{%- assign roles = section.settings.roles | newline_to_br | split: '<br />' -%}
+{% assign contact_form_success = false %}
+<section class="get-in-touch__section">
+    <div class="get-in-touch__wrapper">
+
+        <div class="header-container">
+            <h2>{{ section.settings.label | escape }}</h2>
+            <h1>{{ section.settings.heading | escape }}</h1>
+            {% assign working_days_text = section.settings.working_days | append: " days" %}
+            <p>{{ section.settings.description | replace: '[X working days]', working_days_text | escape }}</p>
+        </div>
+
+        {% form 'contact', class: 'get-in-touch__form' %}
+            {% assign contact_form_success = form.posted_successfully? %}
+            {{ form.errors | default_errors }}
+            <input class="avure-input" type="text" name="pharmacy_name" placeholder="Pharmacy name" aria-label="Pharmacy name"  required>
+            <input class="avure-input" type="text" name="pharmacy_address" placeholder="Pharmacy Address" aria-label="Pharmacy Address"  required>
+            <input class="avure-input" type="text" name="Your_name" placeholder="Your name" aria-label="Your name"  required>
+            {%- render  'avure-combo', combo_placeholder: "Select your role...", options: roles,name:"role" -%}
+            <input class="avure-input" type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
+            <input class="avure-input" type="phone" name="phone" placeholder="Phone number" aria-label="Phone number" autocomplete="tel">
+            {%- render 'avure-combo', combo_placeholder: "What would you like?", options: roles,name:"like"  -%}
+            <textarea class="avure-area " name="contact[body]" placeholder="Tell us about your collaboration idea" aria-label="Tell us about your collaboration idea" required></textarea>
+            <button class="avure-button" type="submit">{{ section.settings.button_label | escape }}</button>
+        {% endform %}
+    </div>
+    {% if contact_form_success %}
+        <div class="get-in-touch-success__overlay">
+            <div class="text-container">
+                <h1>Thank you, [name].</h1>
+                <p>We’ve received your request for [pharmacy name].We’ll reply within 03 working days.</p>
+                <a data-style="light" class="avure-button back-home__btn" href="{{ routes.root_url }}">Back home</a>
+            </div>
+            {%- if section.settings.success_image != blank -%}
+                {{ section.settings.success_image
+                    | image_url: width: 2000
+                    | image_tag: alt: section.settings.success_image.alt, loading: 'eager', class: 'pharma-colab__image'
+                }}
+            {%- else -%}
+                <img
+                    class="success__image"
+                    src="{{ 'success.png' | asset_url }}"
+                    width="2000"
+                    height="1200"
+                    alt="{{ section.settings.image_alt | escape }}"
+                    loading="eager"
+                >
+            {%- endif -%}
+        </div>
+    {% endif %}
+</section>
+{%- stylesheet -%}
+    .get-in-touch-success__overlay{
+        position: absolute;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100dvh;
+        .success__image{
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            z-index: 90;
+            height: 100%;
+            object-fit: cover;
+
+        }
+        .text-container{
+             width: 90%;
+            position: absolute;
+            margin: auto;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-color-primary);
+
+            h1{
+                font-size: var(--text-h1);
+                font-weight: 700;
+                text-transform: uppercase;
+                margin-top: auto;
+                text-align: center;
+            }
+            p{
+                font-size: var(--text-h3);
+                font-weight: 500;
+                text-align: center;
+                margin-bottom: auto;
+            }
+        }
+    }
+  .get-in-touch__section{
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-block: 4rem;
+    .get-in-touch__wrapper{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .header-container{
+        color:var(--text-color-secondary);
+        font-family: var(--text-font-primary);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h1{
+            width: 100%;
+            font-weight: 700;
+            font-size:var(--text-h2);
+            text-transform: uppercase;
+        }
+        h2{
+            font-family: var(--text-font-secondary);
+             width: 100%;
+            font-weight: 500;
+            font-size:var(--text-h4);
+        }
+        p{
+        width: 100%;
+        font-weight: 500;
+        font-size:var(--text-h4);
+        }
+    }
+    .get-in-touch__form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .back-home__btn{
+        margin-bottom: 5rem;
+        font-size:var(--text-h2);
+        padding-inline:2.2rem;
+        font-weight: 600;
+    }
+  }
+{%- endstylesheet -%}
+{% schema %}
+{
+	"name": "Get in touch",
+	"settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Collaborate with Avure"
+        },
+        {
+            "type": "text",
+            "id": "label",
+            "label": "Label",
+            "default": "For pharmacists"
+        },
+		{
+			"type": "textarea",
+			"id": "description",
+			"label": "Description",
+            "default": "Tell us about your pharmacy. We’ll reply within [X working days] with the price list and formula sheets."
+		},
+		{
+			"type": "text",
+			"id": "working_days",
+			"label": "Working Days",
+            "default": "3-5"
+		},
+        {
+        "type": "textarea",
+        "id": "roles",
+        "label": "Roles (one per line)",
+        "default": "Pharmacist\nPharmacy owner\nPharmacy manager\nOther"
+        },
+		{
+			"type": "text",
+			"id": "button_label",
+			"label": "Button label",
+			"default": "Send request"
+		}
+	,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+	"presets": [
+		{   
+			"name": "Get in touch"
+		}
+	]
+}
+{% endschema %}

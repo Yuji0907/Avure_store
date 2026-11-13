@@ -1,0 +1,20 @@
+<section class="product-wrapper">
+  <div class="product-container">
+    {%- render 'product-media-carousel', product:product -%}
+    {%- render 'product-media-carousel-small', product:product -%}
+  </div>
+</section>
+<style>
+    .product-wrapper{
+        width: 100%;
+        display: flex;
+        flex-direction:column;
+        align-items:center;
+    }
+    .product-container{
+        display: flex;
+        flex-direction:column;
+        align-items:center;
+        width: 90%;
+    }
+</style>

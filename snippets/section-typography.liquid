@@ -1,0 +1,50 @@
+<style>
+  {% if section_settings.typography_heading_enabled %}
+    #shopify-section-{{ section_id }} h1,
+    #shopify-section-{{ section_id }} h2,
+    #shopify-section-{{ section_id }} h3,
+    #shopify-section-{{ section_id }} h4,
+    #shopify-section-{{ section_id }} h5,
+    #shopify-section-{{ section_id }} h6,
+    #shopify-section-{{ section_id }} [class*="heading"],
+    #shopify-section-{{ section_id }} [class*="title"] {
+      font-size: {{ section_settings.typography_heading_size }}px;
+      letter-spacing: {{ section_settings.typography_heading_letter_spacing | divided_by: 100.0 }}em;
+      line-height: {{ section_settings.typography_heading_line_height | divided_by: 100.0 }};
+      text-align: {{ section_settings.typography_heading_alignment }};
+    }
+  {% endif %}
+
+  {% if section_settings.typography_body_enabled %}
+    #shopify-section-{{ section_id }} p,
+    #shopify-section-{{ section_id }} [class*="description"],
+    #shopify-section-{{ section_id }} [class*="subheading"] {
+      font-size: {{ section_settings.typography_body_size }}px;
+      letter-spacing: {{ section_settings.typography_body_letter_spacing | divided_by: 100.0 }}em;
+      line-height: {{ section_settings.typography_body_line_height | divided_by: 100.0 }};
+      text-align: {{ section_settings.typography_body_alignment }};
+    }
+  {% endif %}
+
+  {% if section_settings.typography_label_enabled %}
+    #shopify-section-{{ section_id }} small,
+    #shopify-section-{{ section_id }} label,
+    #shopify-section-{{ section_id }} [class*="label"],
+    #shopify-section-{{ section_id }} [class*="eyebrow"] {
+      font-size: {{ section_settings.typography_label_size }}px;
+      letter-spacing: {{ section_settings.typography_label_letter_spacing | divided_by: 100.0 }}em;
+      line-height: {{ section_settings.typography_label_line_height | divided_by: 100.0 }};
+      text-align: {{ section_settings.typography_label_alignment }};
+    }
+  {% endif %}
+
+  {% if section_settings.typography_action_enabled %}
+    #shopify-section-{{ section_id }} a,
+    #shopify-section-{{ section_id }} button {
+      font-size: {{ section_settings.typography_action_size }}px;
+      letter-spacing: {{ section_settings.typography_action_letter_spacing | divided_by: 100.0 }}em;
+      line-height: {{ section_settings.typography_action_line_height | divided_by: 100.0 }};
+      text-align: {{ section_settings.typography_action_alignment }};
+    }
+  {% endif %}
+</style>

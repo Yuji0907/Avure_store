@@ -1,0 +1,167 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+{% assign testimonials = shop.metaobjects.testimonials.values %}
+
+<section class="testimonials-wrapper">
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <h2 class="testimonials-title">
+        {{ section.settings.title }}
+      </h2>
+      <h1 class="testimonials-heading">
+        {{ section.settings.heading }}
+      </h1>
+      <p class="testimonials-description">
+        {{ section.settings.description }}
+      </p>
+    </div>
+
+    <div class="testimonials-carousel">
+      {%- for testimonial in testimonials -%}
+        <div class="testimonials-vide__wrapper">
+          {%- if testimonial.media != blank -%}
+            {{
+              testimonial.media.value
+              | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'testi-video'
+            }}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- stylesheet -%}
+  .testimonials-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-block: 4rem;
+    justify-content: center;
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .testimonials-container {
+      width: 90%;
+      gap: 2rem;
+      .testimonials-header {
+        h2,
+        h1,
+        p {
+          color: var(--text-color-dark);
+          font-size: var(--text-body);
+          text-transform: uppercase;
+          text-align: center;
+        }
+        .testimonials-title {
+          font-family: var(--text-font-accent);
+          font-weight: 500;
+        }
+        .testimonials-heading {
+          font-family: var(--text-font-primary);
+          font-size: var(--text-h2);
+          font-weight: 600;
+          letter-spacing: -1.44px;
+        }
+        .testimonials-description {
+          width: 80%;
+          text-transform: capitalize;
+          font-family: var(--text-font-secondary);
+          font-size: var(--text-h4);
+          color: var(--text-color-muted);
+        }
+      }
+      .testimonials-carousel {
+        --cols-mobile: 3;
+        width: 100%;
+        display: grid;
+
+        grid-template-columns: repeat(var(--cols-mobile, 2), minmax(0, 1fr));
+        gap: 1.5rem;
+        padding: 0;
+        place-items: center;
+        .testimonials-vide__wrapper {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          .testi-video {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            border-radius: 1rem;
+            margin-top: auto;
+            box-shadow: 0px 0px 7px var(--shadow-clr-dark);
+          }
+          /* scale: .9; */
+        }
+
+        .testimonials-vide__wrapper:nth-child(2) {
+          width: 110%;
+        }
+      }
+    }
+  }
+{%- endstylesheet -%}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What people are saying"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Real customers on how Avure fits into their routine, what it feels like, and what they'd tell a friend."
+    }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+  "presets": [
+    {
+      "name": "Testimonials"
+    }
+  ]
+}
+{% endschema %}

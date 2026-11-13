@@ -1,0 +1,131 @@
+<div id="{{name}}" class="avure-combo-box">
+  <div class="combo-top">
+    <input
+      name="{{name | escape }}"
+      type="text"
+      placeholder="{{combo_placeholder | escape }}"
+      class="combo-input"
+      readonly
+    />
+    <svg class="combo-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+      <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <div id="{{name}}-dropdown" class="combo-dropdown">
+    {% for option in options %}
+      <div class="combo-option">{{ option }}</div>
+    {% endfor %}
+  </div>
+</div>
+
+{%- stylesheet -%}
+  .avure-combo-box {
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--color-dark);
+  }
+
+  .combo-input {
+    width: 100%;
+    padding: 10px 36px 10px 10px;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    user-select: none;
+    cursor: pointer;
+  }
+  .combo-top {
+    position: relative;
+  }
+  .combo-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 2rem;
+    height: 2rem;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .avure-combo-box.active .combo-icon {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .combo-input:focus {
+    border: none;
+    outline: none;
+  }
+  .combo-dropdown {
+    width: 100%;
+    background: transparent;
+    margin-top: 4px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+  }
+
+  .avure-combo-box.active .combo-dropdown {
+    display: block;
+  }
+
+  .combo-option {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 2rem;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+  }
+
+  .combo-option:hover {
+    background: #eee;
+  }
+{%- endstylesheet -%}
+{%- javascript -%}
+  document.querySelectorAll('.avure-combo-box').forEach((combo) => {
+    const input = combo.querySelector('.combo-input');
+    const dropdown = combo.querySelector('.combo-dropdown');
+    const options = combo.querySelectorAll('.combo-option');
+    const icon = combo.querySelector('.combo-icon');
+
+    icon.addEventListener('click', () => {
+      combo.classList.toggle('active');
+    });
+    input.addEventListener('click', () => {
+      combo.classList.toggle('active');
+    });
+
+    input.addEventListener('focus', () => {
+      combo.classList.add('active');
+    });
+
+    input.addEventListener('input', () => {
+      combo.classList.add('active');
+
+      const value = input.value.toLowerCase();
+
+      options.forEach((option) => {
+        option.style.display = option.textContent.toLowerCase().includes(value) ? 'block' : 'none';
+      });
+    });
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        input.value = option.textContent.trim();
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        combo.classList.remove('active');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!combo.contains(e.target)) {
+        combo.classList.remove('active');
+      }
+    });
+  });
+{%- endjavascript -%}

@@ -1,0 +1,26 @@
+:root{
+    /* Color styles */
+--avure--erorr: rgba(255, 44, 20, 1);
+--avure--blue---blue-950-: rgba(0, 56, 101, 1);
+--avure--blue---blue-900: rgba(12, 70, 117, 1);
+--avure--blue---blue-800: rgba(27, 85, 133, 1);
+--avure--blue---blue-700: rgba(44, 101, 148, 1);
+--avure--blue---blue-600: rgba(65, 119, 163, 1);
+--avure--blue---blue-500: rgba(89, 138, 179, 1);
+--avure--blue---blue-400: rgba(116, 159, 194, 1);
+--avure--blue---blue-300: rgba(146, 181, 209, 1);
+--avure--blue---blue-200: rgba(180, 204, 224, 1);
+--avure--blue---blue-100: rgba(216, 229, 240, 1);
+--avure--text---black-950: rgba(11, 11, 10, 1);
+--avure--text---black-900: rgba(29, 29, 27, 1);
+--avure--text---black-800: rgba(39, 39, 38, 1);
+--avure--text---black-700: rgba(65, 65, 63, 1);
+--avure--text---black-600: rgba(84, 84, 81, 1);
+--avure--text---black-500: rgba(116, 116, 112, 1);
+--avure--text---black-400: rgba(165, 165, 161, 1);
+--avure--text---black-300: rgba(212, 212, 211, 1);
+--avure--text---black-200: rgba(230, 230, 229, 1);
+--avure--text---black-100: rgba(244, 245, 244, 1);
+--avure--text---black-50: rgba(249, 250, 249, 1);
+
+}

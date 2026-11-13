@@ -1,0 +1,17 @@
+{
+  "sections": {
+		"about":{
+			"type":"about-us",
+			"name":"about"	
+		},
+		"science":{
+			"type":"science-behinde-avure",
+			"name":"science behinde avure"	
+		},
+		"get_in_touch":{
+			"type":"get-in-touch",
+			"name":"get in touch"	
+		},
+  },
+  "order": ["about","science","get_in_touch"]
+}

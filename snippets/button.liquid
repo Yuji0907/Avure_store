@@ -1,0 +1,34 @@
+{%- assign button_text = text | default: 'Button' -%}
+{%- assign button_variant = variant | default: 'filled' -%}
+{%- assign button_type = type | default: 'button' -%}
+
+{%- stylesheet -%}
+  
+
+	.custom-button {
+		display: inline-block;
+		width: 100%;
+        height: 100%;
+		border: 1px solid  var(--fill-dark);
+		font: inherit;
+        font-size: inherit;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+        text-transform: uppercase;
+
+
+	}
+	.custom-button--filled {
+		background: var(--fill-dark);
+		color: var( --text-color-primary);
+	}
+	.custom-button--border {
+		background: transparent;
+		color: var(--text-color-secondary);
+	}
+{%- endstylesheet -%}
+
+<button type="{{ button_type | escape }}" class="custom-button custom-button--{{ button_variant | escape }}">
+	{{ button_text | escape }}
+</button>

@@ -1,0 +1,32 @@
+
+{% assign concerns = shop.metaobjects.concerns.values %}
+
+<ul class="concern-slider_container">
+    {% for concern in concerns %}
+            {%- render 'concern-card', concern: concern -%}
+
+    {% endfor %}
+
+</ul>
+
+{%- stylesheet -%}
+      .concern-slider_container{
+        width:100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        gap: 2rem;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 30%;
+        padding-bottom: 1rem;
+
+    }
+{%- endstylesheet -%}
+  
+
+
+
+
+
+

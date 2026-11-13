@@ -1,0 +1,44 @@
+<div class="announcement-bar">
+  <p class="announcement-text">
+    {{ section.settings.announcement_text }}
+</p>   
+</div>
+
+
+
+{% style %}
+  .announcement-bar {
+    font-family: var(--text-font-accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: 1rem;
+    background-color: var(--bg-primary);
+  }
+  .announcement-text {
+    font-size: var(--text-h4);
+    color: var(--text-color-primary);
+    font-weight:600
+  }
+{% endstyle %}
+
+{%schema %}
+{
+  "name": "announcement bar",
+  "tag": "section",
+  "class": "section-announcement-bar",
+  "settings": [
+        {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Algeria’s Best Cosmeceutical brand 2026"
+    }
+  ],
+  "presets": [{ "name": "announcement bar" }]
+}
+{% endschema %}

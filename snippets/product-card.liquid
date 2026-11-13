@@ -1,0 +1,142 @@
+{%- assign variant = product.selected_or_first_available_variant -%}
+{%- assign badge = product.metafields.custom.variant_badge.value -%}
+
+{%- assign in_cart = false -%}
+{%- for item in cart.items -%}
+  {%- if item.variant_id == variant.id -%}
+    {%- assign in_cart = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<li class="product-card_container">
+  <div class="product-image_container">
+    <a href="{{ product.url }}" class="product-image_link" aria-label="{{ product.title | escape }}">
+      {{ product.featured_image | image_url: width: 500 | image_tag: class: 'product-image', alt: product.title }}
+    </a>
+
+    <div class="product-card_hedear">
+      {%- if product.has_only_default_variant -%}
+        <button
+          type="button"
+          class="shopping-cart-add_container{% if in_cart %} is-in-cart{% endif %}"
+          data-add-to-cart
+          data-variant-id="{{ variant.id }}"
+          data-title="{{ product.title | escape }}"
+          aria-label="{% if in_cart %}In cart, open cart{% else %}Add {{ product.title | escape }} to cart{% endif %}"
+          {% unless variant.available %}disabled{% endunless %}
+        >
+          <span class="icon-add">{% render 'shopping-cart-add' %}</span>
+          <span class="icon-added">{% render 'shopping-cart-add-check' %}</span>
+        </button>
+      {%- else -%}
+        <a href="{{ product.url }}" class="shopping-cart-add_container" aria-label="Choose options for {{ product.title | escape }}">
+          {% render 'shopping-cart-add' %}
+        </a>
+      {%- endif -%}
+
+      <p class="badge-title">{{ badge }}</p>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h3>{{ product.title }}</h3>
+    <p>{{ product.description | strip_html | truncate: 90 }}</p>
+    <span class="price">{{ product.price | money }}</span>
+  </div>
+</li>
+
+{%- stylesheet -%}
+  .product-card_container {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: .6rem;
+
+    .product-image_container {
+      position: relative;
+      min-width: 100%;
+      aspect-ratio: 2/3;
+
+      .product-image_link { display: block; width: 100%; height: 100%; }
+
+      .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .product-card_hedear {
+        position: absolute;
+        inset: 0 0 auto 0;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none; /* clicks pass through to the image link */
+
+        .badge-title {
+          font-size: 1.2rem;
+          font-family: var(--text-primary);
+          text-transform: uppercase;
+          color: var(--text-color-brand);
+          font-weight: 600;
+        }
+
+        svg{
+          width: 2rem;
+          height: 2rem;
+              path{
+        fill:var( --color-primary) 
+    }
+        }
+        .shopping-cart-add_container {
+          pointer-events: auto;
+          display: inline-flex;
+          border: 0;
+          cursor: pointer;
+          background-color: var(--surface-icon);
+          padding: .8rem;
+          border-radius: .8rem;
+
+          &:disabled { opacity: .5; cursor: not-allowed; }
+          &.is-loading { opacity: .6; }
+
+          .icon-add, .icon-added { 
+            display: inline-flex; 
+          }
+          .icon-added { display: none; }
+          &.is-in-cart .icon-add { display: none; }
+          &.is-in-cart .icon-added { display: inline-flex; }
+        }
+      }
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: var(--text-font-secondary);
+      text-align: center;
+
+      > h3 {
+        font-size: 1.8rem;
+        font-family: var(--text-primary);
+        text-transform: uppercase;
+        color: var(--text-color-secondary);
+        font-weight: 600;
+      }
+      > p {
+        font-family: var(--text-font-primary);
+        font-size: 1.3rem;
+      }
+      .price {
+        font-size: 1.5rem;
+        color: var(--text-color-secondary);
+        font-weight: 600;
+      }
+    }
+  }
+{%- endstylesheet -%}

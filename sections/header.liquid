@@ -1,0 +1,74 @@
+
+
+
+
+<section class="section-header">
+
+
+  <div class="header-container">
+    {% comment %} {% render 'announcement-bar' %} {% endcomment %}
+    {% render 'menu' %}
+    <a href="{{ routes.root_url }}" class="header-logo">
+      {%- if settings.brand_logo != blank -%}
+        {{ 
+          settings.brand_logo | image_url: width: 160 | image_tag:
+            alt: shop.name,
+            width: settings.logo_width,
+            loading: 'eager' 
+        }}
+      {%- else -%}
+          <img src="{{ 'logo_dak.svg' | asset_url }}" width="160" height="auto" alt="logo">
+      {%- endif -%}
+    </a>
+    {% render 'shopping-bag' %}
+    
+  </div>
+</section>
+
+
+
+{% stylesheet %}
+
+
+
+  .section-header {
+    width: 100%;
+     font-family: var(--font-heading);
+     position: relative;
+
+  }
+  .header-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 1.5rem;
+    padding-inline: 2rem;
+  }
+  .shopping-bag {
+    width: 40px;
+    path{
+      fill: var(--color-primary);
+    }
+  }
+  .menu {
+    width: 40px;
+    path{
+      fill: var(--color-primary);
+    }
+  }
+  .header-title {
+    font-size: 2rem;
+    color: var(--text-color-primary);
+  }
+{% endstylesheet %}
+{%schema %}
+{
+  "name": "header",
+  "tag": "section",
+  "class": "section-header",
+  "settings": [
+  ],
+  "presets": [{ "name": "header" }]
+}
+{% endschema %}

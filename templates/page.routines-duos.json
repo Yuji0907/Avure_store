@@ -1,0 +1,14 @@
+{
+  "sections": {
+		"routine_duos":{
+			"type":"routines-duos",
+			"name":"routines duos"	
+		},
+		"concern_intro":{
+			"type":"shop-by-concern-intro",
+			"name":"shop by concern intro"	
+		},
+
+  },
+  "order": ["routine_duos","concern_intro"]
+}

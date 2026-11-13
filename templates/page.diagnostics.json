@@ -1,0 +1,25 @@
+{
+  "sections": {
+		"diagnostics_section":{
+			"type":"diagnostics-section",
+			"name":"diagnostics section"     	
+		},
+		"diagnostics_stats":{
+			"type":"diagnostics-stats",
+			"name":"diagnostics stats"	
+		},
+		"diagnostics_faqs":{
+			"type":"diagnostics-faqs",
+			"name":"diagnostics faqs"	
+		},
+        "science":{
+			"type":"science-behinde-avure",
+			"name":"science behinde avure"	
+		},
+        "contact-social":{
+			"type":"contact-social",
+			"name":"contact social"	
+		},
+  },
+  "order": ["diagnostics_section","diagnostics_stats","diagnostics_faqs","science","contact-social"]
+}

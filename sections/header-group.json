@@ -1,0 +1,26 @@
+{
+    "name": "Header Group",
+    "type": "header",
+    "sections":{
+        "nav_drawer":{
+            
+            "type": "nav-drawer", 
+            "name": "Nav Drawer" 
+        },
+        "cart_drawer":{
+            
+            "type": "cart-drawer", 
+            "name": "cart Drawer" 
+        },
+        "announcement-bar":{
+            "type": "announcement-bar", 
+            "name": "Announcement bar" 
+        },
+        
+        "header":{ 
+            "type": "header", 
+            "name": "Header" 
+        }
+    },
+    "order": ["cart_drawer","nav_drawer","announcement-bar","header"]
+}

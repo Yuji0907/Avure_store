@@ -1,0 +1,391 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+<section class="section-footer">
+  <div class="footer-container">
+    <div class="footer-logo_container">
+      <a href="{{ routes.root_url }}" class="footer-logo">
+        {%- if settings.brand_logo_light != blank -%}
+          {{
+            settings.brand_logo_light
+            | image_url: width: 400
+            | image_tag: alt: shop.name, width: settings.logo_width, loading: 'eager', class: 'footer-logo_icon'
+          }}
+        {%- else -%}
+          <img src="{{ 'logo_light.svg' | asset_url }}" width="400 " height="auto" alt="logo">
+        {%- endif -%}
+      </a>
+      <p class="footer-logo_text">
+        //Skincare <br />
+        for Sensitive Skin.
+      </p>
+    </div>
+
+    <div class="footer-links_container">
+      <div class="footer-products_links">
+        <h3 class="footer-products_heading">Products</h3>
+        <ul class="footer-products_list">
+          <a href="{{ routes.all_products_collection_url }}">All Products</a>
+          <a href="/collections/top-sellers">Top Sellers</a>
+          <a href="/pages/our-routine">Our Routine</a>
+        </ul>
+      </div>
+
+      <div class="footer-help_links">
+        <h3 class="footer-help_heading">Help Center</h3>
+        <ul class="footer-help_list">
+          <span>FAQ</span>
+          <span>Terms and Conditions</span>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-contact_container">
+      <div class="footer-contact_text">
+        <h3 class="footer-contact_heading">Contact</h3>
+        <p class="footer-contact_description">
+          Be the first to receive the latest news from Avure, including exclusive online pre-launches and special
+          announcements.
+        </p>
+      </div>
+      <form class="footer-contact_form">
+        <input type="email" placeholder="Ex. avure@gmail.com" class="footer-contact_input">
+        <input type="tel" placeholder="Ex. 0540 36 81 51" class="footer-contact_input">
+        <button type="submit" class="footer-contact_button">Subscribe</button>
+      </form>
+
+      <p class="footer-contact_terms">
+        By clicking subscribe, you are accepting our
+        <a>Terms and Conditions</a>
+        and <a>Privacy Policy.</a>
+        You can unsubscribe at anytime.
+      </p>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      {%- if section.settings.title != blank -%}
+        <h2 class="site-footer__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+
+      <ul class="site-footer__social">
+        {%- if section.settings.instagram != blank -%}
+          <li>
+            <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              {% render 'instagram' %}
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if section.settings.tiktok != blank -%}
+          <li>
+            <a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">
+              {% render 'tiktok' %}
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if section.settings.facebook != blank -%}
+          <li>
+            <a
+              class="facebook-wrapper"
+              href="{{ section.settings.facebook }}"
+              target="_blank"
+              rel="noopener"
+              aria-label="Facebook"
+            >
+              {% render 'facebook' %}
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+
+      {%- if section.settings.email != blank -%}
+        <a class="site-footer__email" href="mailto:{{ section.settings.email }}">
+          {{ section.settings.email }}
+        </a>
+      {%- endif -%}
+
+      <hr class="site-footer__divider">
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name }}. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+</section>
+
+{% stylesheet %}
+  .section-footer {
+    width: 100%;
+    font-family: var(--text-font-primary);
+    background-color: var(--bg-dark);
+    color: var(--text-color-primary);
+    padding-block: 5.5rem;
+    display: grid;
+    place-items: center;
+  }
+  .footer-container {
+    width: min(90%, 800px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .footer-logo_container {
+    align-items: flex-end;
+    .footer-logo_text {
+      font-family: var(--text-font-accent);
+      text-align: end;
+      text-transform: uppercase;
+    }
+    .footer-logo_icon {
+      width: 280px;
+    }
+  }
+
+  /* products links */
+  .footer-links_container {
+    color: var(--text-color-disabled);
+    align-items: space-between;
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-products_links {
+      font-size: var(--text-h4);
+    }
+    .footer-products_heading {
+      color: var(--text-color-primary);
+      font-size: var(--text-h2);
+    }
+    .footer-products_list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .footer-help_links {
+      /* align-self:flex-end; */
+      font-size: var(--text-h4);
+      width: fit-content;
+    }
+    .footer-help_heading {
+      color: var(--text-color-primary);
+      font-size: var(--text-h2);
+    }
+    .footer-help_list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-wrap: nowrap;
+    }
+  }
+
+  .footer-contact_container {
+    flex-direction: column;
+    gap: 2rem;
+    .footer-contact_text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .footer-contact_heading {
+      font-size: var(--text-h2);
+    }
+    .footer-contact_description {
+      font-size: var(--text-h4);
+      text-transform: capitalize;
+    }
+    .footer-contact_form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .footer-contact_input {
+      font-size: 2rem;
+      padding-block: 1rem;
+      padding-inline: 2rem;
+      text-transform: uppercase;
+      background-color: transparent;
+      border: 1px solid var(--color-light);
+    }
+    .footer-contact_button {
+      font-size: 2.5rem;
+      padding-block: 1rem;
+      padding-inline: 2rem;
+      text-transform: uppercase;
+    }
+    .footer-contact_terms {
+      font-size: var(--text-h4);
+      text-align: center;
+      text-transform: capitalize;
+      font-weight: 300;
+      a {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .footer-socials_container {
+    flex-direction: column;
+    align-items: center;
+    .footer-socials_heading {
+    }
+    .socials-icons_container {
+    }
+    .footer-socials_email {
+    }
+  }
+
+  .footer-copyright_container {
+    flex-direction: column;
+    align-items: center;
+    .footer-copyright_line {
+    }
+    .footer-copyright_text {
+    }
+  }
+
+  .site-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-block: 3rem;
+  }
+  .site-footer__inner {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem 1.5rem 0;
+    text-align: center;
+  }
+  .site-footer__title {
+    font-size: var(--text-h3);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--text-font-primary);
+    margin-bottom: 1rem;
+  }
+  .site-footer__social {
+    display: flex;
+    gap: 1.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.6rem;
+    background: var(--bg-light);
+    color: var(--color-light);
+    .social-icon {
+      path {
+        fill: var(--color-dark);
+      }
+    }
+  }
+  .site-footer__email {
+    font-size: var(--text-h3);
+    line-height: 1;
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+  }
+  .facebook-wrapper a {
+    background-color: transparent;
+    .facebook-icon {
+      svg {
+        width: 3rem;
+        height: 3rem;
+        path {
+          fill: var(--color-dark);
+        }
+      }
+    }
+  }
+  .site-footer__social a.facebook-wrapper {
+    background: transparent;
+  }
+
+  .site-footer__social a.facebook-wrapper svg {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .site-footer__social a.facebook-wrapper svg path {
+    fill: var(--color-light);
+  }
+  .site-footer__divider {
+    width: 90%;
+    border: 0;
+    border-top: 0.18rem solid var(--color-light);
+    margin-top: 1.8rem;
+  }
+  .site-footer__bottom {
+    padding-block: 0.5rem;
+    text-align: center;
+    font-size: var(--text-lg);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Follow us" },
+    {
+      "type": "text",
+      "id": "instagram",
+      "label": "Instagram link",
+      "default": "https://www.instagram.com/avure_skincare/"
+    },
+    { "type": "text", "id": "tiktok", "label": "TikTok link", "default": "https://www.tiktok.com/@avure_skincare" },
+    {
+      "type": "text",
+      "id": "facebook",
+      "label": "Facebook link",
+      "default": "https://www.facebook.com/avure_skincare"
+    },
+    { "type": "text", "id": "email", "label": "Contact email", "default": "contact@avure-skincare.com" }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+  "presets": [{ "name": "footer" }]
+}
+{% endschema %}

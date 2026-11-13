@@ -1,0 +1,49 @@
+
+
+
+{% assign ingredients = product.metafields.custom.ingredients.value %}
+
+<div class="product-ingredients_wrapper">
+    <div class="product-ingredients-main_container">
+
+        
+        <div class="product-ingredients-carousel">
+            {% for c in ingredients %}
+                {%- render 'product-ingredient', item:c -%}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+{%- stylesheet -%}
+.product-ingredients_wrapper{
+    margin-top: 2rem;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-bottom: 2rem;
+    /* gap: 2rem; */
+}
+.product-ingredients-main_container{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+    font-family: var(--text-font-primary);
+    .product-ingredients-carousel{
+        width: 100%;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 90%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        gap: 1.2rem;
+        padding-block: 4rem;
+    }
+}  
+{%- endstylesheet -%}

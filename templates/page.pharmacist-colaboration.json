@@ -1,0 +1,25 @@
+{
+  "sections": {
+		"pharma_colab":{
+			"type":"pharma-colab",
+			"name":"pharma colab"     	
+		},
+		"claims":{
+			"type":"claims",
+			"name":"claims"	
+		},
+		"faqs":{
+			"type":"faqs",
+			"name":"faqs"	
+		},
+        "science":{
+			"type":"science-behinde-avure",
+			"name":"science behinde avure"	
+		},
+        "contact-social":{
+			"type":"contact-social",
+			"name":"contact social"	
+		},
+  },
+  "order": ["pharma_colab","claims","faqs","science","contact-social"]
+}

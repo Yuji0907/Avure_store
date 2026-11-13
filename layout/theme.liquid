@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% render 'reset' %}
+    {% render 'fonts' %}
+    {% render 'css-variables' %}
+    {{ content_for_header }}
+  </head>
+
+  <body>
+    
+    {%  sections "header-group" %}
+    {{ content_for_layout }}
+    {%  section "footer" %}
+
+    
+  </body>
+  <script src="{{ 'cart.js' | asset_url }}" defer></script>
+</html>
+

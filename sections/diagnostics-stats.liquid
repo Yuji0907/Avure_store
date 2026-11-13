@@ -1,0 +1,58 @@
+
+
+{%- assign diagnostic_stats = shop.metaobjects.diagnostic_stats.values -%}
+
+<div class="diagnostic_stats-wrapper">
+    
+    <div class="diagnostic_stats-container">
+        
+        {%- for stat in diagnostic_stats-%}
+            <div class="stat-item__container">
+                <h1 class="stat-number">{{ stat.stat_number.value}}</h1>
+                <p class="stat-text">{{ stat.stat_text.value}}</p>
+            </div>
+            
+        {%- endfor -%}
+    </div>
+</div>
+
+{%- stylesheet -%}
+.diagnostic_stats-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  .diagnostic_stats-container{
+    
+        width: 90%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        place-items: center;
+        margin-block: 4rem;
+        .stat-item__container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap:1rem;        
+            text-align: center;
+            .stat-number{
+                font-family: var( --text-font-accent);
+                font-size: var(--text-h2);
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: -3px;
+                line-height: 1;
+            }
+            .stat-text{
+                font-family: var( --text-font-primary);
+                font-size: calc(var(--text-lg) + 0.2rem);
+                font-weight: 500;
+                letter-spacing: -0.44px;
+                text-transform: uppercase;
+            }
+        }
+    }
+{%- endstylesheet -%}

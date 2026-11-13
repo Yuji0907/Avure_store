@@ -1,0 +1,92 @@
+<details class="accordion{% if last %} last{% endif %}">
+  <summary class="accordion-title" >
+    
+    <span> {{ title }}</span>
+    <span class="accordion-icon"></span>
+</summary>
+
+  <ul>
+        {% for item in items %}
+            <li>{{item}}</li>
+        
+    {% endfor %}
+  </ul>
+</details>
+
+
+<style>
+    .accordion {
+        --icon: url("{{ 'plus-small.svg' | asset_url }}");
+    }
+    .accordion[open]  {
+        --icon: url("{{ 'minus-small.svg' | asset_url }}");
+    }
+    .accordion-icon{
+        
+        mask: var(--icon) center / contain no-repeat;
+        -webkit-mask: var(--icon) center / contain no-repeat;
+    }
+
+</style>
+{%- stylesheet -%}
+    .accordion summary {list-style: none;}
+    .accordion summary::marker {display: none;}
+  .accordion::details-content {
+    height: 0;
+    overflow: clip;
+    transition: background-color 1s ease;
+
+    }
+    .accordion[open]::details-content {
+        height: auto;
+    margin-bottom: 1.5rem;
+
+    }
+
+    .accordion{
+    width: 100%;        
+    font-family: inherit;
+    text-transform: capitalize;
+    border-color:var(--border-color-dark) ;
+    border-top: 1px solid ;
+    /* height: 0; */
+
+    
+    .accordion-title{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 0;
+        cursor: pointer;
+
+        font-weight: 600;
+    }
+
+    .accordion-icon{
+        width: 1.8rem;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: var(--fill-dark);
+    }
+    >ul{
+        margin-left: 2rem;
+        list-style: disc;
+        list-style-position: outside;
+        text-align: justify;
+        li{
+            font-size: var(--text-h4);
+            color: var(--text-color-muted);
+  
+        }
+        li::marker{
+                font-size: 1.5rem;
+            }
+    } 
+}
+.last{border-bottom: 1px solid ;}
+{%- endstylesheet -%}

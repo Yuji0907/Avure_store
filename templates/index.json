@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+
+      }
+    },
+    "hero_products": {
+			"type": "hero-products",
+			"name": "Hero Products"
+		},
+		"routines": {
+			"type": "routines_slider",
+			"name": "routines"
+		},
+		"colab": {
+			"type": "colab",
+			"name": "colab"
+		},
+		"concern_intro":{
+			"type":"shop-by-concern-intro",
+			"name":"shop by concern intro"	
+		},
+		"skincare_type": {
+			"type": "skincare-type",
+			"name": "Skincare Type"
+		},
+		"skincare_steps": {
+			"type": "skincare-steps",
+			"settings": {
+				
+			}
+		},
+		"testimonials": {
+			"type": "testimonials",
+			"settings": {
+				
+			}
+		}
+		,
+		"customer_feedbacks": {
+			"type": "customer-feedbacks",
+			"settings": {
+				
+			}
+		},		
+		"science":{
+			"type":"science-behinde-avure",
+			"name":"science behinde avure"	
+		},
+  },
+  "order": ["hero", "hero_products","routines","colab","concern_intro",
+  "skincare_type", "skincare_steps",
+"testimonials",
+"customer_feedbacks","science",]
+}

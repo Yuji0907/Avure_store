@@ -1,0 +1,81 @@
+{% assign behinde_avure = shop.metaobjects.science_behind_avure.values %}
+
+
+<div class="science-behind-avure_wrapper">
+    <div class="science-behind-avure_container">
+        <div class="science-behind-avure_header">
+            <p class="science-avure_subheading">The science behind Avure</p>
+            <h1 class="science-avure_heading">Formulas designed around sensitive skin.</h1>
+            <p class="science-avure_description">We develops dermo-cosmetic care that respects the skin's natural balance.</p>
+        </div>
+        <div class="science-behind-avure_carousel">
+            {% for c in behinde_avure %}
+                {%- render 'image-text-item', item:c -%}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+{%- stylesheet -%}
+.science-behind-avure_wrapper{
+    margin-top: 2rem;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-block: 4rem;
+    /* gap: 2rem; */
+}
+.science-behind-avure_container{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: var(--text-font-primary);
+    .science-behind-avure_header{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: .9rem;
+        text-transform: uppercase;
+        .science-avure_subheading{
+             font-family: var(--text-font-accent);
+             font-size: var(--text-body);
+
+        }
+        .science-avure_heading{
+            width: 60%;
+            font-size: var(--text-h2);
+            font-weight: 600;
+            letter-spacing: -1.4px;
+            line-height: 1;
+            
+        }
+        .science-avure_description{
+            width: 50%;
+             font-family: var(--text-font-accent);
+            font-size: var(--text-lg);
+            font-weight:500;
+            letter-spacing: -1.4px;
+        }
+    }
+    .science-behind-avure_carousel{
+        width: 100%;
+        display: grid;
+        direction: rtl;
+        grid-auto-flow: column;
+        grid-auto-columns: 90%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        gap: 1.2rem;
+        padding-block: 4rem;
+        > *{
+            direction: ltr;
+        }
+    }
+}  
+{%- endstylesheet -%}

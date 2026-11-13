@@ -1,0 +1,259 @@
+{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
+{%- assign k = 0 -%}
+{%- assign reverse = true -%}
+{% assign feedbacks = shop.metaobjects.feedback.values %}
+{%- capture feedback_groups -%}
+  {%- for feedback in feedbacks -%}
+    {%- assign pos = forloop.index0 | modulo: 2 -%}
+    {%- assign posf = forloop.index0  -%}
+
+    {%- if pos == 0 -%}
+      {%- assign k = forloop.index0 -%}
+      {%- if reverse -%}
+        <div class="feedbacks-row"  style="--direction: normal;">
+        {%- assign reverse = false -%} 
+        {%- else -%}
+          <div class="feedbacks-row" style="--direction: reverse;">
+          {%- assign reverse = true -%} 
+  
+      {%- endif -%}
+    {%- endif -%}
+
+      {%- assign full_name = feedback.full_name.value | strip -%}
+      {%- assign name_parts = full_name | split: ' ' -%}
+      {%- if name_parts.size > 1 -%}
+        {%- assign last_initial = name_parts.last | slice: 0, 1 -%}
+        {%- assign masked_name = name_parts.first | append: ' ' | append: last_initial | append: '****' -%}
+      {%- else -%}
+        {%- assign masked_name = full_name -%}
+      {%- endif -%}
+      <div class="feedbacks__wrapper">
+        <div class="feedback-header">
+          <div class="user">
+            <p>@{{ masked_name }}</p>
+            <span>{{ feedback.type.value }}</span>
+          </div>
+          <p>{{ feedback.rating.value }}</p>
+        </div>
+        <p>{{ feedback.feedback.value }}</p>
+      </div>
+      
+    {%- if pos == 1 or forloop.last -%}
+      {% comment %} {%- assign posf = posf | plus :1 -%} {% endcomment %}
+      {%- for feedback in feedbacks -%}
+
+        
+        {%- if forloop.index0 >= k and forloop.index0 <=posf  -%}
+          
+        {%- assign full_name = feedback.full_name.value | strip -%}
+        {%- assign name_parts = full_name | split: ' ' -%}
+        {%- if name_parts.size > 1 -%}
+          {%- assign last_initial = name_parts.last | slice: 0, 1 -%}
+          {%- assign masked_name = name_parts.first | append: ' ' | append: last_initial | append: '******' -%}
+        {%- else -%}
+          {%- assign masked_name = full_name -%}
+        {%- endif -%}
+        <div class="feedbacks__wrapper">
+            <div class="feedback-header">
+              <div class="user">
+                <p>@{{ masked_name }}</p>
+                <span>{{ feedback.type.value }}</span>
+              </div>
+              <p>{{ feedback.rating.value }}</p>
+            </div>
+            <p>{{ feedback.feedback.value }}</p>
+        </div>
+        {%- endif -%}
+
+      {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<section class="feedbacks-wrapper">
+  <div class="feedbacks-container">
+    <div class="feedbacks-header">
+      <h2 class="feedbacks-title">
+        {{ section.settings.title }}
+      </h2>
+      <h1 class="feedbacks-heading">
+        {{ section.settings.heading }}
+      </h1>
+      <p class="feedbacks-description">
+        {{ section.settings.description }}
+      </p>
+    </div>
+
+    <div class="feedbacks-carousel">
+      {{ feedback_groups }}
+    </div>
+  </div>
+</section>
+
+{%- stylesheet -%}
+  .feedbacks-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+    gap: 2rem;
+    margin-block: 4rem;
+    padding: 2rem;
+    background-color: var(--bg-elevated);
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .feedbacks-container {
+      width: 100%;
+      gap: 2rem;
+      .feedbacks-header {
+        width: 80%;
+        h2,
+        h1,
+        p {
+          color: var(--text-color-dark);
+          font-size: var(--text-body);
+          text-transform: uppercase;
+          text-align: center;
+        }
+        .feedbacks-title {
+          font-family: var(--text-font-accent);
+          font-weight: 500;
+        }
+        .feedbacks-heading {
+          font-family: var(--text-font-primary);
+          font-size: var(--text-h2);
+          font-weight: 600;
+          letter-spacing: -1.44px;
+        }
+        .feedbacks-description {
+          width: 80%;
+          text-transform: capitalize;
+          font-family: var(--text-font-secondary);
+          font-size: var(--text-h4);
+          color: var(--text-color-muted);
+        }
+      }
+      .feedbacks-carousel {
+        width: 100%;
+        display: flex;
+
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0;
+        line-height: 1;
+        .feedbacks-row {
+          /* flex-grow: 1; */
+          width: 100%;
+          display: flex;
+          flex-grow: 1;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 16px;
+          justify-content: flex-start;
+          /* transform: translateX(50%); */
+          transform: translateX(calc(-60px * var(--row-index)));
+          animation: infinite-scroll 20s linear infinite;
+          animation-direction: var(--direction, normal);
+        }
+        .feedbacks__wrapper {
+          flex-shrink: 1;
+          min-width: 50%;
+          height: 131px;
+          max-height: 131px;
+          padding-inline: 0.9rem;
+          padding-block: 0.7rem;
+
+          display: flex;
+          flex-direction: column;
+          background-color: var(--bg-light);
+          border-radius: 0.9rem;
+          box-shadow: 0px 2px 4px var(--shadow-clr-dark);
+          font-family: var(--text-font-primary);
+          text-transform: capitalize;
+          gap: 0.5rem;
+          .feedback-header {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .user {
+              width: fit-content;
+              align-items: flex-start;
+              gap: 0;
+
+              p {
+                font-size: var(--text-sm);
+                font-weight: 600;
+                line-height: 1;
+              }
+              span {
+                font-size: var(--text-caption);
+                color: var(--text-color-muted);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+{%- endstylesheet -%}
+
+{% schema %}
+{
+  "name": "Customer Feedbacks",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Customer Feedbacks"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "In their words"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We have collected +100 reviews,all from verified purchases."
+    }
+  ,
+    {"type": "header", "content": "Heading typography"},
+    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
+    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
+    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Body typography"},
+    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
+    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
+    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Label typography"},
+    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
+    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
+    {"type": "header", "content": "Action typography"},
+    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
+    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
+    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
+    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
+    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+  ],
+  "presets": [
+    {
+      "name": "feedbacks"
+    }
+  ]
+}
+{% endschema %}
