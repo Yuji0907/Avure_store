@@ -1,155 +1,180 @@
-{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
 {% assign about_avure = shop.metaobjects.about_avure.values %}
 
 <section class="section-about">
-     <div class="about-container">
+  <div class="about-container">
+    {%- if section.settings.about_image != blank -%}
+      {{
+        section.settings.about_image
+        | image_url: width: 400
+        | image_tag: alt: 'coloab image', loading: 'eager', class: 'about-image'
+      }}
+    {%- else -%}
+      <img class="about-image" src="{{ 'about-image.png' | asset_url }}" width="400" height="auto" alt="logo">
+    {%- endif -%}
 
-        {%- if section.settings.about_image != blank -%}
-            {{ 
-            section.settings.about_image | image_url: width: 400 | image_tag:
-                alt: "coloab image",
-                loading: 'eager',
-                class:"about-image"
-            }}
-        {%- else -%}
-            <img class="about-image" src="{{ 'about-image.png' | asset_url }}" width="400" height="auto" alt="logo">
+    <div class="about-content">
+      {%- if section.settings.subheading != blank -%}
+        <p class="about-label">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      <div class="about-container">
+        {%- if section.settings.hero_title != blank -%}
+          <h1 class="about-heading">{{ section.settings.hero_title }}</h1>
         {%- endif -%}
-        
-        <div class="about-content">
-            {%- if section.settings.subheading != blank -%}
-                <p class="about-label">{{ section.settings.subheading }}</p>
-            {%- endif -%}
-            <div class="about-container">
-                {%- if section.settings.hero_title != blank -%}
-                <h1 class="about-heading">{{ section.settings.hero_title }}</h1>
-                {%- endif -%}
-
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="about-us-values__container">
-        <div>
-            <p class="about-us-values__slogen">//{{ section.settings.slogen }}</p>
-            <h1 class="about-us-values_lable">{{ section.settings.about_us_values_lable }}</h1>
-
-        </div>
-
-        <div class="accordings_container">
-            {% for item in about_avure %}
-                {%- render 'accordion',title:item.title.value,items:item.values.value -%}
-            {% endfor %}
-        </div>
+  </div>
+  <div class="about-us-values__container">
+    <div>
+      <p class="about-us-values__slogen">//{{ section.settings.slogen }}</p>
+      <h1 class="about-us-values_lable">{{ section.settings.about_us_values_lable }}</h1>
     </div>
+
+    <div class="accordings_container">
+      {% for item in about_avure %}
+        {%- render 'accordion', title: item.title.value, items: item.values.value -%}
+      {% endfor %}
+    </div>
+  </div>
 </section>
 
-
-
-
 {%- stylesheet -%}
-  .about-image{
+  .about-image {
     width: 100%;
   }
-  .section-about{
-  width: 100%;
-  /* height: fit-content; */
-  display: flex;
-      /* justify-content: center; */
-      align-items: center;
-  flex-direction: column;
-  gap:4rem;
-  font-family: var(--text-font-accent);
-  /* margin-bottom: 20rem; */
-  .about-us-values__container{
-    width: 90%;
-      /* height: 10rem; */
+  .section-about {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+    font-family: var(--text-font-accent);
+    .about-us-values__container {
+      width: 90%;
       text-transform: uppercase;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       gap: 4rem;
-     .about-us-values__slogen{
-        font-family: var( --text-font-accent);
-        font-size: var(--text-h4) ;
+      .about-us-values__slogen {
+        font-family: var(--text-font-accent);
         font-weight: 500;
-        letter-spacing: -1.4px;
-    }
-    .about-us-values_lable{
-        font-family: var( --text-font-primary);
-        font-size: var(--text-h3) ;
-        font-weight:600;
-        letter-spacing: -1.4px;
-    }
-    .accordings_container{
+      }
+      .about-us-values_lable {
+        font-family: var(--text-font-primary);
+        font-weight: 600;
+      }
+      .accordings_container {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
-        /* gap: 1.5rem; */
         margin-top: 1.5rem;
         width: 100%;
         font-family: var(--text-font-primary);
-        font-size: var(--text-h3);
+      }
     }
   }
-}
-  .about-container{
-  width: 100%;
-  /* height: 100%; */
-  height: auto;
-  position: relative; 
-  inset: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .about-container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    inset: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  .about-content {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-color-primary);
+    width: 100%;
+    text-transform: uppercase;
 
-.about-content{
-  position: absolute;
-  z-index: 1;
-  top:0;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content:  flex-end;
-  align-items: center;
-  gap: 1rem;
-  color: var(--text-color-primary); 
-  width: 100%;
-  text-align: center;  
-  text-transform: uppercase;
-
-  margin-top: 5rem;
-}
-.about-label{
-  text-wrap: balance;
-  font-family:'JetBrainsMono';
-  font-size: var(--text-lg);
-}
-.about-contaboutainer{
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: .5rem;
-}
-.about-heading{
-  font-family: var( --text-font-primary);
-  font-size: var(--text-h2) ;
-  font-weight: 500;
-  width: 90%;
-  letter-spacing: -1.4px;
-  /* text-wrap: balance; */
-
-}
-
+    margin-top: 5rem;
+  }
+  .about-label {
+    text-wrap: balance;
+    font-family: 'JetBrainsMono';
+  }
+  .about-contaboutainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .about-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    width: 90%;
+  }
 {%- endstylesheet -%}
 
+{%- comment -%}
+  Typography is in {% style %} because {% stylesheet %} can't use Liquid. Scoped to this section instance,
+  so the shared accordion snippet is unchanged and accordions in other sections are unaffected.
+{%- endcomment -%}
+{% style %}
+  /* Label */
+  #shopify-section-{{ section.id }} .about-label {
+    width: 100%;
+    font-size: {{ section.settings.label_size }}px;
+    letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.label_alignment }};
+  }
 
+  /* Hero heading */
+  #shopify-section-{{ section.id }} .about-heading {
+    font-size: {{ section.settings.heading_size }}px;
+    letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
 
+  /* Values slogan */
+  #shopify-section-{{ section.id }} .about-us-values__slogen {
+    font-size: {{ section.settings.slogan_size }}px;
+    letter-spacing: {{ section.settings.slogan_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.slogan_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.slogan_alignment }};
+  }
 
+  /* Values title */
+  #shopify-section-{{ section.id }} .about-us-values_lable {
+    font-size: {{ section.settings.values_title_size }}px;
+    letter-spacing: {{ section.settings.values_title_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.values_title_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.values_title_alignment }};
+  }
+
+  /* Accordion titles (flex row with the icon, so no alignment setting) */
+  #shopify-section-{{ section.id }} .accordings_container .accordion-title {
+    font-size: {{ section.settings.accordion_title_size }}px;
+    letter-spacing: {{ section.settings.accordion_title_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.accordion_title_line_height | divided_by: 100.0 }};
+  }
+
+  /* Accordion items */
+  #shopify-section-{{ section.id }} .accordings_container .accordion > ul {
+    text-align: {{ section.settings.accordion_item_alignment }};
+  }
+  #shopify-section-{{ section.id }} .accordings_container .accordion > ul li {
+    font-size: {{ section.settings.accordion_item_size }}px;
+    letter-spacing: {{ section.settings.accordion_item_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.accordion_item_line_height | divided_by: 100.0 }};
+  }
+{% endstyle %}
 
 {% schema %}
 {
@@ -157,43 +182,229 @@
   "tag": "section",
   "class": "section-about",
   "settings": [
-
- 
-    { "type": "header", "content": "main image" },
-    { "type": "image_picker", "id": "main_image", "label": "Image" },
+    { "type": "header", "content": "Main image" },
+    { "type": "image_picker", "id": "about_image", "label": "Image" },
 
     { "type": "header", "content": "Content" },
-    { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "Skincare for sensitive skin, explained plainly." },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Skincare for sensitive skin, explained plainly."
+    },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "about us" },
-    
-    { "type": "header", "content": "Content" },
+
+    { "type": "header", "content": "Values" },
     { "type": "text", "id": "slogen", "label": "About us values slogen", "default": "Skincare for Sensitive Skin." },
     { "type": "text", "id": "about_us_values_lable", "label": "About us values lable", "default": "About avure" },
-  
-    {"type": "header", "content": "Heading typography"},
-    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
-    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
-    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Body typography"},
-    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
-    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
-    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Label typography"},
-    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
-    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Action typography"},
-    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
-    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+
+    { "type": "header", "content": "Label typography" },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "label_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    { "type": "text_alignment", "id": "label_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Hero heading typography" },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Values slogan typography" },
+    {
+      "type": "range",
+      "id": "slogan_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "slogan_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -7
+    },
+    {
+      "type": "range",
+      "id": "slogan_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 120
+    },
+    { "type": "text_alignment", "id": "slogan_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Values title typography" },
+    {
+      "type": "range",
+      "id": "values_title_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "values_title_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -5
+    },
+    {
+      "type": "range",
+      "id": "values_title_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    { "type": "text_alignment", "id": "values_title_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Accordion title typography" },
+    {
+      "type": "range",
+      "id": "accordion_title_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "accordion_title_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "accordion_title_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 120
+    },
+
+    { "type": "header", "content": "Accordion items typography" },
+    {
+      "type": "range",
+      "id": "accordion_item_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "accordion_item_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "accordion_item_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    {
+      "type": "select",
+      "id": "accordion_item_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" },
+        { "value": "justify", "label": "Justify" }
+      ],
+      "default": "justify"
+    }
   ],
   "presets": [{ "name": "hero" }]
 }

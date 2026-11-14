@@ -1,81 +1,214 @@
 {% assign behinde_avure = shop.metaobjects.science_behind_avure.values %}
 
-
 <div class="science-behind-avure_wrapper">
-    <div class="science-behind-avure_container">
-        <div class="science-behind-avure_header">
-            <p class="science-avure_subheading">The science behind Avure</p>
-            <h1 class="science-avure_heading">Formulas designed around sensitive skin.</h1>
-            <p class="science-avure_description">We develops dermo-cosmetic care that respects the skin's natural balance.</p>
-        </div>
-        <div class="science-behind-avure_carousel">
-            {% for c in behinde_avure %}
-                {%- render 'image-text-item', item:c -%}
-            {% endfor %}
-        </div>
+  <div class="science-behind-avure_container">
+    <div class="science-behind-avure_header">
+      <p class="science-avure_subheading">{{ section.settings.subheading }}</p>
+      <h1 class="science-avure_heading">{{ section.settings.heading }}</h1>
+      <p class="science-avure_description">{{ section.settings.description }}</p>
     </div>
-
+    <div class="science-behind-avure_carousel">
+      {% for c in behinde_avure %}
+        {%- render 'image-text-item', item: c -%}
+      {% endfor %}
+    </div>
+  </div>
 </div>
 
-
 {%- stylesheet -%}
-.science-behind-avure_wrapper{
+  .science-behind-avure_wrapper {
     margin-top: 2rem;
     width: 100%;
     display: grid;
     place-items: center;
     margin-block: 4rem;
-    /* gap: 2rem; */
-}
-.science-behind-avure_container{
+  }
+  .science-behind-avure_container {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     font-family: var(--text-font-primary);
-    .science-behind-avure_header{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        gap: .9rem;
-        text-transform: uppercase;
-        .science-avure_subheading{
-             font-family: var(--text-font-accent);
-             font-size: var(--text-body);
-
-        }
-        .science-avure_heading{
-            width: 60%;
-            font-size: var(--text-h2);
-            font-weight: 600;
-            letter-spacing: -1.4px;
-            line-height: 1;
-            
-        }
-        .science-avure_description{
-            width: 50%;
-             font-family: var(--text-font-accent);
-            font-size: var(--text-lg);
-            font-weight:500;
-            letter-spacing: -1.4px;
-        }
+    .science-behind-avure_header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: 0.9rem;
+      text-transform: uppercase;
+      .science-avure_subheading {
+        font-family: var(--text-font-accent);
+      }
+      .science-avure_heading {
+        width: 60%;
+        font-weight: 600;
+      }
+      .science-avure_description {
+        width: 50%;
+        font-family: var(--text-font-accent);
+        font-weight: 500;
+      }
     }
-    .science-behind-avure_carousel{
-        width: 100%;
-        display: grid;
-        direction: rtl;
-        grid-auto-flow: column;
-        grid-auto-columns: 90%;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        gap: 1.2rem;
-        padding-block: 4rem;
-        > *{
-            direction: ltr;
-        }
+    .science-behind-avure_carousel {
+      width: 100%;
+      display: grid;
+      /* direction: rtl; */
+      grid-auto-flow: column;
+      grid-auto-columns: 90%;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      gap: 1.2rem;
+      padding-block: 4rem;
+      > * {
+        direction: ltr;
+      }
     }
-}  
+  }
 {%- endstylesheet -%}
+
+{%- comment -%}
+  Typography is in {% style %} because {% stylesheet %} can't use Liquid. Scoped to this section instance.
+{%- endcomment -%}
+{% style %}
+  /* Subheading */
+  #shopify-section-{{ section.id }} .science-avure_subheading {
+    font-size: {{ section.settings.subheading_size }}px;
+    letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.subheading_alignment }};
+  }
+
+  /* Heading */
+  #shopify-section-{{ section.id }} .science-avure_heading {
+    font-size: {{ section.settings.heading_size }}px;
+    letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  /* Description */
+  #shopify-section-{{ section.id }} .science-avure_description {
+    font-size: {{ section.settings.description_size }}px;
+    letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.description_alignment }};
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Science behind Avure",
+  "settings": [
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "The science behind Avure" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Formulas designed around sensitive skin." },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We develops dermo-cosmetic care that respects the skin's natural balance."
+    },
+
+    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    { "type": "text_alignment", "id": "subheading_alignment", "label": "Alignment", "default": "left" },
+
+    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "left" },
+
+    { "type": "header", "content": "Description typography" },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "description_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -8
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "left" }
+  ],
+  "presets": [{ "name": "Science behind Avure" }]
+}
+{% endschema %}

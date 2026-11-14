@@ -1,24 +1,22 @@
-{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
 <section class="section-hero">
   <div class="colab-hero-container">
+    {%- if section.settings.colab_image != blank -%}
+      {{
+        section.settings.colab_image
+        | image_url: width: 400
+        | image_tag: alt: 'coloab image', loading: 'eager', class: 'colab-image'
+      }}
+    {%- else -%}
+      <img class="colab-image" src="{{ 'colab.png' | asset_url }}" width="400" height="auto" alt="logo">
+    {%- endif -%}
 
-      {%- if section.settings.colab_image != blank -%}
-        {{ 
-          section.settings.colab_image | image_url: width: 400 | image_tag:
-            alt: "coloab image",
-            loading: 'eager',
-            class:"colab-image"
-        }}
-      {%- else -%}
-          <img class="colab-image" src="{{ 'colab.png' | asset_url }}" width="400" height="auto" alt="logo">
-      {%- endif -%}
-      
     <div class="colab-hero-content">
       {%- if section.settings.label != blank -%}
         <p class="colab-hero-label">
           {%- assign label_parts = section.settings.label | split: '.' -%}
           {%- for part in label_parts -%}
-            {{- part | strip -}}{%- unless forloop.last -%}.<br>{%- endunless -%}
+            {{- part | strip -}}
+            {%- unless forloop.last -%}.<br>{%- endunless -%}
           {%- endfor -%}
         </p>
       {%- endif -%}
@@ -34,117 +32,141 @@
       {%- if section.settings.cta != blank -%}
         <div class="btton-wrrapper">
           <a href="pages/colab-form">
-            <button data-style="light" class=" avure-outline-button   colab-btn " type="btn">{{ section.settings.cta | escape }}</button>
+            <button data-style="light" class=" avure-outline-button   colab-btn " type="btn">
+              {{ section.settings.cta | escape }}
+            </button>
           </a>
         </div>
-
       {%- endif -%}
-
     </div>
   </div>
 </section>
 
-
-
-
-
-
 {% stylesheet %}
-
-
-.section-hero{
-  width: 100%;
-  /* height: fit-content; */
-  display: flex;
-  font-family: var(--text-font-accent);
-}
-.colab-hero-container{
-  width: 100%;
-  /* height: 100%; */
-  height: auto;
-  position: relative; 
-  inset: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.colab-image{
-  display: block;
-  position: relative;
-  inset: 0;
-  object-fit: cover;
-  width: 100%;
-  height: auto;
-}
-
-.colab-hero-container::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
-}
-
-.colab-hero-content{
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content:  flex-end;
-  align-items: center;
-  gap: .75rem;
-  color: var(--text-color-primary); 
-  width: 100%;
-   text-align: center;
-  margin-bottom: 10rem;
-
-  .btton-wrrapper{
-      width: 30%;
-    .colab-btn{
-      margin-top: 3rem;
-        --btn-text-size:var(--text-h4);
-                letter-spacing: -1.44px;
-        }
+  .section-hero {
+    width: 100%;
+    display: flex;
+    font-family: var(--text-font-accent);
   }
-}
-.colab-hero-label{
-  font-family: var( --text-font-accent);
-  font-size: var(--text-h3);
-  margin-bottom: auto;
-  margin-top: 2rem;
-  text-transform: uppercase;
-}
-.colab-heading-container{
-  display: flex;
-  width:100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: .5rem;
-}
-.colab-hero-heading{
-  font-family: var( --text-font-primary);
-  font-size: clamp(var(--font-size-4xl), 5vw, var(--font-size-5xl));
-  font-weight: 600;
-  width:95%;  
-  text-transform: uppercase;
+  .colab-hero-container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    inset: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-}
-.colab-hero-subheading{
-  width: 50%;
-  font-family: var( --text-font-primary);
-  font-size: var(--text-h4);
-  text-wrap: balance;
+  .colab-image {
+    display: block;
+    position: relative;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
 
-}
+  .colab-hero-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+  }
+
+  .colab-hero-content {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-color-primary);
+    width: 100%;
+    margin-bottom: 10rem;
+
+    .btton-wrrapper {
+      width: 30%;
+      .colab-btn {
+        margin-top: 3rem;
+      }
+    }
+  }
+  .colab-hero-label {
+    font-family: var(--text-font-accent);
+    margin-bottom: auto;
+    margin-top: 2rem;
+    text-transform: uppercase;
+  }
+  .colab-heading-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .colab-hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    width: 95%;
+    text-transform: uppercase;
+  }
+  .colab-hero-subheading {
+    width: 50%;
+    font-family: var(--text-font-primary);
+    text-wrap: balance;
+  }
 {% endstylesheet %}
 
+{%- comment -%}
+  Typography lives in {% style %} (not {% stylesheet %}) because stylesheet blocks cannot use Liquid.
+  Selectors are scoped to this section instance so several can coexist with different settings.
+{%- endcomment -%}
+{% style %}
+  /* Label */
+  #shopify-section-{{ section.id }} .colab-hero-label {
+    width: 100%;
+    font-size: {{ section.settings.label_size }}px;
+    letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.label_alignment }};
+  }
 
+  /* Title: fluid, chosen size is the max, 60% of it the minimum on small screens */
+  #shopify-section-{{ section.id }} .colab-hero-heading {
+    font-size: clamp(
+      {{ section.settings.heading_size | times: 0.6 | round }}px,
+      5vw,
+      {{ section.settings.heading_size }}px
+    );
+    letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  /* Subheading */
+  #shopify-section-{{ section.id }} .colab-hero-subheading {
+    font-size: {{ section.settings.subheading_size }}px;
+    letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.subheading_alignment }};
+  }
+
+  /* Button text (alignment is handled by the button itself) */
+  #shopify-section-{{ section.id }} .colab-btn {
+    --btn-text-size: {{ section.settings.cta_size }}px;
+    font-size: {{ section.settings.cta_size }}px;
+    letter-spacing: {{ section.settings.cta_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.cta_line_height | divided_by: 100.0 }};
+  }
+{% endstyle %}
 
 {% schema %}
 {
@@ -152,40 +174,150 @@
   "tag": "section",
   "class": "section-colab",
   "settings": [
-
-    { "type": "header", "content": "Logo" },
-    { "type": "image_picker", "id": "brand_logo", "label": "Logo" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "colab_image", "label": "Image" },
 
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "Skincare shared with pharmacists." },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Clear information, simple routines and a team that supports you." },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Clear information, simple routines and a team that supports you."
+    },
     { "type": "text", "id": "label", "label": "label", "default": "Developed by Pharmacists. for  Pharmacists." },
     { "type": "text", "id": "cta", "label": "call to action", "default": "collaborate now" },
-  
-    {"type": "header", "content": "Heading typography"},
-    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
-    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
-    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Body typography"},
-    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
-    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
-    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Label typography"},
-    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
-    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Action typography"},
-    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
-    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+
+    { "type": "header", "content": "Label typography" },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "label_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    { "type": "text_alignment", "id": "label_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Title typography" },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "subheading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    { "type": "text_alignment", "id": "subheading_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Button typography" },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "cta_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -7
+    },
+    {
+      "type": "range",
+      "id": "cta_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
   ],
   "presets": [{ "name": "hero" }]
 }

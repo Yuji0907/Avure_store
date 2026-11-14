@@ -1,58 +1,144 @@
-
-
 {%- assign diagnostic_stats = shop.metaobjects.diagnostic_stats.values -%}
 
 <div class="diagnostic_stats-wrapper">
-    
-    <div class="diagnostic_stats-container">
-        
-        {%- for stat in diagnostic_stats-%}
-            <div class="stat-item__container">
-                <h1 class="stat-number">{{ stat.stat_number.value}}</h1>
-                <p class="stat-text">{{ stat.stat_text.value}}</p>
-            </div>
-            
-        {%- endfor -%}
-    </div>
+  <div class="diagnostic_stats-container">
+    {%- for stat in diagnostic_stats -%}
+      <div class="stat-item__container">
+        <h1 class="stat-number">{{ stat.stat_number.value }}</h1>
+        <p class="stat-text">{{ stat.stat_text.value }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
 </div>
 
 {%- stylesheet -%}
-.diagnostic_stats-wrapper{
+  .diagnostic_stats-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-  .diagnostic_stats-container{
-    
-        width: 90%;
-        display: grid;
-        grid-template-columns: repeat(3,1fr);
-        place-items: center;
-        margin-block: 4rem;
-        .stat-item__container{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap:1rem;        
-            text-align: center;
-            .stat-number{
-                font-family: var( --text-font-accent);
-                font-size: var(--text-h2);
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: -3px;
-                line-height: 1;
-            }
-            .stat-text{
-                font-family: var( --text-font-primary);
-                font-size: calc(var(--text-lg) + 0.2rem);
-                font-weight: 500;
-                letter-spacing: -0.44px;
-                text-transform: uppercase;
-            }
-        }
+  }
+  .diagnostic_stats-container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    margin-block: 4rem;
+    .stat-item__container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      .stat-number {
+        width: 100%;
+        font-family: var(--text-font-accent);
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .stat-text {
+        width: 100%;
+        font-family: var(--text-font-primary);
+        font-weight: 500;
+        text-transform: uppercase;
+      }
     }
+  }
 {%- endstylesheet -%}
+
+{%- comment -%}
+  Typography is in {% style %} because {% stylesheet %} can't use Liquid. Scoped to this section instance.
+{%- endcomment -%}
+{% style %}
+  /* Stat number */
+  #shopify-section-{{ section.id }} .stat-number {
+    font-size: {{ section.settings.number_size }}px;
+    letter-spacing: {{ section.settings.number_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.number_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.number_alignment }};
+  }
+
+  /* Stat text */
+  #shopify-section-{{ section.id }} .stat-text {
+    font-size: {{ section.settings.text_size }}px;
+    letter-spacing: {{ section.settings.text_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.text_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.text_alignment }};
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Diagnostic stats",
+  "settings": [
+    { "type": "header", "content": "Stat number typography" },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "number_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -8
+    },
+    {
+      "type": "range",
+      "id": "number_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    { "type": "text_alignment", "id": "number_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Stat text typography" },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "text_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -2
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    { "type": "text_alignment", "id": "text_alignment", "label": "Alignment", "default": "center" }
+  ],
+  "presets": [{ "name": "Diagnostic stats" }]
+}
+{% endschema %}

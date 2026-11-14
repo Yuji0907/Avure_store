@@ -1,206 +1,351 @@
-{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
-
-
-
 <section class="section-skin-type">
   <div class="skin-type-container">
     {% if section.settings.video != blank %}
       {{ section.settings.video | video_tag: controls: false, playsinline: false }}
     {% else %}
-      <video autoplay muted loop playsinline class="skin-type__video" >
+      <video autoplay muted loop playsinline class="skin-type__video">
         <source src="{{ 'skincare_type.mp4' | asset_url }}" type="video/mp4">
       </video>
     {% endif %}
     <div class="skin-type-info__container">
-        <div class="skin-type__header">
-          <h4 class="lable">{{ section.settings.label | escape }} <span>©</span></h4>
+      <div class="skin-type__header">
+        <h4 class="lable">
+          {{ section.settings.label | escape }}
+          <span>©</span>
+        </h4>
+      </div>
+      <div class="skin-type__main">
+        <h1>{{ section.settings.heading | escape }}</h1>
+        <p>{{ section.settings.description | escape }}</p>
+        <div class="skin-care-btton__wrrapper">
+          <a href="pages/diagnostics-questions">
+            <button data-style="light" class=" avure-outline-button   skin-type-btn " type="btn">
+              {{ section.settings.cta | escape }}
+            </button>
+          </a>
         </div>
-        <div class="skin-type__main">
-          <h1>{{ section.settings.heading | escape }}</h1>
-          <p>{{ section.settings.description | escape }}</p>
-            <div class="skin-care-btton__wrrapper">
-                <a href="pages/diagnostics-questions">
-                    <button data-style="light" class=" avure-outline-button   skin-type-btn " type="btn">{{ section.settings.cta | escape }}</button>
-                </a>
-            </div>
-        </div>
-        <div class="skin-type__footer">
-          <h3>{{ section.settings.footer | escape }}</h3>
-        </div>
+      </div>
+      <div class="skin-type__footer">
+        <h3>{{ section.settings.footer | escape }}</h3>
+      </div>
     </div>
-
   </div>
 </section>
 
-
-
 {% stylesheet %}
-
-  .skin-care-btton__wrrapper{
-      width: 30%;
+  .skin-care-btton__wrrapper {
+    width: 30%;
     margin-top: 0;
-    .skin-type-btn{
-        --btn-text-size:var(--text-body);
-                letter-spacing: -1.44px;
-        }
   }
-    .section-skin-type {
+  .section-skin-type {
+    width: 100%;
+    font-family: var(--text-font-primary);
+    background-color: var(--bg-dark);
+    color: var(--text-color-primary);
+    display: grid;
+    place-items: center;
+
+    .skin-type-container {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      div {
         width: 100%;
-        font-family: var(--text-font-primary);
-        background-color: var(--bg-dark);
-        color: var(--text-color-primary);
-        display: grid;
-        place-items: center;
-        
-        
-        .skin-type-container{
-            width:100%;
-            height: 100%;
+        max-height: 600px;
+        display: flex;
+        gap: 1rem;
+      }
+      video {
+        width: 50%;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+      }
+      .skin-type-info__container {
+        padding-block: 2.3rem;
+        padding-inline: 0.8rem;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        text-transform: uppercase;
 
-            display: flex;
-            align-items: center;
-            div{
-                width: 100%;
-                max-height: 600px;
-                display: flex;
-                gap: 1rem;
-            }
-            video{
-                width: 50%;
-                aspect-ratio: 3 / 4;
-                object-fit: cover;
-            }
-            .skin-type-info__container{
-                padding-block: 2.3rem;
-                padding-inline: .8rem;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                flex-grow: 1;
-                line-height: 1;
-                text-align: center;
-                text-transform: uppercase;
-
-                div{
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                width: 90%;
-
-                }
-                .skin-type__header{
-                    margin-bottom: auto;
-                    h4{
-                        font-family: var(--text-font-accent);
-                        color: var(--text-color-primary);
-                        font-size: var(--text-caption);
-                        letter-spacing: 1.44px;
-                        display: flex;
-                        span{
-                            font-size: .5rem;
-                        }
-                    }
-                }
-                .skin-type__main{
-                    margin-block: auto;
-                    >h1{
-                        font-family: var(--text-font-primary);
-                        color: var(--text-color-primary);
-                        font-size: var(--text-h3);
-                        font-weight: 600;
-                    }
-                    p{
-                        font-family: var(--text-font-primary);
-                        color: var(--text-color-primary);
-                        font-size: var(--text-h4);
-                        text-transform: none;
-                    }
-                }
-                .skin-type__footer{
-                        font-family: var(--text-font-primary);
-                        color: var(--text-color-primary);
-                        font-size: var(--text-body);
-                }
-
-            }
+        div {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 90%;
         }
-
+        .skin-type__header {
+          margin-bottom: auto;
+          h4 {
+            font-family: var(--text-font-accent);
+            color: var(--text-color-primary);
+            display: flex;
+            span {
+              font-size: 0.5rem;
+            }
+          }
+        }
+        .skin-type__main {
+          margin-block: auto;
+          > h1 {
+            font-family: var(--text-font-primary);
+            color: var(--text-color-primary);
+            font-weight: 600;
+          }
+          p {
+            font-family: var(--text-font-primary);
+            color: var(--text-color-primary);
+            text-transform: none;
+          }
+        }
+        .skin-type__footer {
+          font-family: var(--text-font-primary);
+          color: var(--text-color-primary);
+        }
+      }
     }
-    
-    
-
+  }
 {% endstylesheet %}
+
+{%- comment -%}
+  Typography is in {% style %} because {% stylesheet %} can't use Liquid. Scoped to this section instance.
+{%- endcomment -%}
+{% style %}
+  /* Label (flex element, so no alignment setting) */
+  #shopify-section-{{ section.id }} .skin-type__header h4 {
+    font-size: {{ section.settings.label_size }}px;
+    letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
+  }
+
+  /* Heading */
+  #shopify-section-{{ section.id }} .skin-type__main > h1 {
+    width: 100%;
+    font-size: {{ section.settings.heading_size }}px;
+    letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  /* Description */
+  #shopify-section-{{ section.id }} .skin-type__main p {
+    width: 100%;
+    font-size: {{ section.settings.description_size }}px;
+    letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.description_alignment }};
+  }
+
+  /* Button text (alignment is handled by the button) */
+  #shopify-section-{{ section.id }} .skin-type-btn {
+    --btn-text-size: {{ section.settings.cta_size }}px;
+    font-size: {{ section.settings.cta_size }}px;
+    letter-spacing: {{ section.settings.cta_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.cta_line_height | divided_by: 100.0 }};
+  }
+
+  /* Footer text */
+  #shopify-section-{{ section.id }} .skin-type__footer h3 {
+    width: 100%;
+    font-size: {{ section.settings.footer_size }}px;
+    letter-spacing: {{ section.settings.footer_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.footer_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.footer_alignment }};
+  }
+{% endstyle %}
 
 {% schema %}
 {
   "name": "Skincare type",
   "tag": "section",
   "settings": [
-    {
-      "type": "video",
-      "id": "video",
-      "label": "Video"
-    },
-    {
-      "type": "text",
-      "id": "label",
-      "label": "Label",
-      "default": "Skin diagnostic"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Know what your skin really needs."
-    },
+    { "type": "video", "id": "video", "label": "Video" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Skin diagnostic" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Know what your skin really needs." },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "A short diagnostic that turns how your skin feels into a clear, simple routine."
     },
-    {
-      "type": "text",
-      "id": "cta",
-      "label": "Button text",
-      "default": "Start your diagnostic"
-    },
+    { "type": "text", "id": "cta", "label": "Button text", "default": "Start your diagnostic" },
     {
       "type": "text",
       "id": "footer",
       "label": "Footer text",
       "default": "One minute. No account, no photos. Not a medical diagnosis."
-    }
-  ,
-    {"type": "header", "content": "Heading typography"},
-    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
-    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
-    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Body typography"},
-    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
-    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
-    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Label typography"},
-    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
-    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Action typography"},
-    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
-    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+    },
+
+    { "type": "header", "content": "Label typography" },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Font size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "label_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+
+    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Description typography" },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "center" },
+
+    { "type": "header", "content": "Button typography" },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cta_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -9
+    },
+    {
+      "type": "range",
+      "id": "cta_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+
+    { "type": "header", "content": "Footer text typography" },
+    {
+      "type": "range",
+      "id": "footer_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "footer_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "footer_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 120
+    },
+    { "type": "text_alignment", "id": "footer_alignment", "label": "Alignment", "default": "center" }
   ],
   "presets": [{ "name": "Skincare type" }]
 }

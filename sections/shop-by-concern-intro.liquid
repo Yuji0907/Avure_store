@@ -1,111 +1,233 @@
-{% render 'section-typography', section_id: section.id, section_settings: section.settings %}
-
 <div class="products-hero_container">
-    <div class="products-hero_content">
-        <div class="products-hero_header">
-            <h2 class="products-hero_title">
-                Shop by concern
-            </h2>
-            <a class="products-hero_link" href="pages/concerns/imperfections-breakouts">
-                view all
-            </a>
-        </div>
-        {%- render 'concerns-slider'-%}
+  <div class="products-hero_content">
+    <div class="products-hero_header">
+      <h2 class="products-hero_title">Shop by concern</h2>
+      <a class="products-hero_link" href="pages/concerns/imperfections-breakouts"> view all </a>
     </div>
+    {%- render 'concerns-slider' -%}
+  </div>
 </div>
 
+{%- stylesheet -%}
+  .products-hero_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .products-hero_content {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-block: 6rem;
+    .products-hero_header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .products-hero_title {
+      font-family: var(--text-primary);
+      color: var(--text-color-dark);
+      font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .products-hero_title::before {
+      content: '';
+      --size: 1rem;
+      width: var(--size);
+      aspect-ratio: 1/1;
+      border-radius: var(--size);
+      background-color: var(--bg-dark);
+    }
+    .products-hero_link {
+      text-decoration: underline;
+      font-family: var(--text-secondary);
+      color: var(--text-color-dark);
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+  }
+{%- endstylesheet -%}
+
+{%- comment -%}
+  Typography is in {% style %} because {% stylesheet %} can't use Liquid. Selectors are scoped to this
+  section, so the concern-card snippet is unchanged and other places that use it are unaffected.
+{%- endcomment -%}
+{% style %}
+  /* Section title (flex item with a dot, so no alignment setting) */
+  #shopify-section-{{ section.id }} .products-hero_title {
+    font-size: {{ section.settings.title_size }}px;
+    letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.title_line_height | divided_by: 100.0 }};
+  }
+
+  /* "View all" link */
+  #shopify-section-{{ section.id }} .products-hero_link {
+    font-size: {{ section.settings.link_size }}px;
+    letter-spacing: {{ section.settings.link_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.link_line_height | divided_by: 100.0 }};
+  }
+
+  /* Card title */
+  #shopify-section-{{ section.id }} .concern-card__title {
+    font-size: {{ section.settings.card_title_size }}px;
+    letter-spacing: {{ section.settings.card_title_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.card_title_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.card_title_alignment }};
+  }
+
+  /* Card description (symptoms) */
+  #shopify-section-{{ section.id }} .concern-card__description {
+    font-size: {{ section.settings.card_description_size }}px;
+    letter-spacing: {{ section.settings.card_description_letter_spacing | divided_by: 100.0 }}em;
+    line-height: {{ section.settings.card_description_line_height | divided_by: 100.0 }};
+    text-align: {{ section.settings.card_description_alignment }};
+  }
+{% endstyle %}
+
 {% schema %}
-  {
-    "name": "hero products",
-    "tag": "section",
-    "class": "hero-products",
-    "settings": [
-    
-    {"type": "header", "content": "Heading typography"},
-    {"type": "checkbox", "id": "typography_heading_enabled", "label": "Customize headings", "default": false},
-    {"type": "range", "id": "typography_heading_size", "label": "Font size", "min": 8, "max": 120, "step": 1, "unit": "px", "default": 24},
-    {"type": "range", "id": "typography_heading_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_heading_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_heading_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Body typography"},
-    {"type": "checkbox", "id": "typography_body_enabled", "label": "Customize bodys", "default": false},
-    {"type": "range", "id": "typography_body_size", "label": "Font size", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16},
-    {"type": "range", "id": "typography_body_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_body_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_body_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Label typography"},
-    {"type": "checkbox", "id": "typography_label_enabled", "label": "Customize labels", "default": false},
-    {"type": "range", "id": "typography_label_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_label_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_label_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_label_alignment", "label": "Alignment", "default": "center"},
-    {"type": "header", "content": "Action typography"},
-    {"type": "checkbox", "id": "typography_action_enabled", "label": "Customize actions", "default": false},
-    {"type": "range", "id": "typography_action_size", "label": "Font size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 14},
-    {"type": "range", "id": "typography_action_letter_spacing", "label": "Letter spacing", "info": "In hundredths of an em (5 = 0.05em)", "min": -10, "max": 30, "step": 1, "default": 0},
-    {"type": "range", "id": "typography_action_line_height", "label": "Line height", "min": 80, "max": 200, "step": 5, "unit": "%", "default": 140},
-    {"type": "text_alignment", "id": "typography_action_alignment", "label": "Alignment", "default": "center"}
+{
+  "name": "hero products",
+  "tag": "section",
+  "class": "hero-products",
+  "settings": [
+    { "type": "header", "content": "Section title typography" },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+
+    { "type": "header", "content": "View all link typography" },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "link_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+
+    { "type": "header", "content": "Card title typography" },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_title_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_title_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    { "type": "text_alignment", "id": "card_title_alignment", "label": "Alignment", "default": "left" },
+
+    { "type": "header", "content": "Card description typography" },
+    {
+      "type": "range",
+      "id": "card_description_size",
+      "label": "Font size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_description_letter_spacing",
+      "label": "Letter spacing",
+      "info": "In hundredths of an em (5 = 0.05em)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_description_line_height",
+      "label": "Line height",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 120
+    },
+    { "type": "text_alignment", "id": "card_description_alignment", "label": "Alignment", "default": "left" }
   ],
-    "presets": [{"name": "hero products"}]
-  }
+  "presets": [{ "name": "hero products" }]
+}
 {% endschema %}
-
- {%- stylesheet -%}
-    .products-hero_container{
-        width:100%;
-        display:flex;
-        flex-direction:column;
-        align-items: center;
-        justify-content: center;
-    }
-    .products-hero_content{
-        width: 90%;
-        display:flex;
-        flex-direction:column;
-        align-items: center;
-        justify-content: center;
-        margin-block: 6rem;
-    /* background-color: red; */
-    .products-hero_header{
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .products-hero_title{
-        font-size: 3.5rem;
-        font-family: var( --text-primary);
-        color: var(--text-color-dark);
-        font-weight: 500;
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-    }
-    .products-hero_title::before{
-        content: "";
-        --size:1rem;
-        width: var(--size);
-        aspect-ratio: 1/1;
-        border-radius: var(--size);
-        background-color: var(--bg-dark);
-        
-
-    }
-    .products-hero_link{
-        font-size: 1rem;
-        text-decoration: underline;
-        /* font-family: var( --text-secondary); */
-        font-family: var(--text-secondary);
-
-        
-
-        
-
-
-        color: var(--text-color-dark);
-        font-weight: 400;
-        text-transform: uppercase;
-    }
-  }
-{%- endstylesheet -%} 

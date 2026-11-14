@@ -1,144 +1,118 @@
 {% stylesheet %}
-
-
   :root {
-
     /* colors tokens */
-        --avure-error: rgba(255, 44, 20, 1);
-        --avure-blue-950-: rgba(0, 56, 101, 1);
-        --avure-blue-900: rgba(12, 70, 117, 1);
-        --avure-blue-800: rgba(27, 85, 133, 1);
-        --avure-blue-700: rgba(44, 101, 148, 1);
-        --avure-blue-600: rgba(65, 119, 163, 1);
-        --avure-blue-500: rgba(89, 138, 179, 1);
-        --avure-blue-400: rgba(116, 159, 194, 1);
-        --avure-blue-300: rgba(146, 181, 209, 1);
-        --avure-blue-200: rgba(180, 204, 224, 1);
-        --avure-blue-100: rgba(216, 229, 240, 1);
+    --avure-error: rgba(255, 44, 20, 1);
+    --avure-blue-950-: rgba(0, 56, 101, 1);
+    --avure-blue-900: rgba(12, 70, 117, 1);
+    --avure-blue-800: rgba(27, 85, 133, 1);
+    --avure-blue-700: rgba(44, 101, 148, 1);
+    --avure-blue-600: rgba(65, 119, 163, 1);
+    --avure-blue-500: rgba(89, 138, 179, 1);
+    --avure-blue-400: rgba(116, 159, 194, 1);
+    --avure-blue-300: rgba(146, 181, 209, 1);
+    --avure-blue-200: rgba(180, 204, 224, 1);
+    --avure-blue-100: rgba(216, 229, 240, 1);
 
-        --avure-black-950: rgba(11, 11, 10, 1);
-        --avure-black-900: rgba(29, 29, 27, 1);
-        --avure-black-800: rgba(39, 39, 38, 1);
-        --avure-black-700: rgba(65, 65, 63, 1);
-        --avure-black-600: rgba(84, 84, 81, 1);
-        --avure-black-500: rgba(116, 116, 112, 1);
-        --avure-black-400: rgba(165, 165, 161, 1);
-        --avure-black-300: rgba(212, 212, 211, 1);
-        --avure-black-200: rgba(230, 230, 229, 1);
-        --avure-black-100: rgba(244, 245, 244, 1);
-        --avure-black-50: rgba(249, 250, 249, 1);
-        
-        --avure-light: rgba(249, 250, 249, 1);
-        --avure-dark: rgba(11, 11, 10, 1);
+    --avure-black-950: rgba(11, 11, 10, 1);
+    --avure-black-900: rgba(29, 29, 27, 1);
+    --avure-black-800: rgba(39, 39, 38, 1);
+    --avure-black-700: rgba(65, 65, 63, 1);
+    --avure-black-600: rgba(84, 84, 81, 1);
+    --avure-black-500: rgba(116, 116, 112, 1);
+    --avure-black-400: rgba(165, 165, 161, 1);
+    --avure-black-300: rgba(212, 212, 211, 1);
+    --avure-black-200: rgba(230, 230, 229, 1);
+    --avure-black-100: rgba(244, 245, 244, 1);
+    --avure-black-50: rgba(249, 250, 249, 1);
 
+    --avure-light: rgba(249, 250, 249, 1);
+    --avure-dark: rgba(11, 11, 10, 1);
 
     /* font sizes */
-        --font-size-xs: 0.75rem;    /* 12px */
-        --font-size-sm: 0.875rem;   /* 14px */
-        --font-size-md: 1rem;       /* 16px */
-        --font-size-lg: 1.125rem;   /* 18px */
-        --font-size-xl: 1.25rem;    /* 20px */
-        --font-size-2xl: 1.5rem;    /* 24px */
-        --font-size-3xl: 2rem;      /* 32px */
-        --font-size-4xl: 2.5rem;    /* 40px */
-        --font-size-5xl: 3rem;      /* 48px */
-        --font-size-6xl: 3.5rem;    /* 56px */
-        --font-size-7xl: 4rem;      /* 64px */
-        --font-size-8xl: 5rem;      /* 80px */
-        --font-size-9xl: 7.5rem;    /* 120px */
+    --font-size-xs: 0.75rem; /* 12px */
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-md: 1rem; /* 16px */
+    --font-size-lg: 1.125rem; /* 18px */
+    --font-size-xl: 1.25rem; /* 20px */
+    --font-size-2xl: 1.5rem; /* 24px */
+    --font-size-3xl: 2rem; /* 32px */
+    --font-size-4xl: 2.5rem; /* 40px */
+    --font-size-5xl: 3rem; /* 48px */
+    --font-size-6xl: 3.5rem; /* 56px */
+    --font-size-7xl: 4rem; /* 64px */
+    --font-size-8xl: 5rem; /* 80px */
+    --font-size-9xl: 7.5rem; /* 120px */
 
     /* text size */
-    --text-caption:clamp( var(--font-size-xs),0.8vw, var(--font-size-sm));
+    --text-caption: clamp(var(--font-size-xs), 0.8vw, var(--font-size-sm));
     --text-caption-leading: var(--leading-normal);
-    
-    --text-sm: clamp( var(--font-size-sm),1vw, var(--font-size-md));
+
+    --text-sm: clamp(var(--font-size-sm), 1vw, var(--font-size-md));
     --text-sm-leading: var(--leading-normal);
-    
-    --text-body: clamp( var(--font-size-md),1.2vw, var(--font-size-lg));
+
+    --text-body: clamp(var(--font-size-md), 1.2vw, var(--font-size-lg));
     --text-body-leading: var(--leading-normal);
-    
-    --text-lg: clamp( var(--font-size-lg),1.5vw, var(--font-size-xl));
+
+    --text-lg: clamp(var(--font-size-lg), 1.5vw, var(--font-size-xl));
     --text-lg-leading: 1;
-    
 
     /* heading  */
-    --text-h4:clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+    --text-h4: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
     --text-h4-leading: var(--leading-normal);
-    
+
     --text-h3: clamp(var(--font-size-2xl), 3.5vw, var(--font-size-3xl));
     --text-h3-leading: 1.1;
-    
+
     --text-h2: clamp(var(--font-size-3xl), 5vw, var(--font-size-4xl));
     --text-h2-leading: var(--leading-normal);
-    
+
     --text-h1: clamp(var(--font-size-5xl), 2.5vw, var(--font-size-6xl));
     --text-h1-leading: 1.1;
 
-
-
     /* --text-big: var(--font-size-8xl); */
 
-    --text-hero: clamp(
-            var(--font-size-6xl)
-            ,var(--font-vw-800),
-            var(--font-size-8xl));
+    --text-hero: clamp(var(--font-size-6xl), var(--font-vw-800), var(--font-size-8xl));
     --text-hero-leading: var(--leading-none);
 
-    --text-masive: clamp(
-        var(--font-size-7xl)
-        ,var(--font-vw-900),
-        var(--font-size-9xl));
+    --text-masive: clamp(var(--font-size-7xl), var(--font-vw-900), var(--font-size-9xl));
     --text-masive-leading: var(--leading-none);
-
-
-
-
-
-
-
-
 
     /* Brand colors */
 
-        --color-primary: var(--avure-blue-950-);
-        --color-light: var(--avure-light);
-        --color-dark: var(--avure-dark);
-        --color-dark-muted : var(--avure-black-600);
-        --color-dark-disabled : var(--avure-black-400);
+    --color-primary: var(--avure-blue-950-);
+    --color-light: var(--avure-light);
+    --color-dark: var(--avure-dark);
+    --color-dark-muted: var(--avure-black-600);
+    --color-dark-disabled: var(--avure-black-400);
 
-        --surface-icon: var(--avure-blue-100);
-        --surface-icon-selected: var(--avure-light);
-       
-        --bg-primary: var(--avure-blue-950-);
-        --bg-light: var(--avure-light);
-        --bg-elevated: var(--avure-black-100);
-        --bg-dark: var(--avure-black-950);
-        
-        --fill-dark: var(--avure-black-950);
-        --fill-carousel-points: var(--avure-black-100);
-        --fill-carousel-points-selcted: var(--avure-black-200);
-        
-        --shadow-clr-dark:var(--avure-black-300);
-        --border-clr-dark:var(--avure-black-950);
-        --border-clr-muted:var(--avure-black-500);
+    --surface-icon: var(--avure-blue-100);
+    --surface-icon-selected: var(--avure-light);
 
-        --text-color-secondary :var(--avure-dark);
-        --text-color-secondary-subheading :var(--avure-black-900);
-        --text-color-primary :var(--avure-light);
-        --text-color-brand :var(--avure-blue-950-);
-        --text-color-muted :var(--avure-black-700);
-        --text-color-disabled :var(--avure-black-400);
-        
-        --border-color-dark: var(--avure-black-950);
+    --bg-primary: var(--avure-blue-950-);
+    --bg-light: var(--avure-light);
+    --bg-elevated: var(--avure-black-100);
+    --bg-dark: var(--avure-black-950);
 
+    --fill-dark: var(--avure-black-950);
+    --fill-carousel-points: var(--avure-black-100);
+    --fill-carousel-points-selcted: var(--avure-black-200);
+
+    --shadow-clr-dark: var(--avure-black-300);
+    --border-clr-dark: var(--avure-black-950);
+    --border-clr-muted: var(--avure-black-500);
+
+    --text-color-secondary: var(--avure-dark);
+    --text-color-secondary-subheading: var(--avure-black-900);
+    --text-color-primary: var(--avure-light);
+    --text-color-brand: var(--avure-blue-950-);
+    --text-color-muted: var(--avure-black-700);
+    --text-color-disabled: var(--avure-black-400);
+
+    --border-color-dark: var(--avure-black-950);
 
     /* Brand fonts */
-        --text-font-accent: 'JetBrainsMono';
-        --text-font-primary: "Acumin Variable Concept";
-        --text-font-secondary: 'Poppins';
-        
-
-
-
+    --text-font-accent: 'JetBrainsMono';
+    --text-font-primary: 'Acumin Variable Concept';
+    --text-font-secondary: 'Poppins';
   }
 {% endstylesheet %}

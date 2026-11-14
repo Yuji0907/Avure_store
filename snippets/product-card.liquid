@@ -24,13 +24,19 @@
           data-variant-id="{{ variant.id }}"
           data-title="{{ product.title | escape }}"
           aria-label="{% if in_cart %}In cart, open cart{% else %}Add {{ product.title | escape }} to cart{% endif %}"
-          {% unless variant.available %}disabled{% endunless %}
+          {% unless variant.available %}
+            disabled
+          {% endunless %}
         >
           <span class="icon-add">{% render 'shopping-cart-add' %}</span>
           <span class="icon-added">{% render 'shopping-cart-add-check' %}</span>
         </button>
       {%- else -%}
-        <a href="{{ product.url }}" class="shopping-cart-add_container" aria-label="Choose options for {{ product.title | escape }}">
+        <a
+          href="{{ product.url }}"
+          class="shopping-cart-add_container"
+          aria-label="Choose options for {{ product.title | escape }}"
+        >
           {% render 'shopping-cart-add' %}
         </a>
       {%- endif -%}
@@ -52,14 +58,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    gap: .6rem;
+    gap: 0.6rem;
 
     .product-image_container {
       position: relative;
       min-width: 100%;
       aspect-ratio: 2/3;
 
-      .product-image_link { display: block; width: 100%; height: 100%; }
+      .product-image_link {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
 
       .product-image {
         width: 100%;
@@ -85,12 +95,12 @@
           font-weight: 600;
         }
 
-        svg{
+        svg {
           width: 2rem;
           height: 2rem;
-              path{
-        fill:var( --color-primary) 
-    }
+          path {
+            fill: var(--color-primary);
+          }
         }
         .shopping-cart-add_container {
           pointer-events: auto;
@@ -98,18 +108,30 @@
           border: 0;
           cursor: pointer;
           background-color: var(--surface-icon);
-          padding: .8rem;
-          border-radius: .8rem;
+          padding: 0.8rem;
+          border-radius: 0.8rem;
 
-          &:disabled { opacity: .5; cursor: not-allowed; }
-          &.is-loading { opacity: .6; }
-
-          .icon-add, .icon-added { 
-            display: inline-flex; 
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
           }
-          .icon-added { display: none; }
-          &.is-in-cart .icon-add { display: none; }
-          &.is-in-cart .icon-added { display: inline-flex; }
+          &.is-loading {
+            opacity: 0.6;
+          }
+
+          .icon-add,
+          .icon-added {
+            display: inline-flex;
+          }
+          .icon-added {
+            display: none;
+          }
+          &.is-in-cart .icon-add {
+            display: none;
+          }
+          &.is-in-cart .icon-added {
+            display: inline-flex;
+          }
         }
       }
     }
@@ -120,6 +142,7 @@
       align-items: center;
       font-family: var(--text-font-secondary);
       text-align: center;
+      text-transform: capitalize;
 
       > h3 {
         font-size: 1.8rem;
