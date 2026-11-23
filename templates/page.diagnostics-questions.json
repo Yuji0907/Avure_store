@@ -12,10 +12,115 @@
     "diagnostics_questions": {
       "type": "diagnostics-questions",
       "name": "diagnostics questions",
+      "blocks": {
+        "q1_concerns": {
+          "type": "question",
+          "settings": {
+            "question": "What would you most like to improve?",
+            "subtitle": "up to three, in order of importance",
+            "why_text": "Your main concern decides which treatment comes first in your routine.",
+            "key": "concerns",
+            "max_choices": 3,
+            "answers": "Blackheads or breakouts|breakouts\nRedness|redness\nDull or uneven-looking skin|dull\nDryness or tightness|dryness\nVisible pores|pores\nFine lines or firmness|lines\nDaily sun protection|sun\nNothing in particular|none"
+          }
+        },
+        "q2_feel": {
+          "type": "question",
+          "settings": {
+            "question": "Thirty minutes after washing, with nothing applied, how does your skin feel?",
+            "subtitle": "",
+            "why_text": "How your skin feels bare tells us your skin type, which decides your cleanser.",
+            "key": "feel",
+            "max_choices": 1,
+            "answers": "Tight or uncomfortable|dry\nComfortable|normal\nShiny all over|oily\nShiny in some areas|combination"
+          }
+        },
+        "q3_shine": {
+          "type": "question",
+          "settings": {
+            "question": "By midday, where does your skin look shiny?",
+            "subtitle": "",
+            "why_text": "Where shine shows up helps us tell normal skin from combination or oily skin.",
+            "key": "shine",
+            "max_choices": 1,
+            "answers": "Nowhere|none\nT-zone only|tzone\nWhole face|all"
+          }
+        },
+        "q4_react": {
+          "type": "question",
+          "settings": {
+            "question": "How often does your skin react to new products?",
+            "subtitle": "",
+            "why_text": "Reactive skin gets a gentler routine without strong exfoliants.",
+            "key": "react",
+            "max_choices": 1,
+            "answers": "Rarely|low\nSometimes|mid\nOften|high"
+          }
+        },
+        "q5_breakouts": {
+          "type": "question",
+          "settings": {
+            "question": "How often do you get breakouts?",
+            "subtitle": "",
+            "why_text": "Frequent breakouts point to an exfoliant that clears pores.",
+            "key": "breakouts",
+            "max_choices": 1,
+            "answers": "Never|never\nSometimes|sometimes\nOften|often"
+          }
+        },
+        "q6_age": {
+          "type": "question",
+          "settings": {
+            "question": "How old are you?",
+            "subtitle": "",
+            "why_text": "Skin needs change with age, especially for fine lines and firmness.",
+            "key": "age",
+            "max_choices": 1,
+            "answers": "Under 25|u25\n25–34|25\n35–44|35\n45+|45"
+          }
+        },
+        "q7_steps": {
+          "type": "question",
+          "settings": {
+            "question": "How many steps do you want in your routine?",
+            "subtitle": "",
+            "why_text": "We build your routine around the time you actually want to spend on it.",
+            "key": "steps",
+            "max_choices": 1,
+            "answers": "Simple (3 steps)|simple\nComplete (5 steps)|complete"
+          }
+        }
+      },
+      "block_order": [
+        "q1_concerns",
+        "q2_feel",
+        "q3_shine",
+        "q4_react",
+        "q5_breakouts",
+        "q6_age",
+        "q7_steps"
+      ],
+      "settings": {
+        "cleanser_oil": "nettoyant-a-lhuile",
+        "exfoliant_glycolic": "liquide-exfoliant-tonique",
+        "serum_niacinamide": "serum-anti-imperfections",
+        "spf": "creme-gel-solaire"
+      }
+    },
+    "science": {
+      "type": "science-behinde-avure",
+      "name": "science behinde avure",
+      "settings": {}
+    },
+    "contact_social": {
+      "type": "contact-social",
+      "name": "contact social",
       "settings": {}
     }
   },
   "order": [
-    "diagnostics_questions"
+    "diagnostics_questions",
+    "science",
+    "contact_social"
   ]
 }

@@ -14,7 +14,7 @@
     {%- comment -%}
       These page templates show only the short contact-social footer (added as a section in each template).
     {%- endcomment -%}
-    {%- assign short_footer_templates = 'pharmacist-colaboration,pharmacist-form,checkout' | split: ',' -%}
+    {%- assign short_footer_templates = 'pharmacist-colaboration,pharmacist-form,checkout,diagnostics-questions' | split: ',' -%}
     {%- unless template.name == 'page' and short_footer_templates contains template.suffix -%}
       {%  section "footer" %}
     {%- endunless -%}
