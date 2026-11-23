@@ -44,12 +44,83 @@
           <img src="{{ 'logo_dak.svg' | asset_url }}" width="160" height="auto" alt="logo">
       {%- endif -%}
     </a>
+
+    {%- comment -%} Desktop navigation (hidden below 1024px; the drawer is used there) {%- endcomment -%}
+    <nav class="header-nav" aria-label="Main">
+      <ul class="header-nav__list">
+        {%- for link in linklists['main-menu'].links -%}
+          {%- capture sub_items -%}{%- render 'menu-sublinks', link: link -%}{%- endcapture -%}
+          {%- assign has_dropdown = false -%}
+          {%- if sub_items != blank -%}{%- assign has_dropdown = true -%}{%- endif -%}
+          <li class="header-nav__item{% if has_dropdown %} header-nav__item--dropdown{% endif %}">
+            {%- if has_dropdown -%}
+              <button
+                type="button"
+                class="header-nav__toggle"
+                aria-expanded="false"
+                aria-controls="HeaderNav-{{ link.handle }}"
+                data-header-nav-toggle
+              >
+                {{- link.title -}}
+                <svg class="header-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="header-nav__panel" id="HeaderNav-{{ link.handle }}">
+                <a class="header-nav__panel-title" href="{{ link.url }}">{{ link.title }}</a>
+                <ul class="header-nav__sublinks">
+                  {{ sub_items }}
+                </ul>
+              </div>
+            {%- else -%}
+              <a class="header-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <script>
+      (() => {
+        const nav = document.currentScript.previousElementSibling;
+        const closeAll = (except) =>
+          nav.querySelectorAll('[data-header-nav-toggle][aria-expanded="true"]').forEach((b) => {
+            if (b !== except) b.setAttribute('aria-expanded', 'false');
+          });
+        nav.addEventListener('click', (e) => {
+          const toggle = e.target.closest('[data-header-nav-toggle]');
+          if (!toggle) return;
+          const open = toggle.getAttribute('aria-expanded') !== 'true';
+          closeAll(toggle);
+          toggle.setAttribute('aria-expanded', String(open));
+        });
+        document.addEventListener('click', (e) => {
+          if (!nav.contains(e.target)) closeAll();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeAll();
+        });
+      })();
+    </script>
+
     {% render 'shopping-bag' %}
     
   </div>
 </section>
 
-
+<script>
+  /* --header-height = announcement bar + header, used by desktop layouts (hero height, sticky offsets) */
+  (() => {
+    const header = document.querySelector('.section-header');
+    if (!header) return;
+    const update = () => {
+      const height = Math.round(header.getBoundingClientRect().bottom + window.scrollY);
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
+    };
+    update();
+    window.addEventListener('resize', update);
+    if ('ResizeObserver' in window) new ResizeObserver(update).observe(header);
+  })();
+</script>
 
 {% stylesheet %}
 
@@ -95,6 +166,10 @@
     path{
       fill: var(--color-primary);
     }
+  }
+  /* Desktop nav: hidden on mobile, laid out in assets/avure-desktop.css */
+  .header-nav {
+    display: none;
   }
   .header-title {
     font-size: var(--type-subtitle);

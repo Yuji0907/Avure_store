@@ -5,12 +5,16 @@
     {% render 'fonts' %}
     {% render 'css-variables' %}
     {{ content_for_header }}
+    {{ 'avure-desktop.css' | asset_url | stylesheet_tag }}
   </head>
 
-  <body>
+  {%- comment -%} e.g. template-index, template-product, template-page--about, template-metaobject--concerns {%- endcomment -%}
+  <body class="template-{{ template | replace: '.', '--' | replace: '/', '--' }}">
     
     {%  sections "header-group" %}
-    {{ content_for_layout }}
+    <main id="MainContent">
+      {{ content_for_layout }}
+    </main>
     {%- comment -%}
       These page templates show only the short contact-social footer (added as a section in each template).
     {%- endcomment -%}
