@@ -19,7 +19,7 @@
 
 {%- stylesheet -%}
 .product-ingredients_wrapper{
-    margin-top: 2rem;
+    margin-top: 0;
     width: 100%;
     display: grid;
     place-items: center;
@@ -43,7 +43,17 @@
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
         gap: 1.2rem;
-        padding-block: 4rem;
+        padding-block: 1rem 2rem;
     }
-}  
+}
+.product-ingredients_wrapper .product-ingredients-carousel .ingredient-info_container .ingredient-name {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+}
+.product-ingredients_wrapper .product-ingredients-carousel .ingredient-info_container .ingredient-inci {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+}
 {%- endstylesheet -%}

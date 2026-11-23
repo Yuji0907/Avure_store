@@ -1,13 +1,28 @@
-{% assign faqs_colab = shop.metaobjects.colab_questions.values %}
+{%- assign faq_type = section.settings.metaobject_type | default: 'colab_questions' -%}
+{% assign faqs_colab = shop.metaobjects[faq_type].values %}
 
 <div class="faqs-wrapper">
+    {%- if section.settings.show_header and section.settings.eyebrow != blank or section.settings.show_header and section.settings.heading != blank -%}
+      <div class="faqs-header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="faqs-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="faqs-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     <div class="accordings_container">
         {% for item in faqs_colab %}
                     {% if forloop.last %}
                         {%- assign last = true -%}
                     {% endif %}
-            {%- render 'accordion',title:item.question.value,items:item.answers.value,last:last -%}
+            {%- assign first_open = false -%}
+            {%- if forloop.first and section.settings.first_open -%}
+              {%- assign first_open = true -%}
+            {%- endif -%}
+            {%- render 'accordion',title:item.question.value,items:item.answers.value,last:last,open:first_open -%}
             {% comment %} check last  {% endcomment %}
         {% endfor %}
     </div>
@@ -16,6 +31,7 @@
   
   .faqs-wrapper{
     width: 100%;
+    margin-block: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,4 +47,42 @@
         font-family: var(--text-font-primary);
         font-size: var(--text-h3);
     }
+  .faqs-header{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .faqs-eyebrow{
+    font-family: var(--text-font-accent);
+    font-size: var(--type-label);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+  }
+  .faqs-heading{
+    font-family: var(--text-font-primary);
+    font-size: var(--type-title);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+  }
 {%- endstylesheet -%}
+
+{% schema %}
+{
+  "name": "FAQs",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "//FAQS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hello again" },
+    {
+      "type": "text",
+      "id": "metaobject_type",
+      "label": "Metaobject type",
+      "info": "Handle of the metaobject definition holding the questions (fields: question, answers).",
+      "default": "colab_questions"
+    },
+    { "type": "checkbox", "id": "first_open", "label": "Open the first question", "default": true },
+    {"type": "checkbox", "id": "show_header", "label": "Show eyebrow and heading", "default": true}
+  ],
+  "presets": [{ "name": "FAQs" }]
+}
+{% endschema %}

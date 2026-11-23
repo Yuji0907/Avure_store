@@ -1,6 +1,7 @@
 {% render 'section-typography', section_id: section.id, section_settings: section.settings %}
 <section class="all-collections ">
   <div class="all-collections__header">
+    {%- render 'breadcrumb', title: section.settings.heading -%}
     <h1 class="  _title all-collections__title">
       <span class="title-dot"></span>
       <span>
@@ -18,33 +19,38 @@
     <p>{{ section.settings.description | escape }}</p>
   </div>
 
-  {% assign collection_count = 0 %}
-  {% for collection in collections %}
-    {% unless collection.handle == 'routines-duos' %}
-      {% assign collection_count = collection_count | plus: 1 %}
+  {%- comment -%}
+    Steps in routine order. Each entry matches a collection by handle, or by its handleized title.
+    The step number is the position in this list, so it stays the same when a step is skipped.
+    Steps with no products are not shown.
+  {%- endcomment -%}
+  {%- assign step_order = 'cleanse,exfoliate,treat,hydrate,protect' | split: ',' -%}
+  {%- for step in step_order -%}
+    {%- assign step_collection = collections[step] -%}
+    {%- if step_collection.id == blank -%}
+      {%- for candidate in collections -%}
+        {%- assign candidate_handle = candidate.title | handleize -%}
+        {%- if candidate_handle == step -%}
+          {%- assign step_collection = candidate -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if step_collection.id != blank and step_collection.products.size > 0 -%}
       <div class="all-collections__collection">
-        {%- assign step_label = collection.description | strip_html | remove: 'Step' | remove: 'step' | strip -%}
-        <h2 class="_title collection__title">
-          <a href="{{ collection.url }}"> {{ step_label }}.{{ collection.title | escape }}</a>
+        <h2 class="collection__title">
+          <a href="{{ step_collection.url }}">
+            {{- forloop.index | prepend: '0' | slice: -2, 2 }}. {{ step_collection.title | upcase | escape -}}
+          </a>
         </h2>
-
-        {% if collection.products.size > 0 %}
-          <ul class="all-collections__products" role="list">
-            {% for product in collection.products %}
-              {%- render 'product-card', product: product -%}
-            {% endfor %}
-          </ul>
-
-        {% else %}
-          <p>No products in this collection.</p>
-        {% endif %}
+        <ul class="all-collections__products" role="list">
+          {%- for product in step_collection.products -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        </ul>
       </div>
-    {%- endunless -%}
-  {% endfor %}
-
-  {% if collection_count == 0 %}
-    <p>No collections found.</p>
-  {% endif %}
+    {%- endif -%}
+  {%- endfor -%}
 </section>
 
 {%- stylesheet -%}
@@ -53,9 +59,7 @@
       font-family: var(--text-font-secondary);
       font-weight: 400;
       font-size: var(--text-h4);
-      text-transform: capitalize;
       line-height: var(--text-h1-leading);
-      text-transform: capitalize;
       color: var(--text-color-muted);
     }
     .all-collections__title {
@@ -78,17 +82,21 @@
     flex-direction: column;
     margin: 2rem;
     gap: 4rem;
-    .collection__title {
-      text-transform: uppercase;
-    }
     ._title {
-      font-family: var(--text-font-accent);
-      width: 2%;
+      font-family: var(--text-font-primary);
+      width: auto;
+      white-space: nowrap;
       font-weight: 800;
-      font-size: var(--text-h1);
-      text-transform: capitalize;
+      font-size: var(--type-title);
       line-height: var(--text-h1-leading);
-      text-transform: capitalize;
+    }
+    .all-collections__collection .collection__title {
+      margin-bottom: 1rem;
+      font-family: var(--text-font-accent);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
     }
   }
   .all-collections__collection {

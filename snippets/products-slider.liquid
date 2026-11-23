@@ -5,7 +5,7 @@
     {% for product in all_products %}
         {% assign badge = product.metafields.custom.variant_badge.value %}
         {% if badge contains  "Best Sellers" %}
-            {%- render 'product-card', product: product -%}
+            {%- render 'product-card', product: product, badge_override: 'Best Sellers' -%}
         {% endif %}
 
     {% endfor %}
@@ -22,7 +22,7 @@
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 48%;
-        padding-bottom: 1rem;
+        padding-bottom: 0;
 
     }
 {%- endstylesheet -%}

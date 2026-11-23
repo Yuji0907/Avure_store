@@ -17,11 +17,10 @@
 
 {%- stylesheet -%}
   .science-behind-avure_wrapper {
-    margin-top: 2rem;
     width: 100%;
     display: grid;
     place-items: center;
-    margin-block: 4rem;
+    margin-block: 4rem 32px;
   }
   .science-behind-avure_container {
     width: 90%;
@@ -36,7 +35,6 @@
       align-items: flex-start;
       width: 100%;
       gap: 0.9rem;
-      text-transform: uppercase;
       .science-avure_subheading {
         font-family: var(--text-font-accent);
       }
@@ -46,7 +44,7 @@
       }
       .science-avure_description {
         width: 50%;
-        font-family: var(--text-font-accent);
+        font-family: var(--text-font-secondary);
         font-weight: 500;
       }
     }
@@ -60,11 +58,23 @@
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
       gap: 1.2rem;
-      padding-block: 4rem;
+      padding-block: 1.5rem 0;
       > * {
         direction: ltr;
       }
     }
+  }
+  /* Slide caption (image-text-item snippet), scoped so the product-page ingredients are unaffected */
+  .science-behind-avure_wrapper .science-behind-avure_carousel .ingredient-info_container .ingredient-name {
+    font-family: var(--text-font-accent);
+    font-size: var(--type-label);
+    font-weight: 500;
+    line-height: var(--leading-normal);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+  }
+  .science-behind-avure_wrapper .science-behind-avure_carousel .product-ingredient_wrapper {
+    gap: 0.75rem;
   }
 {%- endstylesheet -%}
 
@@ -119,7 +129,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 16
+      "default": 11
     },
     {
       "type": "range",
@@ -152,7 +162,7 @@
       "max": 120,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 24
     },
     {
       "type": "range",
@@ -185,7 +195,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 18
+      "default": 13
     },
     {
       "type": "range",

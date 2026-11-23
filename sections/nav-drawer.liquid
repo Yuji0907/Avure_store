@@ -48,7 +48,7 @@
                 <img class="menu-image" src="{{ 'all_products.png' | asset_url }}" width="400" height="auto" alt="logo">
               {%- endif -%}
               {%- if section.settings.menu_label != blank -%}
-                <p class="sub-menu-label">all products</p>
+                <p class="sub-menu-label">{{ link.title }}</p>
               {%- endif -%}
               <button id="close-{{ link.handle }}">
                 {%- render 'close-icon' -%}
@@ -56,21 +56,38 @@
             </div>
 
             <div class="all-liks__container">
-              {%- for collection in collections -%}
-                {%- unless collection.handle == 'frontpage'
-                  or collection.handle == 'all'
-                  or collection.title == 'routines-duos'
-                -%}
+              {%- comment -%}
+                Fixed step order. Each entry matches a collection by handle, or by its handleized title.
+              {%- endcomment -%}
+              {%- assign step_order = 'cleanse,exfoliate,treat,hydrate,protect' | split: ',' -%}
+              {%- assign step_number = 0 -%}
+              {%- for step in step_order -%}
+                {%- assign step_collection = collections[step] -%}
+                {%- if step_collection.id == blank -%}
+                  {%- for candidate in collections -%}
+                    {%- assign candidate_handle = candidate.title | handleize -%}
+                    {%- if candidate_handle == step -%}
+                      {%- assign step_collection = candidate -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                {%- if step_collection.id != blank -%}
+                  {%- assign step_number = step_number | plus: 1 -%}
+                  {%- assign step_badge = step_collection.metafields.custom.badge.value | strip -%}
                   <li>
-                    <span class="list-number">0{{ forloop.index0 | plus: 1 }}.</span
-                    ><a class="main-links" href="{{ collection.url }}">{{ collection.title }}</a>
+                    <span class="list-number">{{ step_number | prepend: '0' | slice: -2, 2 }}.</span
+                    ><a class="main-links" href="{{ step_collection.url }}">
+                      {{- step_collection.title -}}
+                      {%- if step_badge != blank -%}<sup class="menu-badge">{{ step_badge }}</sup>{%- endif -%}
+                    </a>
                   </li>
-                {%- endunless -%}
+                {%- endif -%}
               {%- endfor -%}
             </div>
           </ul>
           <span>
-            {%- render 'chevron', color: 'black' -%}
+            {%- render 'chevron', color: 'black', direction: 'down' -%}
           </span>
 
         {%- elsif link.handle == 'routines-duos' -%}
@@ -86,10 +103,7 @@
                 <img class="menu-image" src="{{ 'kit.png' | asset_url }}" width="400" height="auto" alt="logo">
               {%- endif -%}
               {%- if section.settings.menu_label != blank -%}
-                <p class="sub-menu-label">
-                  routines & <br>
-                  duos
-                </p>
+                <p class="sub-menu-label">{{ link.title }}</p>
                 <button id="close-{{ link.handle }}">
                   {%- render 'close-icon' -%}
                 </button>
@@ -103,8 +117,12 @@
                   or collection.title != 'routines-duos'
                 -%}
                   {% for product in collection.products %}
+                    {%- assign product_badge = product.metafields.custom.badge.value | strip -%}
                     <li>
-                      <a class="main-links" href="{{ product.url }}">{{ product.title }}</a>
+                      <a class="main-links" href="{{ product.url }}">
+                        {{- product.title -}}
+                        {%- if product_badge != blank -%}<sup class="menu-badge">{{ product_badge }}</sup>{%- endif -%}
+                      </a>
                     </li>
                   {% endfor %}
                 {%- endunless -%}
@@ -112,7 +130,7 @@
             </div>
           </ul>
           <span>
-            {%- render 'chevron', color: 'black' -%}
+            {%- render 'chevron', color: 'black', direction: 'down' -%}
           </span>
 
         {%- elsif link.handle == 'by-concern' -%}
@@ -129,7 +147,7 @@
                 <img class="menu-image" src="{{ 'by_concern.png' | asset_url }}" width="400" height="auto" alt="logo">
               {%- endif -%}
               {%- if section.settings.menu_label != blank -%}
-                <p class="sub-menu-label">by concern</p>
+                <p class="sub-menu-label">{{ link.title }}</p>
                 <button id="close-{{ link.handle }}">
                   {%- render 'close-icon' -%}
                 </button>
@@ -145,7 +163,7 @@
             </div>
           </ul>
           <span>
-            {%- render 'chevron', color: 'black' -%}
+            {%- render 'chevron', color: 'black', direction: 'down' -%}
           </span>
         {%- endif -%}
       </span>
@@ -233,6 +251,18 @@
       fill: black;
     }
   }
+  .menu-badge {
+    margin-left: 0.25rem;
+    font-family: var(--text-font-accent);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: super;
+    color: var(--text-color-brand);
+    white-space: nowrap;
+  }
   .link-group {
     width: 80%;
     display: flex;
@@ -244,7 +274,6 @@
       font-size: var(--text-h1);
       font-weight: 600;
       font-family: var(--text-font-primary);
-      text-transform: capitalize;
       width: 100%;
     }
     .list-number {
@@ -307,7 +336,14 @@
         font-weight: 700;
         color: var(--text-color-brand);
         font-family: var(--text-font-accent);
-        text-transform: capitalize;
+      }
+      .menu-label {
+        font-family: var(--text-font-accent);
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1.4;
+        letter-spacing: var(--tracking-eyebrow);
+        text-transform: uppercase;
       }
       .sub-menu-label {
         font-size: var(--text-h1);

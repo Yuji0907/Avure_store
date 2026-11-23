@@ -21,11 +21,11 @@
 
     <div class="footer-links_container">
       <div class="footer-products_links">
-        <h3 class="footer-products_heading">Products</h3>
+        <h3 class="footer-products_heading">Product</h3>
         <ul class="footer-products_list">
           <a href="{{ routes.all_products_collection_url }}">All Products</a>
           <a href="/collections/top-sellers">Top Sellers</a>
-          <a href="/pages/our-routine">Our Routine</a>
+          <a href="/pages/our-routine">Our Routines</a>
         </ul>
       </div>
 
@@ -108,7 +108,7 @@
     <div class="site-footer__bottom">
       <p>
         &copy; {{ 'now' | date: '%Y' }}
-        {{ shop.name }}. All Rights Reserved.
+        {{ section.settings.brand_name | default: 'Avure' | escape }}. All Rights Reserved.
       </p>
     </div>
   </footer>
@@ -143,8 +143,10 @@
       text-align: end;
       text-transform: uppercase;
     }
-    .footer-logo_icon {
-      width: 280px;
+    .footer-logo_icon,
+    .footer-logo img {
+      width: 110px;
+      height: auto;
     }
   }
 
@@ -197,8 +199,8 @@
       font-size: var(--text-h2);
     }
     .footer-contact_description {
+      font-family: var(--text-font-secondary);
       font-size: var(--text-h4);
-      text-transform: capitalize;
     }
     .footer-contact_form {
       display: flex;
@@ -206,15 +208,15 @@
       gap: 1.5rem;
     }
     .footer-contact_input {
-      font-size: 2rem;
+      font-size: var(--type-input);
       padding-block: 1rem;
       padding-inline: 2rem;
-      text-transform: uppercase;
       background-color: transparent;
       border: 1px solid var(--color-light);
     }
     .footer-contact_button {
-      font-size: 2.5rem;
+      font-size: 14px;
+      font-weight: 700;
       padding-block: 1rem;
       padding-inline: 2rem;
       text-transform: uppercase;
@@ -222,7 +224,6 @@
     .footer-contact_terms {
       font-size: var(--text-h4);
       text-align: center;
-      text-transform: capitalize;
       font-weight: 300;
       a {
         text-decoration: underline;
@@ -271,7 +272,6 @@
   .site-footer__title {
     font-size: var(--text-h3);
     font-weight: 700;
-    text-transform: uppercase;
     font-family: var(--text-font-primary);
     margin-bottom: 1rem;
   }
@@ -346,6 +346,7 @@
   "class": "section-footer",
   "settings": [
     { "type": "text", "id": "title", "label": "Title", "default": "Follow us" },
+    {"type": "text", "id": "brand_name", "label": "Brand name (copyright)", "default": "Avure"},
     {
       "type": "text",
       "id": "instagram",

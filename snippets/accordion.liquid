@@ -1,4 +1,4 @@
-<details class="accordion{% if last %} last{% endif %}">
+<details class="accordion{% if last %} last{% endif %}"{% if open %} open{% endif %}>
   <summary class="accordion-title" >
     
     <span> {{ title }}</span>
@@ -46,7 +46,6 @@
     .accordion{
     width: 100%;        
     font-family: inherit;
-    text-transform: capitalize;
     border-color:var(--border-color-dark) ;
     border-top: 1px solid ;
     /* height: 0; */

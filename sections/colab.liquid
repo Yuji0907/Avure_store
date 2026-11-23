@@ -46,7 +46,7 @@
   .section-hero {
     width: 100%;
     display: flex;
-    font-family: var(--text-font-accent);
+    font-family: var(--text-font-secondary);
   }
   .colab-hero-container {
     width: 100%;
@@ -116,11 +116,10 @@
     font-family: var(--text-font-primary);
     font-weight: 600;
     width: 95%;
-    text-transform: uppercase;
   }
   .colab-hero-subheading {
     width: 50%;
-    font-family: var(--text-font-primary);
+    font-family: var(--text-font-secondary);
     text-wrap: balance;
   }
 {% endstylesheet %}
@@ -139,13 +138,9 @@
     text-align: {{ section.settings.label_alignment }};
   }
 
-  /* Title: fluid, chosen size is the max, 60% of it the minimum on small screens */
+  /* Title */
   #shopify-section-{{ section.id }} .colab-hero-heading {
-    font-size: clamp(
-      {{ section.settings.heading_size | times: 0.6 | round }}px,
-      5vw,
-      {{ section.settings.heading_size }}px
-    );
+    font-size: {{ section.settings.heading_size }}px;
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -193,11 +188,11 @@
       "type": "range",
       "id": "label_size",
       "label": "Font size",
-      "min": 14,
+      "min": 11,
       "max": 72,
       "step": 1,
       "unit": "px",
-      "default": 28
+      "default": 11
     },
     {
       "type": "range",
@@ -230,7 +225,7 @@
       "max": 120,
       "step": 2,
       "unit": "px",
-      "default": 64
+      "default": 24
     },
     {
       "type": "range",
@@ -263,7 +258,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 13
     },
     {
       "type": "range",
@@ -296,7 +291,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 12
     },
     {
       "type": "range",

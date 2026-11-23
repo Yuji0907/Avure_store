@@ -34,7 +34,9 @@
 
       {%- if section.settings.cta != blank -%}
         <div class="btton-wrrapper">
-          <button class=" avure-button " type="btn">{{ section.settings.cta | escape }}</button>
+          <a class="avure-button pharma-colab__cta" href="{{ section.settings.cta_link | default: '/pages/colab-form' }}">
+            {{- section.settings.cta | escape -}}
+          </a>
         </div>
       {%- endif -%}
     </div>
@@ -44,7 +46,7 @@
 {% stylesheet %}
   .pharma-colab {
     width: 100%;
-    font-family: var(--text-font-accent);
+    font-family: var(--text-font-secondary);
   }
   .pharma-colab__hero {
     width: 100%;
@@ -56,9 +58,16 @@
 
   .pharma-colab__image {
     display: block;
-    object-fit: cover;
     width: 100%;
     height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: top;
+  }
+  .pharma-colab__cta {
+    display: block;
+    text-align: center;
+    text-decoration: none;
   }
 
   .pharma-colab__content {
@@ -83,7 +92,6 @@
     font-weight: 600;
     width: 95%;
     margin: 0;
-    text-transform: uppercase;
   }
 
   .pharma-colab__description {
@@ -153,6 +161,7 @@
     },
     { "type": "text", "id": "label", "label": "Eyebrow", "default": "For pharmacists & Dermatologists" },
     { "type": "text", "id": "cta", "label": "Call to action", "default": "Collaborate now" },
+    {"type": "url", "id": "cta_link", "label": "Call to action link", "info": "Leave empty to use /pages/colab-form (the pharmacist form page)"},
 
     { "type": "header", "content": "Eyebrow typography" },
     {
@@ -163,7 +172,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 18
+      "default": 11
     },
     {
       "type": "range",
@@ -196,7 +205,7 @@
       "max": 120,
       "step": 2,
       "unit": "px",
-      "default": 40
+      "default": 24
     },
     {
       "type": "range",
@@ -229,7 +238,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 13
     },
     {
       "type": "range",

@@ -1,5 +1,4 @@
 {% render 'section-typography', section_id: section.id, section_settings: section.settings %}
-{%- assign wilayas = section.settings.wilayas | newline_to_br | split: '<br />' -%}
 
 <section class="checkout-info" id="CheckoutInfo-{{ section.id }}">
   <header class="checkout-info__header">
@@ -52,7 +51,8 @@
     </div>
 
     <div class="field" data-field="wilaya">
-      {%- render 'avure-combo', name: 'wilaya', combo_placeholder: 'Wilaya *', options: wilayas -%}
+      {%- comment -%} Options are filled from assets/algeria.json by the script below {%- endcomment -%}
+      {%- render 'avure-combo', name: 'wilaya', combo_placeholder: 'Wilaya *' -%}
       <small class="field__error">Please select your wilaya</small>
     </div>
 
@@ -135,7 +135,6 @@
   .checkout-info__header h1 {
     grid-column: 2;
     font-size: var(--text-h3);
-    text-transform: uppercase;
     font-weight: 500;
   }
   .checkout-info__form {
@@ -145,7 +144,6 @@
   .checkout-info__form h2 {
     font-size: var(--text-h3);
     font-weight: 700;
-    text-transform: uppercase;
     margin-top: 1rem;
   }
 
@@ -155,7 +153,7 @@
   }
   .field__error {
     display: none;
-    font-size: 1.1rem;
+    font-size: var(--type-label);
     color: #e5322d;
   }
   .field.is-invalid .field__error {
@@ -230,20 +228,27 @@
     const list = form.querySelector('datalist');
     let locations = {};
 
+    const escapeHtml = (s) =>
+      String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const toOptions = (names) => names.map((name) => `<div class="combo-option">${escapeHtml(name)}</div>`).join('');
+
+    // Commune is free text with suggestions: the commune list in algeria.json is not complete yet.
+    commune.readOnly = false;
+    commune.setAttribute('autocomplete', 'address-level2');
+
     const loadCommunes = () => {
       const communes = locations[wilaya.value.trim()] || [];
-      const communeDropdown = form.querySelector('#commune-dropdown');
-      // same markup the combo snippet outputs
-      communeDropdown.innerHTML = communes.map((name) => `<div class="combo-option">${name}</div>`).join('');
-
+      form.querySelector('#commune-dropdown').innerHTML = toOptions(communes);
       commune.value = '';
-      commune.disabled = communes.length === 0;
+      commune.disabled = !wilaya.value;
     };
 
     fetch(form.dataset.locations)
       .then((r) => r.json())
       .then((data) => {
         locations = data;
+        const names = Object.keys(data).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+        form.querySelector('#wilaya-dropdown').innerHTML = toOptions(names);
         loadCommunes();
       });
 

@@ -21,7 +21,7 @@
                 {% for feat in product_features %}
                     <li class="product-feature">
                         <p>{{ feat }}</p>
-                        {%- render 'V-avure_icon', size:32 -%}
+                        {%- render 'V-avure_icon', size: 14 -%}
                     </li>
                 {% endfor %}
             </ul>
@@ -30,7 +30,7 @@
 
 
         <div class="accordings_container">
-            {%- render 'accordion',title:"Benifits",items:product_benefits -%}
+            {%- render 'accordion', title: "Benefits", items: product_benefits, open: true -%}
             {%- render 'accordion',title:"How to use",items:how_to_use -%}
             {%- render 'accordion',title:"is it for you?",items:is_it_for_you,last:true -%}
         </div>
@@ -61,14 +61,12 @@
             width: 100%;
             font-weight: 700;
             font-size: var(--text-h2);
-            text-transform: capitalize;
             line-height: var(--text-h1-leading) ;
         }
         .product-tagline{
             width: 100%;
             font-weight: 400;
             font-size: var(--text-h3);
-            text-transform: capitalize;
             line-height: var(--text-h1-leading) ;
         }
         .product-features_list{
@@ -76,7 +74,6 @@
             font-weight: 500;
             font-family: var(--text-font-secondary);
             font-size: var(--text-h3);
-            text-transform: capitalize;
             line-height: var(--text-h1-leading) ;
             display: flex;
             flex-direction: column;

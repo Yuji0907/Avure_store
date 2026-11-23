@@ -1,13 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-		"shop_concern":{
-			"type":"concern-page",
-			"name":"shop by concern"	
-		},
-		"skincare_steps":{
-			"type":"skincare-steps",
-			"name":"skincare steps"	
-		},
+    "shop_concern": {
+      "type": "concern-page",
+      "name": "shop by concern",
+      "settings": {}
+    },
+    "faqs": {
+      "type": "faqs",
+      "name": "faqs",
+      "settings": {
+        "eyebrow": "//FAQS",
+        "heading": "Hello again",
+        "first_open": true
+      }
+    },
+    "skincare_steps": {
+      "type": "skincare-steps",
+      "name": "skincare steps",
+      "settings": {}
+    }
   },
-  "order": ["shop_concern","skincare_steps"]
+  "order": [
+    "shop_concern",
+    "faqs",
+    "skincare_steps"
+  ]
 }
