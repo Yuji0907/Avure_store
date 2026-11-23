@@ -21,7 +21,7 @@
                 {% for feat in product_features %}
                     <li class="product-feature">
                         <p>{{ feat }}</p>
-                        {%- render 'V-avure_icon', size:32 -%}
+                        {%- render 'V-avure_icon', size: 14 -%}
                     </li>
                 {% endfor %}
             </ul>
@@ -30,7 +30,7 @@
 
 
         <div class="accordings_container">
-            {%- render 'accordion',title:"Benifits",items:product_benefits -%}
+            {%- render 'accordion', title: "Benefits", items: product_benefits, open: true -%}
             {%- render 'accordion',title:"How to use",items:how_to_use -%}
             {%- render 'accordion',title:"is it for you?",items:is_it_for_you,last:true -%}
         </div>

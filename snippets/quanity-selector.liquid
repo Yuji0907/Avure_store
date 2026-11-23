@@ -1,7 +1,7 @@
 
 
 <div class="quantity-selector_container" style="--quantity-selector-size: {{ size | default: '2rem' }};">
-{%- render 'icon-button', icon:"plus"  -%}
+{%- render 'icon-button', icon:"minus" -%}
 <input 
     class="quanity-input"
     type="number" 
@@ -12,7 +12,7 @@
     max=""
     aria-label="Quanity"
 >
-{%- render 'icon-button',icon:"minus" -%}
+{%- render 'icon-button', icon:"plus" -%}
 
 </div>
 

@@ -7,10 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-
-
-
- {
+{
   "sections": {
     "main": {
       "type": "product-wrapper",
@@ -40,7 +37,31 @@
       "type": "best-sellers",
       "settings": {}
     },
+    "routines": {
+      "type": "routines_slider",
+      "name": "routines",
+      "settings": {}
+    },
+    "science": {
+      "type": "science-behinde-avure",
+      "name": "science behinde avure",
+      "settings": {}
+    },
+    "get_in_touch": {
+      "type": "get-in-touch",
+      "settings": {}
+    }
   },
-  "order": ["main", "product_info","product_about",
-  "product_ingredients","testimonials","customer_feedbacks","best_sellers"]
+  "order": [
+    "main",
+    "product_info",
+    "product_about",
+    "product_ingredients",
+    "testimonials",
+    "customer_feedbacks",
+    "best_sellers",
+    "routines",
+    "science",
+    "get_in_touch"
+  ]
 }
