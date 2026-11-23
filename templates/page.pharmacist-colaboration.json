@@ -22,7 +22,10 @@
     "faqs": {
       "type": "faqs",
       "name": "faqs",
-      "settings": {}
+      "settings": {
+        "show_header": false,
+        "first_open": true
+      }
     },
     "science": {
       "type": "science-behinde-avure",

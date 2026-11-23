@@ -77,6 +77,29 @@
       return;
     }
 
+    // switch a line to another variant (cart drawer size pills)
+    const swap = e.target.closest("[data-cart-swap]");
+    if (swap && !swap.disabled) {
+      e.preventDefault();
+      swap.disabled = true;
+      try {
+        await changeCart(swap.dataset.key, 0);
+        const res = await fetch(`${root}cart/add.js`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: [{ id: Number(swap.dataset.variantId), quantity: Number(swap.dataset.quantity) || 1 }],
+          }),
+        });
+        if (!res.ok) throw new Error((await res.json()).description);
+      } catch (err) {
+        console.error(err);
+      }
+      const cart = await getCart();
+      document.dispatchEvent(new CustomEvent("cart:updated", { detail: cart }));
+      return;
+    }
+
     // quantity +/-
     const qty = e.target.closest("[data-cart-qty]");
     if (qty) {

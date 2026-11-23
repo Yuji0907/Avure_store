@@ -15,7 +15,8 @@
       <input
         class="avure-input"
         type="text"
-        name="pharmacy_name"
+        name="contact[Pharmacy name]"
+        data-success-pharmacy
         placeholder="Pharmacy name"
         aria-label="Pharmacy name"
         required
@@ -23,17 +24,17 @@
       <input
         class="avure-input"
         type="text"
-        name="pharmacy_address"
+        name="contact[Pharmacy address]"
         placeholder="Pharmacy Address"
         aria-label="Pharmacy Address"
         required
       >
-      <input class="avure-input" type="text" name="Your_name" placeholder="Your name" aria-label="Your name" required>
+      <input class="avure-input" type="text" name="contact[name]" placeholder="Your name" aria-label="Your name" autocomplete="name" required data-success-name>
       {%- render 'avure-combo', combo_placeholder: 'Select your role...', options: roles, name: 'role' -%}
       <input
         class="avure-input"
         type="email"
-        name="email"
+        name="contact[email]"
         placeholder="Email"
         aria-label="Email"
         autocomplete="email"
@@ -42,7 +43,7 @@
       <input
         class="avure-input"
         type="phone"
-        name="phone"
+        name="contact[phone]"
         placeholder="Phone number"
         aria-label="Phone number"
         autocomplete="tel"
@@ -61,8 +62,10 @@
   {% if contact_form_success %}
     <div class="get-in-touch-success__overlay">
       <div class="text-container">
-        <h1>Thank you, [name].</h1>
-        <p>We’ve received your request for [pharmacy name].We’ll reply within 03 working days.</p>
+        <h1 data-success-title>Thank you.</h1>
+        <p>
+          We’ve received your request<span data-success-for></span>. We’ll reply within 03 working days.
+        </p>
         <a data-style="light" class="avure-button back-home__btn" href="{{ routes.root_url }}">Back home</a>
       </div>
       {%- if section.settings.success_image != blank -%}
@@ -84,6 +87,33 @@
     </div>
   {% endif %}
 </section>
+<script>
+  (() => {
+    const KEY = 'avure-colab-request';
+    const form = document.querySelector('#shopify-section-{{ section.id }} .get-in-touch__form');
+    if (form) {
+      form.addEventListener('submit', () => {
+        const value = (selector) => form.querySelector(selector)?.value.trim() || '';
+        try {
+          sessionStorage.setItem(
+            KEY,
+            JSON.stringify({ name: value('[data-success-name]'), pharmacy: value('[data-success-pharmacy]') })
+          );
+        } catch (e) {}
+      });
+    }
+
+    const overlay = document.querySelector('#shopify-section-{{ section.id }} .get-in-touch-success__overlay');
+    if (!overlay) return;
+    let saved = {};
+    try {
+      saved = JSON.parse(sessionStorage.getItem(KEY) || '{}');
+    } catch (e) {}
+    if (saved.name) overlay.querySelector('[data-success-title]').textContent = `Thank you, ${saved.name}.`;
+    if (saved.pharmacy) overlay.querySelector('[data-success-for]').textContent = ` for ${saved.pharmacy}`;
+  })();
+</script>
+
 {%- stylesheet -%}
   .get-in-touch-success__overlay {
     position: absolute;

@@ -13,9 +13,15 @@
       "type": "colab-form",
       "name": "colab_form",
       "settings": {}
+    },
+    "contact_social": {
+      "type": "contact-social",
+      "name": "contact social",
+      "settings": {}
     }
   },
   "order": [
-    "colab_form"
+    "colab_form",
+    "contact_social"
   ]
 }

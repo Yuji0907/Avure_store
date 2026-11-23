@@ -2,7 +2,7 @@
 {% assign faqs_colab = shop.metaobjects[faq_type].values %}
 
 <div class="faqs-wrapper">
-    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+    {%- if section.settings.show_header and section.settings.eyebrow != blank or section.settings.show_header and section.settings.heading != blank -%}
       <div class="faqs-header">
         {%- if section.settings.eyebrow != blank -%}
           <p class="faqs-eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -80,7 +80,8 @@
       "info": "Handle of the metaobject definition holding the questions (fields: question, answers).",
       "default": "colab_questions"
     },
-    { "type": "checkbox", "id": "first_open", "label": "Open the first question", "default": true }
+    { "type": "checkbox", "id": "first_open", "label": "Open the first question", "default": true },
+    {"type": "checkbox", "id": "show_header", "label": "Show eyebrow and heading", "default": true}
   ],
   "presets": [{ "name": "FAQs" }]
 }

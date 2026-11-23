@@ -108,7 +108,7 @@
     <div class="site-footer__bottom">
       <p>
         &copy; {{ 'now' | date: '%Y' }}
-        {{ shop.name }}. All Rights Reserved.
+        {{ section.settings.brand_name | default: 'Avure' | escape }}. All Rights Reserved.
       </p>
     </div>
   </footer>
@@ -346,6 +346,7 @@
   "class": "section-footer",
   "settings": [
     { "type": "text", "id": "title", "label": "Title", "default": "Follow us" },
+    {"type": "text", "id": "brand_name", "label": "Brand name (copyright)", "default": "Avure"},
     {
       "type": "text",
       "id": "instagram",

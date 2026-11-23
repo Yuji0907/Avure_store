@@ -54,9 +54,32 @@
               <p class="cart-drawer__description">{{ item.product.description | strip_html | truncate: 100 }}</p>
             {%- endif -%}
 
-            {%- unless item.variant.title == 'Default Title' -%}
-              <div class="variants">
-                {%- render 'selector', items: product.variants -%}
+            {%- unless item.product.has_only_default_variant -%}
+              <div class="cart-drawer__variants" role="group" aria-label="Size">
+                {%- for variant in item.product.variants -%}
+                  {%- assign variant_label = variant.title -%}
+                  {%- unless variant_label contains 'ml' -%}
+                    {%- assign variant_label = variant_label | append: ' ml' -%}
+                  {%- endunless -%}
+                  <button
+                    type="button"
+                    class="cart-drawer__variant{% if variant.id == item.variant_id %} is-selected{% endif %}"
+                    {% if variant.id == item.variant_id %}
+                      aria-pressed="true"
+                    {% else %}
+                      aria-pressed="false"
+                      data-cart-swap
+                      data-key="{{ item.key }}"
+                      data-variant-id="{{ variant.id }}"
+                      data-quantity="{{ item.quantity }}"
+                    {% endif %}
+                    {% unless variant.available %}
+                      disabled
+                    {% endunless %}
+                  >
+                    {{ variant_label | escape }}
+                  </button>
+                {%- endfor -%}
               </div>
             {%- endunless -%}
 
@@ -65,9 +88,32 @@
             </div>
 
             <div class="cart-drawer__qty">
-              {%- render 'quanity-selector', size: '30px' -%}
+              <div class="cart-drawer__stepper">
+                <button
+                  type="button"
+                  class="cart-drawer__step"
+                  aria-label="Decrease quantity"
+                  data-cart-qty
+                  data-key="{{ item.key }}"
+                  data-qty="{{ item.quantity | minus: 1 }}"
+                >
+                  &minus;
+                </button>
+                <span class="cart-drawer__count" aria-live="polite">{{ item.quantity }}</span>
+                <button
+                  type="button"
+                  class="cart-drawer__step"
+                  aria-label="Increase quantity"
+                  data-cart-qty
+                  data-key="{{ item.key }}"
+                  data-qty="{{ item.quantity | plus: 1 }}"
+                >
+                  +
+                </button>
+              </div>
 
               <a
+                class="cart-drawer__remove"
                 href="{{ routes.cart_change_url }}?id={{ item.key | url_encode }}&amp;quantity=0"
                 data-cart-remove
                 data-key="{{ item.key }}"
@@ -232,10 +278,61 @@
     justify-content: space-between;
     margin-top: auto;
   }
-  .cart-drawer__qty button {
+  .cart-drawer__variants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .cart-drawer__variant {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-dark);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-color-secondary);
+    font-family: var(--text-font-primary);
+    font-size: var(--type-body-sm);
+    line-height: 1;
     cursor: pointer;
-    width: 2rem;
-    height: 2rem;
+  }
+  .cart-drawer__variant.is-selected {
+    background: var(--bg-dark);
+    color: var(--text-color-primary);
+    cursor: default;
+  }
+  .cart-drawer__variant:disabled:not(.is-selected) {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .cart-drawer__stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .cart-drawer__step {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--color-dark);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-color-secondary);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .cart-drawer__count {
+    min-width: 1.5ch;
+    text-align: center;
+    font-size: var(--type-body);
+    font-weight: 600;
+  }
+  .cart-drawer__remove {
+    margin-left: auto;
+    font-size: var(--type-body-sm);
+    text-decoration: underline;
+    color: var(--text-color-muted);
   }
   .cart-drawer__prices {
     display: flex;

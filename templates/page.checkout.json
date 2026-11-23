@@ -13,9 +13,15 @@
       "type": "checkout",
       "name": "checkout page",
       "settings": {}
+    },
+    "contact_social": {
+      "type": "contact-social",
+      "name": "contact social",
+      "settings": {}
     }
   },
   "order": [
-    "checkout_page"
+    "checkout_page",
+    "contact_social"
   ]
 }
