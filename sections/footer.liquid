@@ -21,11 +21,11 @@
 
     <div class="footer-links_container">
       <div class="footer-products_links">
-        <h3 class="footer-products_heading">Products</h3>
+        <h3 class="footer-products_heading">Product</h3>
         <ul class="footer-products_list">
           <a href="{{ routes.all_products_collection_url }}">All Products</a>
           <a href="/collections/top-sellers">Top Sellers</a>
-          <a href="/pages/our-routine">Our Routine</a>
+          <a href="/pages/our-routine">Our Routines</a>
         </ul>
       </div>
 
@@ -143,8 +143,10 @@
       text-align: end;
       text-transform: uppercase;
     }
-    .footer-logo_icon {
-      width: 280px;
+    .footer-logo_icon,
+    .footer-logo img {
+      width: 110px;
+      height: auto;
     }
   }
 
@@ -213,7 +215,8 @@
       border: 1px solid var(--color-light);
     }
     .footer-contact_button {
-      font-size: var(--type-button);
+      font-size: 14px;
+      font-weight: 700;
       padding-block: 1rem;
       padding-inline: 2rem;
       text-transform: uppercase;

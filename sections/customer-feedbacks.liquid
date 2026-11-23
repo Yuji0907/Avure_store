@@ -32,7 +32,7 @@
             <p>@{{ masked_name }}</p>
             <span>{{ feedback.type.value }}</span>
           </div>
-          <p>{{ feedback.rating.value }}</p>
+          {%- assign rating_number = feedback.rating.value.rating | default: feedback.rating.value | times: 1 -%}{%- render 'rating', rating: rating_number -%}
         </div>
         <p>{{ feedback.feedback.value }}</p>
       </div>
@@ -58,7 +58,7 @@
                 <p>@{{ masked_name }}</p>
                 <span>{{ feedback.type.value }}</span>
               </div>
-              <p>{{ feedback.rating.value }}</p>
+              {%- assign rating_number = feedback.rating.value.rating | default: feedback.rating.value | times: 1 -%}{%- render 'rating', rating: rating_number -%}
             </div>
             <p>{{ feedback.feedback.value }}</p>
         </div>
@@ -149,8 +149,9 @@
           animation-direction: var(--direction, normal);
         }
         .feedbacks__wrapper {
-          flex-shrink: 1;
-          min-width: 50%;
+          flex: 0 0 230px;
+          width: 230px;
+          min-width: 230px;
           height: 131px;
           max-height: 131px;
           padding-inline: 0.9rem;
@@ -179,6 +180,12 @@
               span {
                 color: var(--text-color-muted);
               }
+            }
+            div.rating {
+              flex-direction: row;
+              width: auto;
+              flex-shrink: 0;
+              gap: 2px;
             }
           }
         }

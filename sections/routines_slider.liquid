@@ -26,7 +26,7 @@
               {%- render 'rating', rating: rating -%}
             </div>
 
-            <p>{{ product.description }}</p>
+            <p>{{ product.description | strip_html | strip }}</p>
 
             <span class="price">
               {{ product.price | money }}
@@ -47,7 +47,7 @@
   }
   .routines-slider__content {
     width: 90%;
-    margin: 6rem auto;
+    margin: 0 auto 32px;
   }
   .routines-slider__header {
     display: flex;
@@ -116,15 +116,33 @@
         justify-content: space-between;
         .row-flex__group {
           display: flex;
+          flex-wrap: nowrap;
           width: 100%;
           justify-content: space-between;
           padding-top: 1rem;
           align-items: center;
+          gap: 0.5rem;
           > h1 {
+            flex: 1 1 auto;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-family: var(--text-secondary);
             color: var(--text-color-secondary);
             font-weight: 600;
           }
+          > .rating {
+            flex: 0 0 auto;
+          }
+        }
+        > p {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          overflow: hidden;
+          margin-top: 0.25rem;
         }
         > p,
         .price {
@@ -136,7 +154,10 @@
           color: var(--text-color-secondary);
           font-weight: 600;
           display: flex;
-          gap: 0.2rem;
+          flex-direction: row;
+          align-items: baseline;
+          gap: 0.4rem;
+          margin-top: 0.5rem;
           .compare-at-price {
             color: var(--text-color-disabled);
             font-weight: 500;

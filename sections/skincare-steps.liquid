@@ -104,14 +104,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-block: 4rem;
-    gap: 4rem;
+    padding-block: 32px;
+    gap: 2rem;
     .step-selector {
       width: 100%;
       display: flex;
       align-items: center;
+      flex-wrap: nowrap;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.5rem;
       .selected {
         --color: var(--color-dark);
         font-weight: 700;
@@ -119,9 +120,10 @@
       .selected::before {
         content: '';
         position: absolute;
-        bottom: -10px;
+        left: 0;
+        bottom: -4px;
         width: 100%;
-        height: 6px;
+        height: 2px;
         background-color: var(--color);
         border-radius: 100px;
       }
@@ -141,6 +143,9 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        flex: 0 1 auto;
+        min-width: 0;
+        white-space: nowrap;
       }
     }
     .skincare-steps__link {
@@ -263,11 +268,11 @@
       "type": "range",
       "id": "tab_size",
       "label": "Font size",
-      "min": 13,
+      "min": 11,
       "max": 72,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 11
     },
     {
       "type": "range",
@@ -364,7 +369,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 13
     },
     {
       "type": "range",
@@ -397,7 +402,7 @@
       "max": 24,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 11
     },
     {
       "type": "range",
