@@ -18,7 +18,7 @@
       {%- endif -%}
       <div class="about-container">
         {%- if section.settings.hero_title != blank -%}
-          <h1 class="about-heading">{{ section.settings.hero_title }}</h1>
+          <h1 class="about-heading">{{ section.settings.hero_title | replace_first: ', ', ',<br>' }}</h1>
         {%- endif -%}
       </div>
     </div>
@@ -30,8 +30,22 @@
     </div>
 
     <div class="accordings_container">
+      {%- comment -%}
+        The container is column-reverse, so the item shown at position N on screen is forloop.rindex N.
+        The first DOM item is shown last and gets the bottom divider.
+      {%- endcomment -%}
+      {%- assign open_position = section.settings.open_item_index | default: 0 | times: 1 -%}
       {% for item in about_avure %}
-        {%- render 'accordion', title: item.title.value, items: item.values.value -%}
+        {%- assign item_open = false -%}
+        {%- if forloop.rindex == open_position -%}
+          {%- assign item_open = true -%}
+        {%- endif -%}
+        {%- render 'accordion',
+          title: item.title.value,
+          items: item.values.value,
+          open: item_open,
+          last: forloop.first
+        -%}
       {% endfor %}
     </div>
   </div>
@@ -54,14 +68,15 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 4rem;
+      gap: 1.5rem;
       .about-us-values__slogen {
         font-family: var(--text-font-accent);
         font-weight: 500;
       }
       .about-us-values_lable {
         font-family: var(--text-font-primary);
-        font-weight: 600;
+        font-weight: 700;
+        text-transform: uppercase;
       }
       .accordings_container {
         display: flex;
@@ -113,8 +128,12 @@
   }
   .about-heading {
     font-family: var(--text-font-primary);
-    font-weight: 500;
+    font-weight: 700;
+    text-transform: uppercase;
     width: 90%;
+    max-width: 320px;
+    margin-inline: auto;
+    text-wrap: balance;
   }
 {%- endstylesheet -%}
 
@@ -156,6 +175,28 @@
     text-align: {{ section.settings.values_title_alignment }};
   }
 
+  /* Accordion rows: ~40px high, 1px #222 dividers, 14px +/- icon */
+  #shopify-section-{{ section.id }} .accordings_container .accordion {
+    border-top: 1px solid #222;
+  }
+  #shopify-section-{{ section.id }} .accordings_container .accordion.last {
+    border-bottom: 1px solid #222;
+  }
+  #shopify-section-{{ section.id }} .accordings_container .accordion-title {
+    padding: 10px 0;
+    min-height: 40px;
+    font-family: var(--text-font-secondary);
+    font-weight: 500;
+    text-align: left;
+  }
+  #shopify-section-{{ section.id }} .accordings_container .accordion-icon {
+    flex: 0 0 14px;
+    width: 14px;
+  }
+  #shopify-section-{{ section.id }} .accordings_container .accordion[open]::details-content {
+    margin-bottom: 0.75rem;
+  }
+
   /* Accordion titles (flex row with the icon, so no alignment setting) */
   #shopify-section-{{ section.id }} .accordings_container .accordion-title {
     font-size: {{ section.settings.accordion_title_size }}px;
@@ -168,6 +209,10 @@
     text-align: {{ section.settings.accordion_item_alignment }};
   }
   #shopify-section-{{ section.id }} .accordings_container .accordion > ul li {
+    {%- comment -%} "Left" renders justified, which the alignment picker can't offer {%- endcomment -%}
+    text-align: {% if section.settings.accordion_item_alignment == 'left' %}justify{% else %}{{ section.settings.accordion_item_alignment }}{% endif %};
+    color: var(--avure-black-900);
+    font-family: var(--text-font-secondary);
     font-size: {{ section.settings.accordion_item_size }}px;
     letter-spacing: {{ section.settings.accordion_item_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.accordion_item_line_height | divided_by: 100.0 }};
@@ -196,16 +241,27 @@
     { "type": "text", "id": "slogen", "label": "About us values slogen", "default": "Skincare for Sensitive Skin." },
     { "type": "text", "id": "about_us_values_lable", "label": "About us values lable", "default": "About avure" },
 
+    {
+      "type": "range",
+      "id": "open_item_index",
+      "label": "Open item index",
+      "info": "Position of the accordion item that starts open (1 = top). 0 keeps all closed.",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+
     { "type": "header", "content": "Label typography" },
     {
       "type": "range",
       "id": "label_size",
       "label": "Font size",
-      "min": 10,
+      "min": 9,
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 9
     },
     {
       "type": "range",
@@ -238,7 +294,7 @@
       "max": 120,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 20
     },
     {
       "type": "range",
@@ -267,11 +323,11 @@
       "type": "range",
       "id": "slogan_size",
       "label": "Font size",
-      "min": 10,
+      "min": 9,
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 9
     },
     {
       "type": "range",
@@ -304,7 +360,7 @@
       "max": 72,
       "step": 1,
       "unit": "px",
-      "default": 24
+      "default": 16
     },
     {
       "type": "range",
@@ -337,7 +393,7 @@
       "max": 72,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 16
     },
     {
       "type": "range",
@@ -369,7 +425,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 12
     },
     {
       "type": "range",
