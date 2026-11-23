@@ -1,0 +1,19 @@
+{%- comment -%}
+  Product badge over card images.
+  Text comes from `badge` when passed (e.g. a section-specific label), otherwise from the
+  product metafield custom.badge. Renders nothing when both are empty.
+  "LIMITED OFFER" is shown in red, every other badge in navy.
+  Usage: {% render 'product-badge', product: product, badge: optional_text %}
+{%- endcomment -%}
+{%- assign badge_text = badge | default: product.metafields.custom.badge.value | strip -%}
+{%- if badge_text != blank -%}
+  {%- assign badge_key = badge_text | downcase -%}
+  <p
+    class="badge-title"
+    {% if badge_key == 'limited offer' %}
+      style="--badge-color: var(--avure-error);"
+    {% endif %}
+  >
+    {{ badge_text | escape }}
+  </p>
+{%- endif -%}

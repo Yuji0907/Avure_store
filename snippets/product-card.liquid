@@ -1,5 +1,4 @@
 {%- assign variant = product.selected_or_first_available_variant -%}
-{%- assign badge = product.metafields.custom.variant_badge.value -%}
 
 {%- assign in_cart = false -%}
 {%- for item in cart.items -%}
@@ -41,7 +40,7 @@
         </a>
       {%- endif -%}
 
-      <p class="badge-title">{{ badge }}</p>
+      {%- render 'product-badge', product: product, badge: badge_override -%}
     </div>
   </div>
 
@@ -91,7 +90,7 @@
           font-size: var(--type-caption);
           font-family: var(--text-primary);
           text-transform: uppercase;
-          color: var(--text-color-brand);
+          color: var(--badge-color, var(--text-color-brand));
           font-weight: 600;
         }
 

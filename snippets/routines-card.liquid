@@ -1,109 +1,127 @@
+{%- assign rating = product.metafields.custom.rating.value.rating | times: 1 -%}
 <li class="routines-card_container">
-    {% comment %} <a href=""></a> {% endcomment %}
-    <a href="{{ product.url }}" class="routines-card-image_container">
-        <div class="routines-card_header">
-            <div class="shopping-cart-add_container">
-                {% assign badge = product.metafields.custom.variant_badge.value %}
-                {% render 'shopping-cart-add' %}
-            </div>
-            <p class="badge-title">{{badge}}</p>
-        </div>
-
-        {{ product.featured_image | image_url: width: 500 | image_tag :
-            class:"routines-card-image"
-        }}
-        
-    </a>
-    <div class="routines-card-info">
-        <h1 >{{product.title}}</h1>
-        <p >{{product.description}}</p>
-        <span class="price">
-            {{ product.price | money }}
-            {% if product.compare_at_price > product.price %}
-                <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
-            {% endif %}
-        </span>
+  <a href="{{ product.url }}" class="routines-card-image_container" aria-label="{{ product.title | escape }}">
+    <div class="routines-card_header">
+      <div class="routines-card_badge">
+        {%- render 'product-badge', product: product -%}
+      </div>
+      <div class="shopping-cart-add_container">
+        {% render 'shopping-cart-add' %}
+      </div>
     </div>
+
+    {{ product.featured_image | image_url: width: 500 | image_tag: class: 'routines-card-image', alt: product.title }}
+  </a>
+
+  <div class="routines-card-info">
+    <div class="routines-card_title-row">
+      <h3 class="routines-card_title">{{ product.title }}</h3>
+      {%- render 'rating', rating: rating -%}
+    </div>
+    <p class="routines-card_description">{{ product.description | strip_html | strip }}</p>
+    <span class="price">
+      {{ product.price | money }}
+      {% if product.compare_at_price > product.price %}
+        <s class="compare-at-price">{{ product.compare_at_price | money }}</s>
+      {% endif %}
+    </span>
+  </div>
 </li>
 
 {%- stylesheet -%}
-    .routines-card_container{
-        scroll-snap-align: start;
+  .routines-card_container {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    .routines-card-image_container {
+      position: relative;
+      display: block;
+
+      .routines-card_header {
+        position: absolute;
+        inset: 0 0 auto 0;
+        z-index: 1;
         display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        gap: .6rem;
-      /* height: 10vh; */
-        .routines-card-image_container{
-            /* position: relative; */
-            /* aspect-ratio: 2/3; */
-            /* max-height: 500px; */
-            .routines-card_header{
-                position: absolute;
-                    right:0;
-                    left:0;
-                display: flex;
-                flex-direction: row-reverse;
-                align-items: center;
-                justify-content: space-between;
-                margin: 1.5rem;
-                    .badge-title{
-                        font-size: var(--type-caption);
-                        font-family: var( --text-primary);
-                        text-transform: uppercase;
-                        color: var(--text-color-brand);
-                        font-weight: 600;
-                    }
-                .shopping-cart-add_container{
-                    background-color: var(--surface-icon);
-                    padding: .8rem;
-                    border-radius: .8rem;
-                    /* width: 100%; */
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        pointer-events: none;
 
-                    .shopping-cart-add{
-                        /* padding: 2rem; */
-                    }
-                }
-            }
-
-            .routines-card-image{
-                    width: 100%;
-                    height: auto;
-                    /* height: 100%; */
-                object-fit: contain;
-            }
+        .badge-title {
+          font-size: var(--type-caption);
+          font-family: var(--text-font-primary);
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--badge-color, var(--text-color-brand));
         }
-        .routines-card-info{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            font-family: var(--text-font-secondary);
-            /* text-align: center; */
-            >h1{
-                font-size: var(--type-product);
-                font-family: var(--text-font-secondary);
-                color: var(--text-color-secondary);
-                font-weight: 600;
-            }
-            >p{
-                font-family: var(--text-font-secondary);
-                color: var(--text-color-muted);
-                font-size: var(--type-body-sm);
-
-            }
-            .price{
-                font-size: var(--type-body);
-                color: var(--text-color-secondary);
-                font-weight: 600;
-
-            }
-            .compare-at-price{
-                color: var(--text-color-disabled);
-                font-weight: 400;
-                scale: .5;
-
-            }
+        .shopping-cart-add_container {
+          margin-left: auto;
+          background-color: var(--surface-icon);
+          padding: 0.6rem;
+          border-radius: 0.8rem;
         }
+      }
+
+      .routines-card-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
     }
 
+    .routines-card-info {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.25rem;
+      font-family: var(--text-font-secondary);
+
+      .routines-card_title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .routines-card_title {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-family: var(--text-font-primary);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.3;
+        text-transform: uppercase;
+        color: var(--text-color-secondary);
+      }
+      .rating {
+        flex: 0 0 auto;
+      }
+      .routines-card_description {
+        font-size: 11px;
+        line-height: 1.45;
+        color: var(--text-color-muted);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+      }
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        margin-top: 0.25rem;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+      }
+      .compare-at-price {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--text-color-disabled);
+      }
+    }
+  }
 {%- endstylesheet -%}

@@ -14,6 +14,15 @@
       "name": "shop by concern",
       "settings": {}
     },
+    "faqs": {
+      "type": "faqs",
+      "name": "faqs",
+      "settings": {
+        "eyebrow": "//FAQS",
+        "heading": "Hello again",
+        "first_open": true
+      }
+    },
     "skincare_steps": {
       "type": "skincare-steps",
       "name": "skincare steps",
@@ -22,6 +31,7 @@
   },
   "order": [
     "shop_concern",
+    "faqs",
     "skincare_steps"
   ]
 }

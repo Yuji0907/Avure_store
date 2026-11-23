@@ -5,7 +5,7 @@
     {% for product in all_products %}
         {% assign badge = product.metafields.custom.variant_badge.value %}
         {% if badge contains  "Best Sellers" %}
-            {%- render 'product-card', product: product -%}
+            {%- render 'product-card', product: product, badge_override: 'Best Sellers' -%}
         {% endif %}
 
     {% endfor %}
