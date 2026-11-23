@@ -88,7 +88,7 @@
         pointer-events: none; /* clicks pass through to the image link */
 
         .badge-title {
-          font-size: 1.2rem;
+          font-size: var(--type-caption);
           font-family: var(--text-primary);
           text-transform: uppercase;
           color: var(--text-color-brand);
@@ -142,21 +142,19 @@
       align-items: center;
       font-family: var(--text-font-secondary);
       text-align: center;
-      text-transform: capitalize;
 
       > h3 {
-        font-size: 1.8rem;
-        font-family: var(--text-primary);
-        text-transform: uppercase;
+        font-size: var(--type-product);
+        font-family: var(--text-font-primary);
         color: var(--text-color-secondary);
         font-weight: 600;
       }
       > p {
-        font-family: var(--text-font-primary);
-        font-size: 1.3rem;
+        font-family: var(--text-font-secondary);
+        font-size: var(--type-body-sm);
       }
       .price {
-        font-size: 1.5rem;
+        font-size: var(--type-body);
         color: var(--text-color-secondary);
         font-weight: 600;
       }

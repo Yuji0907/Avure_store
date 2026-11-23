@@ -43,38 +43,56 @@
     --font-size-8xl: 5rem; /* 80px */
     --font-size-9xl: 7.5rem; /* 120px */
 
-    /* text size */
-    --text-caption: clamp(var(--font-size-xs), 0.8vw, var(--font-size-sm));
+    /* ------------------------------------------------------------------
+       Type scale (mobile-first, matches the 384px Figma frames).
+       Fixed px values: no vw-based sizing. Desktop sizes can be layered
+       on later with media queries that override these tokens.
+       ------------------------------------------------------------------ */
+    --type-display: 32px; /* hero headline */
+    --type-title: 24px; /* section / page titles */
+    --type-subtitle: 18px; /* sub-titles, cart totals */
+    --type-product: 14px; /* product / card names */
+    --type-body: 13px; /* body copy, descriptions */
+    --type-body-sm: 12px; /* secondary body, card descriptions */
+    --type-label: 11px; /* eyebrows, links, tags */
+    --type-caption: 10px; /* badges, small mono captions */
+    --type-button: 12px; /* button text */
+    --type-input: 13px; /* form fields */
+
+    --leading-none: 1;
+    --leading-tight: 1.15;
+    --leading-normal: 1.45;
+    --tracking-eyebrow: 0.08em;
+
+    /* Legacy tokens: still used across sections, now mapped onto the scale above */
+    --text-caption: var(--type-caption);
     --text-caption-leading: var(--leading-normal);
 
-    --text-sm: clamp(var(--font-size-sm), 1vw, var(--font-size-md));
+    --text-sm: var(--type-body-sm);
     --text-sm-leading: var(--leading-normal);
 
-    --text-body: clamp(var(--font-size-md), 1.2vw, var(--font-size-lg));
+    --text-body: var(--type-body);
     --text-body-leading: var(--leading-normal);
 
-    --text-lg: clamp(var(--font-size-lg), 1.5vw, var(--font-size-xl));
-    --text-lg-leading: 1;
+    --text-lg: var(--type-body);
+    --text-lg-leading: var(--leading-normal);
 
-    /* heading  */
-    --text-h4: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+    --text-h4: var(--type-body-sm);
     --text-h4-leading: var(--leading-normal);
 
-    --text-h3: clamp(var(--font-size-2xl), 3.5vw, var(--font-size-3xl));
-    --text-h3-leading: 1.1;
+    --text-h3: var(--type-product);
+    --text-h3-leading: var(--leading-tight);
 
-    --text-h2: clamp(var(--font-size-3xl), 5vw, var(--font-size-4xl));
-    --text-h2-leading: var(--leading-normal);
+    --text-h2: var(--type-subtitle);
+    --text-h2-leading: var(--leading-tight);
 
-    --text-h1: clamp(var(--font-size-5xl), 2.5vw, var(--font-size-6xl));
-    --text-h1-leading: 1.1;
+    --text-h1: var(--type-title);
+    --text-h1-leading: var(--leading-tight);
 
-    /* --text-big: var(--font-size-8xl); */
-
-    --text-hero: clamp(var(--font-size-6xl), var(--font-vw-800), var(--font-size-8xl));
+    --text-hero: var(--type-display);
     --text-hero-leading: var(--leading-none);
 
-    --text-masive: clamp(var(--font-size-7xl), var(--font-vw-900), var(--font-size-9xl));
+    --text-masive: 40px;
     --text-masive-leading: var(--leading-none);
 
     /* Brand colors */
@@ -111,8 +129,71 @@
     --border-color-dark: var(--avure-black-950);
 
     /* Brand fonts */
-    --text-font-accent: 'JetBrainsMono';
-    --text-font-primary: 'Acumin Variable Concept';
-    --text-font-secondary: 'Poppins';
+    --text-font-accent: 'JetBrainsMono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --text-font-primary: 'Acumin Variable Concept', 'Poppins', system-ui, sans-serif;
+    --text-font-secondary: 'Poppins', system-ui, sans-serif;
+
+    /* Aliases: several sections reference these names, which were never defined */
+    --text-primary: var(--text-font-primary);
+    --text-secondary: var(--text-font-secondary);
+    --font-heading: var(--text-font-primary);
+  }
+
+  /* ------------------------------------------------------------------
+     Global typography
+     ------------------------------------------------------------------ */
+  body {
+    font-family: var(--text-font-secondary);
+    font-size: var(--type-body);
+    line-height: var(--leading-normal);
+  }
+
+  /* Eyebrow labels, announcement bar and small captions: the only places
+     that use JetBrains Mono + uppercase. Add .u-eyebrow to opt new elements in. */
+  .u-eyebrow,
+  .announcement-text,
+  .hero-label,
+  .colab-hero-label,
+  .about-label,
+  .about-us-values__slogen,
+  .science-avure_subheading,
+  .testimonials-title,
+  .feedbacks-title,
+  .diagnostics__eyebrow,
+  .pharma-colab__eyebrow,
+  .skincare-steps__heading,
+  .skin-type__header h4,
+  .product-info_container .category,
+  .diagnostics__container > h3 {
+    font-family: var(--text-font-accent);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+  }
+
+  /* ------------------------------------------------------------------
+     Horizontal sliders: keep scrolling, hide the scrollbar
+     ------------------------------------------------------------------ */
+  .u-no-scrollbar,
+  .product-slider_container,
+  .concern-slider_container,
+  .routines-slider__track,
+  .science-behind-avure_carousel,
+  .product-ingredients-carousel,
+  [class*='carousel'],
+  [class*='slider_container'],
+  [class*='slider__track'] {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .u-no-scrollbar::-webkit-scrollbar,
+  .product-slider_container::-webkit-scrollbar,
+  .concern-slider_container::-webkit-scrollbar,
+  .routines-slider__track::-webkit-scrollbar,
+  .science-behind-avure_carousel::-webkit-scrollbar,
+  .product-ingredients-carousel::-webkit-scrollbar,
+  [class*='carousel']::-webkit-scrollbar,
+  [class*='slider_container']::-webkit-scrollbar,
+  [class*='slider__track']::-webkit-scrollbar {
+    display: none;
   }
 {% endstylesheet %}

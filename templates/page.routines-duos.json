@@ -1,14 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-		"routine_duos":{
-			"type":"routines-duos",
-			"name":"routines duos"	
-		},
-		"concern_intro":{
-			"type":"shop-by-concern-intro",
-			"name":"shop by concern intro"	
-		},
-
+    "routine_duos": {
+      "type": "routines-duos",
+      "name": "routines duos",
+      "settings": {}
+    },
+    "concern_intro": {
+      "type": "shop-by-concern-intro",
+      "name": "shop by concern intro",
+      "settings": {}
+    }
   },
-  "order": ["routine_duos","concern_intro"]
+  "order": [
+    "routine_duos",
+    "concern_intro"
+  ]
 }

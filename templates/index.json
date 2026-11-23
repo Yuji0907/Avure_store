@@ -1,57 +1,71 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-
-      }
+      "settings": {}
     },
     "hero_products": {
-			"type": "hero-products",
-			"name": "Hero Products"
-		},
-		"routines": {
-			"type": "routines_slider",
-			"name": "routines"
-		},
-		"colab": {
-			"type": "colab",
-			"name": "colab"
-		},
-		"concern_intro":{
-			"type":"shop-by-concern-intro",
-			"name":"shop by concern intro"	
-		},
-		"skincare_type": {
-			"type": "skincare-type",
-			"name": "Skincare Type"
-		},
-		"skincare_steps": {
-			"type": "skincare-steps",
-			"settings": {
-				
-			}
-		},
-		"testimonials": {
-			"type": "testimonials",
-			"settings": {
-				
-			}
-		}
-		,
-		"customer_feedbacks": {
-			"type": "customer-feedbacks",
-			"settings": {
-				
-			}
-		},		
-		"science":{
-			"type":"science-behinde-avure",
-			"name":"science behinde avure"	
-		},
+      "type": "hero-products",
+      "name": "Hero Products",
+      "settings": {}
+    },
+    "routines": {
+      "type": "routines_slider",
+      "name": "routines",
+      "settings": {}
+    },
+    "colab": {
+      "type": "colab",
+      "name": "colab",
+      "settings": {}
+    },
+    "concern_intro": {
+      "type": "shop-by-concern-intro",
+      "name": "shop by concern intro",
+      "settings": {}
+    },
+    "skincare_type": {
+      "type": "skincare-type",
+      "name": "Skincare Type",
+      "settings": {}
+    },
+    "skincare_steps": {
+      "type": "skincare-steps",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "customer_feedbacks": {
+      "type": "customer-feedbacks",
+      "settings": {}
+    },
+    "science": {
+      "type": "science-behinde-avure",
+      "name": "science behinde avure",
+      "settings": {}
+    }
   },
-  "order": ["hero", "hero_products","routines","colab","concern_intro",
-  "skincare_type", "skincare_steps",
-"testimonials",
-"customer_feedbacks","science",]
+  "order": [
+    "hero",
+    "hero_products",
+    "routines",
+    "colab",
+    "concern_intro",
+    "skincare_type",
+    "skincare_steps",
+    "testimonials",
+    "customer_feedbacks",
+    "science"
+  ]
 }
