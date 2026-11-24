@@ -1,29 +1,38 @@
 {%- comment -%}
-  Skin diagnostic quiz: question steps (blocks) -> final step (email + phone) -> analyse screen -> results.
-  Everything after the questions runs client-side; answers, the current view and the results are kept
-  in sessionStorage so a refresh resumes where the visitor was.
+  Skin diagnostic: questions -> email + phone -> analyse screen -> results.
 
-  The recommendation logic reads answers by question key. Keep these keys on the matching blocks:
-  concerns, feel, shine, react, breakouts, age, steps.
+  Data and logic come from the client's quiz (English versions in assets/):
+    avure-catalog.js    window.AVURE_CATALOG   13 products, actives, usage, compatibility rules
+    avure-questions.js  window.AvureQuestions  EXPRESS = the 14 screens used here
+    avure-engine.js     window.AvureEngine     analyze(answers, catalog) -> profile, routine, products
+  This section only renders those questions with the existing screens and shows the engine's result.
+  Answers and the current view are kept in sessionStorage, so a refresh resumes where the visitor was.
+
+  Product pickers (one per catalog id) link the engine's products to Shopify products: their variant id
+  and price override the catalog values at runtime. A product without a picker cannot be added to cart.
 {%- endcomment -%}
 
-{%- assign slot_ids = 'cleanser_oil,cleanser_gel,exfoliant_salicylic,exfoliant_glycolic,serum_niacinamide,serum_azelaic,serum_vitc,serum_hyaluronic,serum_retinol,moisturizer,spf' | split: ',' -%}
+{%- assign catalog_ids = 'gel_cleanser,oil_cleanser,salicylic_2,glycolic_7,niacinamide_10,retinol_02,vitc_15,azelaic_15,ha_2,eye_contour,day_cream,spf_gelcream,spf_stick' | split: ',' -%}
+
+<script src="{{ 'avure-catalog.js' | asset_url }}" defer></script>
+<script src="{{ 'avure-questions.js' | asset_url }}" defer></script>
+<script src="{{ 'avure-engine.js' | asset_url }}" defer></script>
 
 <section
   class="skin-quiz"
   id="SkinQuiz-{{ section.id }}"
   data-skin-quiz
   data-view="quiz"
-  data-storage-key="avure-skin-diagnostic-{{ section.id }}"
+  data-storage-key="avure-skin-diagnostic-v2-{{ section.id }}"
 >
-  {%- comment -%} ---------- Questions ---------- {%- endcomment -%}
+  {%- comment -%} ---------- Questions (rendered from AvureQuestions.EXPRESS) ---------- {%- endcomment -%}
   <div class="skin-quiz__view skin-quiz__view--quiz" data-view-panel="quiz">
     <div
       class="skin-quiz__progress"
       role="progressbar"
       aria-label="Diagnostic progress"
       aria-valuemin="1"
-      aria-valuemax="{{ section.blocks.size | plus: 1 }}"
+      aria-valuemax="15"
       aria-valuenow="1"
       data-progress
     >
@@ -32,45 +41,11 @@
 
     <p class="skin-quiz__eyebrow">{{ section.settings.label | escape }}</p>
 
-    {%- for block in section.blocks -%}
-      {%- assign max_choices = block.settings.max_choices | default: 1 -%}
-      <fieldset
-        class="skin-quiz__step"
-        data-step
-        data-key="{{ block.settings.key | handleize }}"
-        data-max="{{ max_choices }}"
-        data-why="{{ block.settings.why_text | escape }}"
-        {% unless forloop.first %}
-          hidden
-        {% endunless %}
-        {{ block.shopify_attributes }}
-      >
-        <legend class="skin-quiz__question">{{ block.settings.question | escape }}</legend>
-        {%- if block.settings.subtitle != blank -%}
-          <p class="skin-quiz__subtitle">({{ block.settings.subtitle | escape }})</p>
-        {%- endif -%}
-
-        <div class="skin-quiz__chips">
-          {%- assign answer_lines = block.settings.answers | newline_to_br | split: '<br />' -%}
-          {%- for line in answer_lines -%}
-            {%- assign line = line | strip -%}
-            {%- if line == blank -%}{%- continue -%}{%- endif -%}
-            {%- assign parts = line | split: '|' -%}
-            {%- assign answer_label = parts[0] | strip -%}
-            {%- assign answer_value = parts[1] | default: answer_label | strip | handleize -%}
-            <button
-              type="button"
-              class="skin-quiz__chip"
-              aria-pressed="false"
-              data-value="{{ answer_value | escape }}"
-              data-label="{{ answer_label | escape }}"
-            >
-              {{- answer_label | escape -}}
-            </button>
-          {%- endfor -%}
-        </div>
-      </fieldset>
-    {%- endfor -%}
+    <fieldset class="skin-quiz__step" data-step>
+      <legend class="skin-quiz__question" data-question></legend>
+      <p class="skin-quiz__subtitle" data-subtitle hidden></p>
+      <div class="skin-quiz__chips" data-chips></div>
+    </fieldset>
 
     <div class="skin-quiz__footer">
       <p class="skin-quiz__error" data-error role="alert" hidden>{{ section.settings.error_text | escape }}</p>
@@ -91,10 +66,13 @@
     <p class="skin-quiz__eyebrow">{{ section.settings.label | escape }}</p>
     <h2 class="skin-quiz__question">{{ section.settings.final_heading | escape }}</h2>
 
+    {%- comment -%}
+      Privacy: only the email, the phone (in the note) and the tags "diagnostic, skin-<type>" are sent.
+      Never add quiz, pregnancy or medical answers to this form.
+    {%- endcomment -%}
     {%- form 'customer', class: 'skin-quiz__form' -%}
       <input type="hidden" name="contact[tags]" value="diagnostic" data-tags>
       <input type="hidden" name="contact[note]" value="" data-note>
-      <input type="hidden" name="contact[accepts_marketing]" value="true">
 
       <label class="skin-quiz__field">
         <span class="visually-hidden">Email</span>
@@ -168,10 +146,6 @@
         <div class="skin-quiz__panel-body">
           <h3 class="skin-quiz__type-name" data-type-name></h3>
           <p class="skin-quiz__type-text" data-type-text></p>
-          <div class="skin-quiz__sensitive" data-sensitive hidden>
-            <h4>Easily irritated</h4>
-            <p>{{ section.settings.sensitive_text | escape }}</p>
-          </div>
         </div>
       </details>
 
@@ -191,6 +165,7 @@
               <span>Total</span>
               <span data-total></span>
             </div>
+            <p class="skin-quiz__routine-note" data-routine-note hidden></p>
             <p class="skin-quiz__error" data-cart-error role="alert" hidden></p>
             <button type="button" class="avure-button" data-add-routine></button>
           </div>
@@ -202,12 +177,36 @@
         <div class="skin-quiz__panel-body skin-quiz__how">
           <div>
             <h4>Morning</h4>
-            <ol data-morning></ol>
+            <ol class="skin-quiz__steps" data-morning></ol>
           </div>
           <div>
             <h4>Evening</h4>
-            <ol data-evening></ol>
+            <ol class="skin-quiz__steps" data-evening></ol>
           </div>
+        </div>
+      </details>
+
+      <details class="skin-quiz__panel">
+        <summary>Ingredients for your skin <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
+        <div class="skin-quiz__panel-body">
+          <ul class="skin-quiz__ingredients" data-ingredients></ul>
+        </div>
+      </details>
+
+      <details class="skin-quiz__panel">
+        <summary>How to start <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
+        <div class="skin-quiz__panel-body skin-quiz__start">
+          <ol class="skin-quiz__phases" data-phases></ol>
+          <div data-schedule-wrap>
+            <h4>Your evenings</h4>
+            <ul class="skin-quiz__schedule" data-schedule></ul>
+          </div>
+          <div class="skin-quiz__sensitive" data-medical-wrap hidden>
+            <h4>Good to know</h4>
+            <ul data-medical></ul>
+          </div>
+          <ul class="skin-quiz__notes" data-notes></ul>
+          <p class="skin-quiz__disclaimer" data-disclaimer></p>
         </div>
       </details>
 
@@ -215,34 +214,26 @@
     </div>
   </div>
 
-  {%- comment -%} Data for the client-side logic {%- endcomment -%}
-  <script type="application/json" data-quiz-config>
+  {%- comment -%} Shopify products picked for each catalog id: {catalogId: {variantId, title, image, url, price, available}} {%- endcomment -%}
+  <script type="application/json" data-quiz-products>
     {
-      "types": {
-        "dry": { "name": {{ section.settings.type_dry_name | json }}, "text": {{ section.settings.type_dry_text | json }} },
-        "normal": { "name": {{ section.settings.type_normal_name | json }}, "text": {{ section.settings.type_normal_text | json }} },
-        "oily": { "name": {{ section.settings.type_oily_name | json }}, "text": {{ section.settings.type_oily_text | json }} },
-        "combination": { "name": {{ section.settings.type_combination_name | json }}, "text": {{ section.settings.type_combination_text | json }} }
-      },
-      "products": {
-        {%- assign first_product = true -%}
-        {%- for slot in slot_ids -%}
-          {%- assign slot_product = section.settings[slot] -%}
-          {%- if slot_product != blank -%}
-            {%- assign slot_variant = slot_product.selected_or_first_available_variant -%}
-            {%- unless first_product -%},{%- endunless -%}
-            {%- assign first_product = false -%}
-            {{ slot | json }}: {
-              "title": {{ slot_product.title | json }},
-              "url": {{ slot_product.url | json }},
-              "image": {{ slot_product.featured_image | image_url: width: 240 | json }},
-              "variantId": {{ slot_variant.id | json }},
-              "price": {{ slot_variant.price | json }},
-              "available": {{ slot_variant.available | json }}
-            }
-          {%- endif -%}
-        {%- endfor -%}
-      }
+      {%- assign first_product = true -%}
+      {%- for catalog_id in catalog_ids -%}
+        {%- assign mapped = section.settings[catalog_id] -%}
+        {%- if mapped != blank -%}
+          {%- assign mapped_variant = mapped.selected_or_first_available_variant -%}
+          {%- unless first_product -%},{%- endunless -%}
+          {%- assign first_product = false -%}
+          {{ catalog_id | json }}: {
+            "variantId": {{ mapped_variant.id | json }},
+            "title": {{ mapped.title | json }},
+            "image": {{ mapped.featured_image | image_url: width: 240 | json }},
+            "url": {{ mapped.url | json }},
+            "price": {{ mapped_variant.price | json }},
+            "available": {{ mapped_variant.available | json }}
+          }
+        {%- endif -%}
+      {%- endfor -%}
     }
   </script>
 </section>
@@ -253,384 +244,476 @@
     if (!root || root.dataset.ready) return;
     root.dataset.ready = 'true';
 
-    const config = JSON.parse(root.querySelector('[data-quiz-config]').textContent);
-    const STORAGE = root.dataset.storageKey;
-    const PHONE_RE = /^(\+213|0)[567]\d{8}$/;
-    const ANALYSE_MS = 2500;
-
-    const steps = Array.from(root.querySelectorAll('[data-step]'));
-    const fill = root.querySelector('[data-progress-fill]');
-    const progress = root.querySelector('[data-progress]');
-    const error = root.querySelector('[data-error]');
-    const whyText = root.querySelector('[data-why-text]');
-    const prevBtn = root.querySelector('[data-previous]');
-    const nextBtn = root.querySelector('[data-next]');
-
-    /* ---------- state ---------- */
-    const load = () => {
-      try {
-        return JSON.parse(sessionStorage.getItem(STORAGE)) || {};
-      } catch (e) {
-        return {};
-      }
+    const boot = () => {
+      if (!window.AvureQuestions || !window.AvureEngine || !window.AVURE_CATALOG) return false;
+      start();
+      return true;
     };
-    let state = Object.assign({ view: 'quiz', step: 0, answers: {} }, load());
-    const save = () => {
-      try {
-        sessionStorage.setItem(STORAGE, JSON.stringify(state));
-      } catch (e) {}
-    };
+    if (!boot()) {
+      document.addEventListener('DOMContentLoaded', boot, { once: true });
+      window.addEventListener('load', () => root.dataset.started || boot(), { once: true });
+    }
 
-    /* Sections placed after the quiz (science, footer) only show with the results.
-       CSS (:has) handles it; this is a fallback for browsers without :has. Looked up lazily,
-       because those sections are parsed after this script runs. */
-    const followingSections = () => {
-      const list = [];
-      let sib = root.closest('.shopify-section')?.nextElementSibling;
-      while (sib) {
-        if (sib.classList.contains('shopify-section')) list.push(sib);
-        sib = sib.nextElementSibling;
-      }
-      return list;
-    };
+    function start() {
+      if (root.dataset.started) return;
+      root.dataset.started = 'true';
 
-    const showView = (view) => {
-      state.view = view;
-      root.dataset.view = view;
-      root.querySelectorAll('[data-view-panel]').forEach((panel) => {
-        panel.hidden = panel.dataset.viewPanel !== view;
-      });
-      if (!CSS.supports('selector(:has(*))')) {
-        followingSections().forEach((s) => (s.style.display = view === 'results' ? '' : 'none'));
-      }
-      save();
-      window.scrollTo({ top: 0 });
-    };
+      const Q = window.AvureQuestions;
+      const Engine = window.AvureEngine;
+      const STORAGE = root.dataset.storageKey;
+      const PHONE_RE = /^(\+213|0)[567]\d{8}$/;
+      const ANALYSE_MS = 2500;
+      const SEVERITY = [[1, 'Mild'], [2, 'Moderate'], [3, 'Marked']];
+      const ACNE_TYPE = Q.QUESTIONS.find((q) => q.id === 'acne_type');
+      const ERROR_TEXT = root.querySelector('[data-error]').textContent;
 
-    /* ---------- questions ---------- */
-    const answersFor = (key) => state.answers[key] || [];
-    const first = (key) => answersFor(key)[0];
-
-    const renderStep = () => {
-      steps.forEach((step, i) => {
-        step.hidden = i !== state.step;
-        const chosen = answersFor(step.dataset.key);
-        step.querySelectorAll('.skin-quiz__chip').forEach((chip) => {
-          chip.setAttribute('aria-pressed', String(chosen.includes(chip.dataset.value)));
-        });
-      });
-      const current = steps[state.step];
-      whyText.textContent = current ? current.dataset.why || '' : '';
-      const total = steps.length + 1;
-      fill.style.width = `${((state.step + 1) / total) * 100}%`;
-      progress.setAttribute('aria-valuenow', String(state.step + 1));
-      prevBtn.disabled = state.step === 0;
-      error.hidden = true;
-    };
-
-    root.addEventListener('click', (e) => {
-      const chip = e.target.closest('.skin-quiz__chip');
-      if (!chip) return;
-      const step = chip.closest('[data-step]');
-      const key = step.dataset.key;
-      const max = Number(step.dataset.max) || 1;
-      let chosen = answersFor(key).slice();
-      const value = chip.dataset.value;
-
-      if (chosen.includes(value)) {
-        chosen = chosen.filter((v) => v !== value);
-      } else if (max === 1) {
-        chosen = [value];
-      } else if (chosen.length < max) {
-        chosen.push(value); // selection order = order of importance
-      } else {
-        return;
-      }
-      state.answers[key] = chosen;
-      save();
-      renderStep();
-    });
-
-    prevBtn.addEventListener('click', () => {
-      if (state.step > 0) {
-        state.step -= 1;
-        save();
-        renderStep();
-      }
-    });
-
-    nextBtn.addEventListener('click', () => {
-      const current = steps[state.step];
-      if (answersFor(current.dataset.key).length === 0) {
-        error.hidden = false;
-        return;
-      }
-      if (state.step < steps.length - 1) {
-        state.step += 1;
-        save();
-        renderStep();
-      } else {
-        showView('final');
-      }
-    });
-
-    /* ---------- recommendation logic ---------- */
-    const computeResults = () => {
-      const concerns = answersFor('concerns');
-      const feel = first('feel') || 'normal';
-      const shine = first('shine');
-      const react = first('react');
-      const age = first('age');
-
-      let type = feel;
-      if (feel === 'normal' && shine === 'tzone') type = 'combination';
-      if (feel === 'normal' && shine === 'all') type = 'oily';
-      if (!config.types[type]) type = 'normal';
-
-      const sensitive = react === 'high' || (react === 'mid' && concerns.includes('redness'));
-
-      const cleanse = type === 'dry' || type === 'normal' ? 'cleanser_oil' : 'cleanser_gel';
-
-      let treat = 'serum_hyaluronic';
-      switch (concerns[0]) {
-        case 'breakouts':
-        case 'pores':
-          treat = 'serum_niacinamide';
-          break;
-        case 'redness':
-          treat = 'serum_azelaic';
-          break;
-        case 'dull':
-          treat = sensitive ? 'serum_niacinamide' : 'serum_vitc';
-          break;
-        case 'dryness':
-          treat = 'serum_hyaluronic';
-          break;
-        case 'lines':
-          treat = (age === '35' || age === '45') && !sensitive ? 'serum_retinol' : 'serum_hyaluronic';
-          break;
-        default:
-          treat = 'serum_hyaluronic';
-      }
-
-      const complete = first('steps') === 'complete';
-      let exfoliate = null;
-      if (complete && !sensitive) {
-        exfoliate = type === 'oily' || first('breakouts') === 'often' ? 'exfoliant_salicylic' : 'exfoliant_glycolic';
-      }
-
-      const routine = complete
-        ? [
-            ['cleanse', cleanse],
-            exfoliate && ['exfoliate', exfoliate],
-            ['treat', treat],
-            ['moisturize', 'moisturizer'],
-            ['protect', 'spf'],
-          ]
-        : [
-            ['cleanse', cleanse],
-            ['treat', treat],
-            ['protect', 'spf'],
-          ];
-
-      return {
-        type,
-        sensitive,
-        concerns,
-        routine: routine.filter(Boolean).map(([step, slot]) => ({ step, slot })),
+      /* Short "why this question" text for each express screen */
+      const WHY = {
+        age: 'Skin needs change with age, and some actives are only suggested from 25.',
+        x_profile: 'Some actives are not recommended during pregnancy or breastfeeding, so we leave them out.',
+        medical: 'If a dermatologist is treating your skin, we keep the routine gentle and compatible with their care.',
+        after_cleanse: 'How your bare skin feels after washing is the clearest sign of your skin type.',
+        midday_shine: 'Where shine shows up tells normal, combination and oily skin apart.',
+        tight_day: 'Tightness through the day is the main sign of dehydration.',
+        x_reactivity: 'Reactive skin gets gentler products and a slower start.',
+        redness_freq: 'Frequent redness changes which actives are suitable for you.',
+        current_irritation: 'Irritated skin needs soothing before any active is added.',
+        x_actives: 'Your experience with actives decides how quickly we introduce them.',
+        concerns: 'Your concerns decide which treatments go into your routine.',
+        x_intensity: 'How marked each concern is sets the strength and pace of your routine.',
+        sun_exposure: 'Time in the sun decides how much protection you need.',
+        current_products: 'Knowing what you already use avoids doubling up and over-exfoliating.',
       };
-    };
 
-    /* ---------- final step ---------- */
-    const finalForm = root.querySelector('.skin-quiz__form');
-    finalForm.noValidate = true;
-    const finalError = root.querySelector('[data-final-error]');
-    const normalizePhone = (raw) => {
-      let v = raw.replace(/[\s.-]/g, '');
-      if (/^[567]\d{8}$/.test(v)) v = '0' + v;
-      if (/^213/.test(v)) v = '+' + v;
-      return v;
-    };
+      /* Catalog with Shopify variant ids and prices from the theme editor (prices in DA) */
+      const shopifyProducts = JSON.parse(root.querySelector('[data-quiz-products]').textContent || '{}');
+      const catalog = JSON.parse(JSON.stringify(window.AVURE_CATALOG));
+      catalog.products.forEach((p) => {
+        const m = shopifyProducts[p.id];
+        if (!m) return;
+        p.variants[0] = { ...p.variants[0], variantId: m.variantId, price: Math.round(m.price / 100) };
+      });
 
-    root.querySelector('[data-final-previous]').addEventListener('click', () => {
-      state.step = steps.length - 1;
-      showView('quiz');
+      const $ = (sel) => root.querySelector(sel);
+      const fill = $('[data-progress-fill]');
+      const progress = $('[data-progress]');
+      const error = $('[data-error]');
+      const prevBtn = $('[data-previous]');
+      const nextBtn = $('[data-next]');
+
+      /* ---------- state ---------- */
+      const load = () => {
+        try {
+          return JSON.parse(sessionStorage.getItem(STORAGE)) || {};
+        } catch (e) {
+          return {};
+        }
+      };
+      let state = Object.assign({ view: 'quiz', step: 0, answers: {} }, load());
+      const save = () => {
+        try {
+          sessionStorage.setItem(STORAGE, JSON.stringify(state));
+        } catch (e) {}
+      };
+      const A = () => state.answers;
+
+      /* Sections after the quiz (science, footer) only show with the results.
+         CSS (:has) handles it; this is a fallback for browsers without :has. */
+      const followingSections = () => {
+        const list = [];
+        let sib = root.closest('.shopify-section')?.nextElementSibling;
+        while (sib) {
+          if (sib.classList.contains('shopify-section')) list.push(sib);
+          sib = sib.nextElementSibling;
+        }
+        return list;
+      };
+      const showView = (view) => {
+        state.view = view;
+        root.dataset.view = view;
+        root.querySelectorAll('[data-view-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.viewPanel !== view;
+        });
+        if (!CSS.supports('selector(:has(*))')) {
+          followingSections().forEach((s) => (s.style.display = view === 'results' ? '' : 'none'));
+        }
+        save();
+        window.scrollTo({ top: 0 });
+      };
+
+      /* ---------- question flow ---------- */
+      const EXPRESS = Q.EXPRESS;
+      const visible = (q) => !q.showIf || q.showIf(A());
+      const visibleSteps = () => EXPRESS.filter(visible);
+      const nextIndex = (from, dir) => {
+        let i = from + dir;
+        while (i >= 0 && i < EXPRESS.length && !visible(EXPRESS[i])) i += dir;
+        return i;
+      };
+
+      const el = (tag, cls, text) => {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text != null) node.textContent = text;
+        return node;
+      };
+      const chip = (label, pressed, data) => {
+        const b = el('button', 'skin-quiz__chip', label);
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(!!pressed));
+        Object.assign(b.dataset, data);
+        return b;
+      };
+
+      const isAnswered = (q) => {
+        const a = A();
+        switch (q.type) {
+          case 'single':
+            return Object.prototype.hasOwnProperty.call(a, q.id) && a[q.id] !== undefined;
+          case 'multi':
+          case 'concerns':
+            return Array.isArray(a[q.id]) && a[q.id].length > 0;
+          case 'intensity_all': {
+            const cs = a.concerns || [];
+            const ok = cs.every((c) => ((a.concernDetails || {})[c] || {}).severity);
+            return ok && (!cs.includes('acne') || !!a.acne_type);
+          }
+          default:
+            return true;
+        }
+      };
+
+      const renderStep = () => {
+        const q = EXPRESS[state.step];
+        const a = A();
+        $('[data-question]').textContent = q.label;
+        const sub = $('[data-subtitle]');
+        sub.hidden = !q.hint;
+        sub.textContent = q.hint ? `(${q.hint})` : '';
+        $('[data-why-text]').textContent = WHY[q.id] || q.hint || '';
+
+        const chips = $('[data-chips]');
+        chips.replaceChildren();
+        chips.classList.toggle('skin-quiz__chips--rows', q.type === 'intensity_all');
+
+        if (q.type === 'single') {
+          q.options.forEach(([value, label]) => chips.append(chip(label, a[q.id] === value, { kind: 'single', value })));
+        } else if (q.type === 'multi' || q.type === 'concerns') {
+          const chosen = a[q.id] || [];
+          q.options.forEach(([value, label]) => chips.append(chip(label, chosen.includes(value), { kind: q.type, value })));
+        } else if (q.type === 'intensity_all') {
+          const conLabel = (cid) => (Q.CONCERNS.find((c) => c.id === cid) || {}).label || cid;
+          (a.concerns || []).forEach((cid) => {
+            const row = el('div', 'skin-quiz__intensity');
+            row.append(el('p', 'skin-quiz__intensity-label', conLabel(cid)));
+            const group = el('div', 'skin-quiz__intensity-chips');
+            const sev = ((a.concernDetails || {})[cid] || {}).severity;
+            SEVERITY.forEach(([v, label]) => group.append(chip(label, sev === v, { kind: 'severity', concern: cid, value: v })));
+            row.append(group);
+            chips.append(row);
+          });
+          if ((a.concerns || []).includes('acne') && ACNE_TYPE) {
+            const row = el('div', 'skin-quiz__intensity');
+            row.append(el('p', 'skin-quiz__intensity-label', ACNE_TYPE.label));
+            const group = el('div', 'skin-quiz__intensity-chips');
+            ACNE_TYPE.options.forEach(([v, label]) => group.append(chip(label, a.acne_type === v, { kind: 'acne_type', value: v })));
+            row.append(group);
+            chips.append(row);
+          }
+        }
+
+        const steps = visibleSteps();
+        const pos = steps.indexOf(q);
+        const total = steps.length + 1; // + email step
+        fill.style.width = `${((pos + 1) / total) * 100}%`;
+        progress.setAttribute('aria-valuenow', String(pos + 1));
+        progress.setAttribute('aria-valuemax', String(total));
+        prevBtn.disabled = nextIndex(state.step, -1) < 0;
+        error.hidden = true;
+        error.textContent = ERROR_TEXT;
+      };
+
+      /* Answer handling, as in the client's UI */
+      root.querySelector('[data-chips]').addEventListener('click', (e) => {
+        const b = e.target.closest('.skin-quiz__chip');
+        if (!b) return;
+        const q = EXPRESS[state.step];
+        const a = A();
+        const kind = b.dataset.kind;
+        const value = b.dataset.value;
+
+        if (kind === 'single') {
+          a[q.id] = value;
+          const opt = q.options.find((o) => o[0] === value);
+          if (opt && opt[2]) Object.assign(a, opt[2]);
+        } else if (kind === 'multi') {
+          let list = (a[q.id] || []).slice();
+          if (list.includes(value)) list = list.filter((v) => v !== value);
+          else if (q.exclusive && value === q.exclusive) list = [value];
+          else list = list.filter((v) => v !== q.exclusive).concat(value);
+          a[q.id] = list;
+        } else if (kind === 'concerns') {
+          let list = (a.concerns || []).slice();
+          if (list.includes(value)) list = list.filter((v) => v !== value);
+          else if (list.length < (q.max || 3)) list.push(value);
+          else return;
+          a.concerns = list;
+          if (list.length) a.priority = list[0];
+          else delete a.priority;
+          if (!list.includes('acne')) delete a.acne_type;
+          if (a.concernDetails) {
+            Object.keys(a.concernDetails).forEach((cid) => {
+              if (!list.includes(cid)) delete a.concernDetails[cid];
+            });
+          }
+        } else if (kind === 'severity') {
+          a.concernDetails = a.concernDetails || {};
+          a.concernDetails[b.dataset.concern] = { ...(a.concernDetails[b.dataset.concern] || {}), severity: Number(value) };
+        } else if (kind === 'acne_type') {
+          a.acne_type = value;
+        }
+        save();
+        renderStep();
+      });
+
+      prevBtn.addEventListener('click', () => {
+        const i = nextIndex(state.step, -1);
+        if (i >= 0) {
+          state.step = i;
+          save();
+          renderStep();
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const q = EXPRESS[state.step];
+        if (!isAnswered(q)) {
+          error.hidden = false;
+          return;
+        }
+        const i = nextIndex(state.step, 1);
+        if (i < EXPRESS.length) {
+          state.step = i;
+          save();
+          renderStep();
+        } else {
+          showView('final');
+        }
+      });
+
+      /* ---------- engine ---------- */
+      const analyze = () =>
+        Engine.analyze({ ...A(), _asked: [...Q.EXPRESS_FIELDS, 'detail.severity'] }, catalog);
+
+      /* ---------- final step (only email, phone and tags are sent) ---------- */
+      const finalForm = root.querySelector('.skin-quiz__form');
+      finalForm.noValidate = true;
+      const finalError = $('[data-final-error]');
+      const normalizePhone = (raw) => {
+        let v = raw.replace(/[\s.-]/g, '');
+        if (/^[567]\d{8}$/.test(v)) v = '0' + v;
+        if (/^213/.test(v)) v = '+' + v;
+        return v;
+      };
+
+      $('[data-final-previous]').addEventListener('click', () => {
+        state.step = nextIndex(EXPRESS.length, -1);
+        showView('quiz');
+        renderStep();
+      });
+
+      finalForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = finalForm.querySelector('[data-email]');
+        const phone = normalizePhone(finalForm.querySelector('[data-phone]').value);
+        const problems = [];
+        if (!email.value.trim() || !email.checkValidity()) problems.push('Please enter a valid email.');
+        if (!PHONE_RE.test(phone)) problems.push('Please enter a valid phone number.');
+        if (problems.length) {
+          finalError.textContent = problems.join(' ');
+          finalError.hidden = false;
+          return;
+        }
+        finalError.hidden = true;
+
+        const type = analyze().profile.type;
+        finalForm.querySelector('[data-tags]').value = `diagnostic, skin-${type}`;
+        finalForm.querySelector('[data-note]').value = `Phone: ${phone}`;
+
+        // Fire and forget: the results never wait on the signup.
+        fetch(finalForm.action, { method: 'POST', body: new FormData(finalForm), credentials: 'same-origin' }).catch(
+          () => {}
+        );
+
+        showView('analyse');
+        setTimeout(() => {
+          renderResults();
+          showView('results');
+        }, ANALYSE_MS);
+      });
+
+      /* ---------- results ---------- */
+      const money = (da) => Number(da).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' DA';
+      const P = Object.fromEntries(catalog.products.map((p) => [p.id, p]));
+
+      const renderResults = () => {
+        const r = analyze();
+        const cards = Object.fromEntries(r.products.map((p) => [p.id, p]));
+
+        $('[data-type-name]').textContent = r.profile.label;
+        $('[data-type-text]').textContent = r.explanation;
+
+        $('[data-priorities]').replaceChildren(...r.priorities.map((p, i) => el('li', null, `${i + 1}. ${p.label}`)));
+
+        // Routine card
+        const list = $('[data-routine]');
+        list.replaceChildren(
+          ...r.products.map((item) => {
+            const m = shopifyProducts[item.id];
+            const li = el('li', 'skin-quiz__routine-item');
+            const link = el(m ? 'a' : 'span', 'skin-quiz__routine-link');
+            if (m) link.href = m.url;
+            if (m && m.image) {
+              const img = el('img');
+              img.src = m.image;
+              img.alt = '';
+              img.loading = 'lazy';
+              link.append(img);
+            }
+            const info = el('span', 'skin-quiz__routine-info');
+            info.append(el('span', 'skin-quiz__routine-step', `${item.when} · ${item.size}`));
+            info.append(el('span', 'skin-quiz__routine-title', item.name));
+            link.append(info);
+            const canBuy = m && m.available && m.variantId;
+            const price = canBuy
+              ? el('span', 'skin-quiz__routine-price', money(item.price))
+              : el('span', 'skin-quiz__routine-price is-unavailable', m ? 'Out of stock' : 'Coming soon');
+            li.append(link, price);
+            return li;
+          })
+        );
+        $('[data-total]').textContent = money(r.totalPrice);
+
+        const buyable = r.products.filter((p) => {
+          const m = shopifyProducts[p.id];
+          return m && m.available && m.variantId;
+        });
+        const buyTotal = buyable.reduce((s, p) => s + p.price, 0);
+        const addBtn = $('[data-add-routine]');
+        addBtn.textContent = `Add to cart - ${money(buyTotal)}`;
+        addBtn.disabled = buyable.length === 0;
+        addBtn.dataset.variants = JSON.stringify(buyable.map((p) => shopifyProducts[p.id].variantId));
+        const missing = r.products.length - buyable.length;
+        const note = $('[data-routine-note]');
+        note.hidden = missing === 0;
+        note.textContent =
+          missing === 0 ? '' : `${missing} product${missing > 1 ? 's' : ''} can't be bought online right now and ${missing > 1 ? 'are' : 'is'} not included in the cart total.`;
+
+        // How to use
+        const stepItem = (s) => {
+          const li = el('li');
+          const head = el('p', 'skin-quiz__step-head');
+          head.append(el('strong', null, s.name));
+          const tags = [s.role];
+          if (s.nightsOnly) tags.push('some evenings');
+          if (s.optional) tags.push('optional');
+          head.append(el('span', 'skin-quiz__step-tag', ` · ${tags.join(' · ')}`));
+          li.append(head);
+          const card = cards[s.id];
+          if (card && card.howTo) li.append(el('p', 'skin-quiz__step-text', card.howTo));
+          if (card && card.frequency && card.frequency !== 'Every day') li.append(el('p', 'skin-quiz__step-text', card.frequency));
+          return li;
+        };
+        $('[data-morning]').replaceChildren(...r.routine.AM.map(stepItem));
+        $('[data-evening]').replaceChildren(...r.routine.PM.map(stepItem));
+
+        // Ingredients: key actives of the routine products
+        const actives = new Map();
+        r.products.forEach((item) => {
+          (P[item.id].keyActives || []).forEach((k) => {
+            const pct = typeof k.pct === 'number' ? `${k.pct}%` : '';
+            const key = `${k.name}|${pct}`;
+            if (!actives.has(key)) actives.set(key, { name: k.name, pct, products: [] });
+            actives.get(key).products.push(item.name);
+          });
+        });
+        $('[data-ingredients]').replaceChildren(
+          ...[...actives.values()].map((x) => {
+            const li = el('li');
+            li.append(el('strong', null, x.pct ? `${x.name} ${x.pct}` : x.name));
+            li.append(el('span', 'skin-quiz__step-text', ` in ${x.products.join(', ')}`));
+            return li;
+          })
+        );
+
+        // How to start
+        $('[data-phases]').replaceChildren(
+          ...r.routine.progression.map((ph) => {
+            const li = el('li');
+            li.append(el('strong', null, ph.weeks));
+            li.append(el('p', 'skin-quiz__step-text', ph.focus));
+            return li;
+          })
+        );
+        const nameOf = (id) => (P[id] ? P[id].name : id);
+        const hasEveningActives = r.routine.schedule.some((n) => n.items.length);
+        $('[data-schedule-wrap]').hidden = !hasEveningActives;
+        $('[data-schedule]').replaceChildren(
+          ...r.routine.schedule.map((n) => {
+            const li = el('li');
+            li.append(el('span', 'skin-quiz__day', n.day));
+            li.append(el('span', null, n.items.length ? n.items.map(nameOf).join(' + ') : 'Rest evening: basics only'));
+            return li;
+          })
+        );
+        $('[data-medical-wrap]').hidden = r.medicalNotes.length === 0;
+        $('[data-medical]').replaceChildren(...r.medicalNotes.map((t) => el('li', null, t)));
+        $('[data-notes]').replaceChildren(...r.notes.map((t) => el('li', null, t)));
+        $('[data-disclaimer]').textContent = r.disclaimer;
+      };
+
+      $('[data-add-routine]').addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const cartError = $('[data-cart-error]');
+        const ids = JSON.parse(btn.dataset.variants || '[]');
+        if (!ids.length) return;
+        btn.disabled = true;
+        cartError.hidden = true;
+        try {
+          const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+          const res = await fetch(`${rootUrl}cart/add.js`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: ids.map((id) => ({ id, quantity: 1 })) }),
+          });
+          if (!res.ok) throw new Error((await res.json()).description || 'Could not add to cart');
+          const cart = await (await fetch(`${rootUrl}cart.js`)).json();
+          document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+          if (window.openCartDrawer) window.openCartDrawer();
+        } catch (err) {
+          cartError.textContent = err.message;
+          cartError.hidden = false;
+        } finally {
+          btn.disabled = false;
+        }
+      });
+
+      $('[data-restart]').addEventListener('click', () => {
+        state = { view: 'quiz', step: 0, answers: {} };
+        save();
+        renderStep();
+        showView('quiz');
+      });
+
+      /* ---------- resume ---------- */
+      if (!(state.step >= 0 && state.step < EXPRESS.length) || !visible(EXPRESS[state.step])) state.step = 0;
       renderStep();
-    });
-
-    finalForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = finalForm.querySelector('[data-email]');
-      const phone = normalizePhone(finalForm.querySelector('[data-phone]').value);
-      const problems = [];
-      if (!email.value.trim() || !email.checkValidity()) problems.push('Please enter a valid email.');
-      if (!PHONE_RE.test(phone)) problems.push('Please enter a valid phone number.');
-      if (problems.length) {
-        finalError.textContent = problems.join(' ');
-        finalError.hidden = false;
-        return;
-      }
-      finalError.hidden = true;
-
-      const results = computeResults();
-      state.results = results;
-      finalForm.querySelector('[data-tags]').value = [
-        'diagnostic',
-        `skin-${results.type}`,
-        `sensitive-${results.sensitive ? 'yes' : 'no'}`,
-      ].join(', ');
-      finalForm.querySelector('[data-note]').value = `Phone: ${phone}`;
-
-      // Fire and forget: the results never wait on the signup.
-      fetch(finalForm.action, { method: 'POST', body: new FormData(finalForm), credentials: 'same-origin' }).catch(
-        () => {}
-      );
-
-      showView('analyse');
-      setTimeout(() => {
+      if (state.view === 'results' || state.view === 'analyse') {
         renderResults();
         showView('results');
-      }, ANALYSE_MS);
-    });
-
-    /* ---------- results ---------- */
-    const STEP_LABELS = {
-      cleanse: 'Cleanse',
-      exfoliate: 'Exfoliate',
-      treat: 'Treat',
-      moisturize: 'Moisturize',
-      protect: 'Protect',
-    };
-    const money = (cents) =>
-      (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' DA';
-    const el = (tag, cls, text) => {
-      const node = document.createElement(tag);
-      if (cls) node.className = cls;
-      if (text != null) node.textContent = text;
-      return node;
-    };
-    const labelFor = (key, value) =>
-      root.querySelector(`[data-step][data-key="${key}"] [data-value="${CSS.escape(value)}"]`)?.dataset.label || value;
-
-    const renderResults = () => {
-      const results = state.results || computeResults();
-      state.results = results;
-      const type = config.types[results.type];
-
-      root.querySelector('[data-type-name]').textContent = type.name;
-      root.querySelector('[data-type-text]').textContent = type.text;
-      root.querySelector('[data-sensitive]').hidden = !results.sensitive;
-
-      const priorities = root.querySelector('[data-priorities]');
-      priorities.replaceChildren(
-        ...results.concerns.map((value, i) => el('li', null, `${i + 1}. ${labelFor('concerns', value)}`))
-      );
-
-      const items = results.routine
-        .map((r) => ({ ...r, product: config.products[r.slot] }))
-        .filter((r) => r.product);
-
-      const list = root.querySelector('[data-routine]');
-      list.replaceChildren(
-        ...items.map((item) => {
-          const li = el('li', 'skin-quiz__routine-item');
-          const link = el('a', 'skin-quiz__routine-link');
-          link.href = item.product.url;
-          if (item.product.image) {
-            const img = el('img');
-            img.src = item.product.image;
-            img.alt = '';
-            img.loading = 'lazy';
-            link.append(img);
-          }
-          const info = el('span', 'skin-quiz__routine-info');
-          info.append(el('span', 'skin-quiz__routine-step', STEP_LABELS[item.step]));
-          info.append(el('span', 'skin-quiz__routine-title', item.product.title));
-          link.append(info);
-          const price = item.product.available
-            ? el('span', 'skin-quiz__routine-price', money(item.product.price))
-            : el('span', 'skin-quiz__routine-price is-unavailable', 'Out of stock');
-          li.append(link, price);
-          return li;
-        })
-      );
-
-      const buyable = items.filter((i) => i.product.available && i.product.variantId);
-      const total = buyable.reduce((sum, i) => sum + i.product.price, 0);
-      root.querySelector('[data-total]').textContent = money(total);
-      const addBtn = root.querySelector('[data-add-routine]');
-      addBtn.textContent = `Add to cart - ${money(total)}`;
-      addBtn.disabled = buyable.length === 0;
-      addBtn.dataset.variants = JSON.stringify(buyable.map((i) => i.product.variantId));
-
-      // How to use, built from the routine
-      const titleFor = (step) => items.find((i) => i.step === step)?.product.title;
-      const morning = [];
-      const evening = [];
-      const add = (arr, step, note) => {
-        const t = titleFor(step);
-        if (t) arr.push(note ? `${t} (${note})` : t);
-      };
-      const treatSlot = items.find((i) => i.step === 'treat')?.slot;
-      add(morning, 'cleanse');
-      if (treatSlot && treatSlot !== 'serum_retinol') add(morning, 'treat');
-      add(morning, 'moisturize');
-      add(morning, 'protect');
-      add(evening, 'cleanse');
-      add(evening, 'exfoliate', '2–3 evenings a week');
-      if (treatSlot !== 'serum_vitc') add(evening, 'treat');
-      add(evening, 'moisturize');
-      const fillList = (selector, entries) => {
-        const list = root.querySelector(selector);
-        list.replaceChildren(...entries.map((t) => el('li', null, t)));
-        list.parentElement.hidden = entries.length === 0;
-      };
-      fillList('[data-morning]', morning);
-      fillList('[data-evening]', evening);
-      save();
-    };
-
-    root.querySelector('[data-add-routine]').addEventListener('click', async (e) => {
-      const btn = e.currentTarget;
-      const cartError = root.querySelector('[data-cart-error]');
-      const ids = JSON.parse(btn.dataset.variants || '[]');
-      if (!ids.length) return;
-      btn.disabled = true;
-      cartError.hidden = true;
-      try {
-        const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-        const res = await fetch(`${rootUrl}cart/add.js`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: ids.map((id) => ({ id, quantity: 1 })) }),
-        });
-        if (!res.ok) throw new Error((await res.json()).description || 'Could not add to cart');
-        const cart = await (await fetch(`${rootUrl}cart.js`)).json();
-        document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
-        if (window.openCartDrawer) window.openCartDrawer();
-      } catch (err) {
-        cartError.textContent = err.message;
-        cartError.hidden = false;
-      } finally {
-        btn.disabled = false;
+      } else {
+        showView(state.view === 'final' ? 'final' : 'quiz');
       }
-    });
-
-    root.querySelector('[data-restart]').addEventListener('click', () => {
-      state = { view: 'quiz', step: 0, answers: {} };
-      save();
-      renderStep();
-      showView('quiz');
-    });
-
-    /* ---------- boot ---------- */
-    if (state.step >= steps.length) state.step = 0;
-    renderStep();
-    if (state.view === 'results' || state.view === 'analyse') {
-      renderResults();
-      showView('results');
-    } else {
-      showView(state.view === 'final' ? 'final' : 'quiz');
     }
   })();
 </script>
@@ -1045,17 +1128,121 @@
     text-decoration: underline;
     cursor: pointer;
   }
+
+  /* ---------- additions for the client quiz (new screen types / result blocks) ---------- */
+  .skin-quiz__chips--rows {
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+  .skin-quiz__intensity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .skin-quiz__intensity-label {
+    font-family: var(--text-font-primary);
+    font-size: var(--type-body-sm);
+    font-weight: 700;
+    text-align: center;
+  }
+  .skin-quiz__intensity-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .skin-quiz__routine-note {
+    font-size: var(--type-caption);
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__steps,
+  .skin-quiz__phases {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .skin-quiz__step-head {
+    font-size: var(--type-body-sm);
+  }
+  .skin-quiz__step-tag {
+    font-family: var(--text-font-accent);
+    font-size: var(--type-caption);
+    text-transform: uppercase;
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__step-text {
+    margin-top: 0.15rem;
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .skin-quiz__start {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .skin-quiz__schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .skin-quiz__schedule li {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .skin-quiz__day {
+    flex: 0 0 2.5rem;
+    font-family: var(--text-font-accent);
+    font-size: var(--type-label);
+    text-transform: uppercase;
+  }
+  .skin-quiz__notes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__disclaimer {
+    font-size: var(--type-caption);
+    color: var(--text-color-muted);
+  }
 {%- endstylesheet -%}
 
 {% schema %}
 {
   "name": "Skin diagnostic quiz",
   "settings": [
-    { "type": "text", "id": "label", "label": "Eyebrow", "default": "Skin diagnostic©" },
-    { "type": "text", "id": "why_heading", "label": "Why heading", "default": "Why this question" },
-    { "type": "text", "id": "error_text", "label": "No answer error", "default": "Please select an answer" },
-
-    { "type": "header", "content": "Final step" },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow",
+      "default": "Skin diagnostic©"
+    },
+    {
+      "type": "text",
+      "id": "why_heading",
+      "label": "Why heading",
+      "default": "Why this question"
+    },
+    {
+      "type": "text",
+      "id": "error_text",
+      "label": "No answer error",
+      "default": "Please select an answer"
+    },
+    {
+      "type": "header",
+      "content": "Final step"
+    },
     {
       "type": "text",
       "id": "final_heading",
@@ -1068,94 +1255,111 @@
       "label": "Consent text",
       "default": "<p>By clicking OK, you agree to receive your results and skincare tips by email. You can unsubscribe at any time.</p>"
     },
-
-    { "type": "header", "content": "Analyse screen" },
-    { "type": "image_picker", "id": "analyse_image", "label": "Image" },
-    { "type": "text", "id": "analyse_text", "label": "Text", "default": "Working out what your skin needs..." },
-
-    { "type": "header", "content": "Results" },
-    { "type": "image_picker", "id": "results_image", "label": "Hero image" },
-    { "type": "text", "id": "results_eyebrow", "label": "Eyebrow", "default": "//Your skin profile" },
-    { "type": "text", "id": "type_dry_name", "label": "Dry: name", "default": "Dry skin" },
     {
-      "type": "textarea",
-      "id": "type_dry_text",
-      "label": "Dry: description",
-      "default": "Your skin makes less oil than it needs, so it can feel tight and look flaky. Gentle cleansing and steady hydration matter most."
-    },
-    { "type": "text", "id": "type_normal_name", "label": "Normal: name", "default": "Normal skin" },
-    {
-      "type": "textarea",
-      "id": "type_normal_text",
-      "label": "Normal: description",
-      "default": "Your skin is mostly balanced: not too oily, not too dry. A simple routine keeps it that way."
-    },
-    { "type": "text", "id": "type_oily_name", "label": "Oily: name", "default": "Oily skin" },
-    {
-      "type": "textarea",
-      "id": "type_oily_text",
-      "label": "Oily: description",
-      "default": "Your skin makes extra oil across the face, which can lead to shine and clogged pores. Light textures and regular exfoliation help."
-    },
-    { "type": "text", "id": "type_combination_name", "label": "Combination: name", "default": "Combination skin" },
-    {
-      "type": "textarea",
-      "id": "type_combination_text",
-      "label": "Combination: description",
-      "default": "Your T-zone gets oily while your cheeks stay normal or dry. Balance is the goal: hydrate everywhere, control shine where it shows."
+      "type": "header",
+      "content": "Analyse screen"
     },
     {
-      "type": "textarea",
-      "id": "sensitive_text",
-      "label": "Easily irritated: text",
-      "default": "Your skin reacts quickly to new products. We kept your routine gentle and left out strong exfoliants."
+      "type": "image_picker",
+      "id": "analyse_image",
+      "label": "Image"
     },
-
-    { "type": "header", "content": "Routine products" },
-    { "type": "product", "id": "cleanser_oil", "label": "Cleanser: oil (dry / normal skin)" },
-    { "type": "product", "id": "cleanser_gel", "label": "Cleanser: gel (oily / combination skin)" },
-    { "type": "product", "id": "exfoliant_salicylic", "label": "Exfoliant: salicylic acid" },
-    { "type": "product", "id": "exfoliant_glycolic", "label": "Exfoliant: glycolic acid" },
-    { "type": "product", "id": "serum_niacinamide", "label": "Serum: niacinamide" },
-    { "type": "product", "id": "serum_azelaic", "label": "Serum: azelaic acid" },
-    { "type": "product", "id": "serum_vitc", "label": "Serum: vitamin C" },
-    { "type": "product", "id": "serum_hyaluronic", "label": "Serum: hyaluronic acid" },
-    { "type": "product", "id": "serum_retinol", "label": "Serum: retinol" },
-    { "type": "product", "id": "moisturizer", "label": "Moisturizer" },
-    { "type": "product", "id": "spf", "label": "Sunscreen (SPF)" }
-  ],
-  "blocks": [
     {
-      "type": "question",
-      "name": "Question",
-      "settings": [
-        { "type": "text", "id": "question", "label": "Question" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "info": "e.g. up to three, in order of importance" },
-        { "type": "textarea", "id": "why_text", "label": "Why this question" },
-        {
-          "type": "text",
-          "id": "key",
-          "label": "Key",
-          "info": "Used by the recommendation logic: concerns, feel, shine, react, breakouts, age, steps"
-        },
-        {
-          "type": "range",
-          "id": "max_choices",
-          "label": "Maximum answers",
-          "min": 1,
-          "max": 3,
-          "step": 1,
-          "default": 1
-        },
-        {
-          "type": "textarea",
-          "id": "answers",
-          "label": "Answers",
-          "info": "One per line, as label|value"
-        }
-      ]
+      "type": "text",
+      "id": "analyse_text",
+      "label": "Text",
+      "default": "Working out what your skin needs..."
+    },
+    {
+      "type": "header",
+      "content": "Results"
+    },
+    {
+      "type": "image_picker",
+      "id": "results_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "results_eyebrow",
+      "label": "Eyebrow",
+      "default": "//Your skin profile"
+    },
+    {
+      "type": "header",
+      "content": "Catalog products",
+      "info": "Link each product of the diagnostic catalog to a Shopify product. Its variant and price are used for the routine total and Add to cart. Products left empty show as \"Coming soon\"."
+    },
+    {
+      "type": "product",
+      "id": "gel_cleanser",
+      "label": "Hydrating Glow Gel Cleanser (gel_cleanser)"
+    },
+    {
+      "type": "product",
+      "id": "oil_cleanser",
+      "label": "Calming Antioxidant Oil Cleanser (oil_cleanser)"
+    },
+    {
+      "type": "product",
+      "id": "salicylic_2",
+      "label": "Salicylic Acid 2% Toner (salicylic_2)"
+    },
+    {
+      "type": "product",
+      "id": "glycolic_7",
+      "label": "Glycolic Acid 7% Toner (glycolic_7)"
+    },
+    {
+      "type": "product",
+      "id": "niacinamide_10",
+      "label": "Niacinamide 10% Serum (niacinamide_10)"
+    },
+    {
+      "type": "product",
+      "id": "retinol_02",
+      "label": "Retinol 0.2% Serum (retinol_02)"
+    },
+    {
+      "type": "product",
+      "id": "vitc_15",
+      "label": "Vitamin C 15% Serum (vitc_15)"
+    },
+    {
+      "type": "product",
+      "id": "azelaic_15",
+      "label": "Azelaic Acid 15% Gel-Serum (azelaic_15)"
+    },
+    {
+      "type": "product",
+      "id": "ha_2",
+      "label": "Hyaluronic Acid 2% Serum (ha_2)"
+    },
+    {
+      "type": "product",
+      "id": "eye_contour",
+      "label": "Eye Renew Complex (eye_contour)"
+    },
+    {
+      "type": "product",
+      "id": "day_cream",
+      "label": "Lift & Repair Day Cream (day_cream)"
+    },
+    {
+      "type": "product",
+      "id": "spf_gelcream",
+      "label": "UV Daily Defence+ Gel-Cream SPF50+ (spf_gelcream)"
+    },
+    {
+      "type": "product",
+      "id": "spf_stick",
+      "label": "UV Daily Defence+ Stick SPF50+ (spf_stick)"
     }
   ],
-  "presets": [{ "name": "Skin diagnostic quiz" }]
+  "presets": [
+    {
+      "name": "Skin diagnostic quiz"
+    }
+  ]
 }
 {% endschema %}
