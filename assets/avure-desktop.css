@@ -515,7 +515,8 @@
   }
   /* media: 2-column image grid, no slider / dots / thumbnails */
   body.template-product #MainContent .carousel-sm-wrraper,
-  body.template-product #MainContent .carousel-wrraper .break-points {
+  body.template-product #MainContent .carousel-wrraper .break-points,
+  body.template-product #MainContent .carousel-wrraper .gallery-arrow {
     display: none;
   }
   body.template-product #MainContent .carousel-wrraper .product-media_container {

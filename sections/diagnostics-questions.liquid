@@ -17,6 +17,15 @@
 <script src="{{ 'avure-catalog.js' | asset_url }}" defer></script>
 <script src="{{ 'avure-questions.js' | asset_url }}" defer></script>
 <script src="{{ 'avure-engine.js' | asset_url }}" defer></script>
+<script src="{{ 'avure-profile-texts.js' | asset_url }}" defer></script>
+
+{%- assign script_font = section.settings.script_font | default: 'Great Vibes' | strip -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family={{ script_font | escape | replace: ' ', '+' }}&display=swap"
+>
 
 <section
   class="skin-quiz"
@@ -126,8 +135,9 @@
     </div>
   </div>
 
-  {%- comment -%} ---------- Results ---------- {%- endcomment -%}
+  {%- comment -%} ---------- Results (Figma "Diagnostic Results") ---------- {%- endcomment -%}
   <div class="skin-quiz__view skin-quiz__view--results" data-view-panel="results" hidden>
+    {%- comment -%} a. Hero {%- endcomment -%}
     {%- if section.settings.results_image != blank -%}
       {{
         section.settings.results_image
@@ -139,48 +149,73 @@
     {%- endif -%}
 
     <div class="skin-quiz__results">
-      <p class="skin-quiz__eyebrow">{{ section.settings.results_eyebrow | escape }}</p>
+      {%- comment -%} b. Title + intro {%- endcomment -%}
+      <h2 class="skin-quiz__profile-title">{{ section.settings.results_title | escape }}</h2>
+      <p class="skin-quiz__intro">
+        <span data-intro></span>
+        <a class="skin-quiz__read-more" href="#SkinQuizProfile-{{ section.id }}" data-read-more>[Read more]</a>
+      </p>
 
+      {%- comment -%} c. Summary table {%- endcomment -%}
+      <table class="skin-quiz__summary">
+        <tbody>
+          <tr>
+            <th scope="row">Your skin type</th>
+            <td><ul data-summary-type></ul></td>
+          </tr>
+          <tr>
+            <th scope="row">Your priorities</th>
+            <td><ul data-summary-priorities></ul></td>
+          </tr>
+        </tbody>
+      </table>
+
+      {%- comment -%} d. Routine heading {%- endcomment -%}
+      <div class="skin-quiz__routine-head">
+        <p class="skin-quiz__eyebrow">{{ section.settings.routine_eyebrow | escape }}</p>
+        <h2 class="skin-quiz__section-title">{{ section.settings.routine_title | escape }}</h2>
+        <p class="skin-quiz__section-subtitle">{{ section.settings.routine_subtitle | escape }}</p>
+      </div>
+
+      {%- comment -%} e. Product cards {%- endcomment -%}
+      <ul class="skin-quiz__cards" data-cards></ul>
+
+      {%- comment -%} f. Routine box {%- endcomment -%}
+      <div class="skin-quiz__box">
+        <p class="skin-quiz__box-eyebrow">Your routine</p>
+        <p class="skin-quiz__box-title">Avure<sup data-count></sup></p>
+        <p class="skin-quiz__box-text">{{ section.settings.routine_box_text | escape }}</p>
+        {%- if section.settings.shipping_text != blank -%}
+          <p class="skin-quiz__box-shipping">{{ section.settings.shipping_text | escape }}</p>
+        {%- endif -%}
+        <p class="skin-quiz__routine-note" data-routine-note hidden></p>
+        <p class="skin-quiz__error" data-cart-error role="alert" hidden></p>
+        <button type="button" class="avure-button" data-add-routine></button>
+      </div>
+    </div>
+
+    {%- comment -%} g. Full-width image {%- endcomment -%}
+    {%- if section.settings.routine_image != blank -%}
+      {{
+        section.settings.routine_image
+        | image_url: width: 1600
+        | image_tag: class: 'skin-quiz__wide-image', loading: 'lazy', alt: ''
+      }}
+    {%- else -%}
+      <img class="skin-quiz__wide-image" src="{{ 'kit.png' | asset_url }}" alt="" width="1600" height="1000" loading="lazy">
+    {%- endif -%}
+
+    <div class="skin-quiz__results">
+      {%- comment -%} h. Accordions {%- endcomment -%}
       <details class="skin-quiz__panel" open>
-        <summary>Your skin type <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
-        <div class="skin-quiz__panel-body">
-          <h3 class="skin-quiz__type-name" data-type-name></h3>
-          <p class="skin-quiz__type-text" data-type-text></p>
-        </div>
-      </details>
-
-      <details class="skin-quiz__panel" open>
-        <summary>Your priorities <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
-        <div class="skin-quiz__panel-body">
-          <ul class="skin-quiz__priorities" data-priorities></ul>
-        </div>
-      </details>
-
-      <details class="skin-quiz__panel" open>
-        <summary>Your routine <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
-        <div class="skin-quiz__panel-body">
-          <div class="skin-quiz__routine-card">
-            <ul class="skin-quiz__routine" data-routine></ul>
-            <div class="skin-quiz__total">
-              <span>Total</span>
-              <span data-total></span>
-            </div>
-            <p class="skin-quiz__routine-note" data-routine-note hidden></p>
-            <p class="skin-quiz__error" data-cart-error role="alert" hidden></p>
-            <button type="button" class="avure-button" data-add-routine></button>
-          </div>
-        </div>
-      </details>
-
-      <details class="skin-quiz__panel">
         <summary>How to use <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
         <div class="skin-quiz__panel-body skin-quiz__how">
           <div>
-            <h4>Morning</h4>
+            <h4>[Morning]</h4>
             <ol class="skin-quiz__steps" data-morning></ol>
           </div>
           <div>
-            <h4>Evening</h4>
+            <h4>[Evening]</h4>
             <ol class="skin-quiz__steps" data-evening></ol>
           </div>
         </div>
@@ -207,6 +242,36 @@
           </div>
           <ul class="skin-quiz__notes" data-notes></ul>
           <p class="skin-quiz__disclaimer" data-disclaimer></p>
+        </div>
+      </details>
+    </div>
+
+    {%- comment -%} i. Full-width image {%- endcomment -%}
+    {%- if section.settings.profile_image != blank -%}
+      {{
+        section.settings.profile_image
+        | image_url: width: 1600
+        | image_tag: class: 'skin-quiz__wide-image', loading: 'lazy', alt: ''
+      }}
+    {%- else -%}
+      <img class="skin-quiz__wide-image" src="{{ 'about-image.png' | asset_url }}" alt="" width="1600" height="1000" loading="lazy">
+    {%- endif -%}
+
+    {%- comment -%} j. Detailed skin profile (texts: assets/avure-profile-texts.js) {%- endcomment -%}
+    <div class="skin-quiz__results skin-quiz__profile" id="SkinQuizProfile-{{ section.id }}">
+      <p class="skin-quiz__eyebrow">{{ section.settings.results_eyebrow | escape }}</p>
+
+      <details class="skin-quiz__panel" open>
+        <summary>Your skin type <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
+        <div class="skin-quiz__panel-body">
+          <ul class="skin-quiz__profile-list" data-profile-type></ul>
+        </div>
+      </details>
+
+      <details class="skin-quiz__panel">
+        <summary>Your priorities <span class="skin-quiz__panel-icon" aria-hidden="true"></span></summary>
+        <div class="skin-quiz__panel-body">
+          <ul class="skin-quiz__profile-list" data-profile-priorities></ul>
         </div>
       </details>
 
@@ -555,50 +620,107 @@
       /* ---------- results ---------- */
       const money = (da) => Number(da).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' DA';
       const P = Object.fromEntries(catalog.products.map((p) => [p.id, p]));
+      const TEXTS = window.AVURE_PROFILE_TEXTS || { types: {}, conditions: {}, concerns: {} };
+      const rootUrl = () => (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      const canBuy = (id) => {
+        const m = shopifyProducts[id];
+        return !!(m && m.available && m.variantId);
+      };
+      const typeLabel = (profile) =>
+        ((TEXTS.types[profile.type] || {}).label || `${profile.type} skin`) +
+        (profile.typeConfidence === 'low' ? ' (to be confirmed)' : '');
+      /* "sensitive" is implied by "very_sensitive": show only the stronger one */
+      const conditionsOf = (profile) =>
+        profile.conditions.filter((c) => c !== 'sensitive' || !profile.conditions.includes('very_sensitive'));
+      const concernLabel = (id, fallback) => (TEXTS.concerns[id] || {}).label || fallback || id;
+
+      const addToCart = async (variantIds) => {
+        const res = await fetch(`${rootUrl()}cart/add.js`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: variantIds.map((id) => ({ id, quantity: 1 })) }),
+        });
+        if (!res.ok) throw new Error((await res.json()).description || 'Could not add to cart');
+        const cart = await (await fetch(`${rootUrl()}cart.js`)).json();
+        document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+        return cart;
+      };
 
       const renderResults = () => {
         const r = analyze();
         const cards = Object.fromEntries(r.products.map((p) => [p.id, p]));
+        const nameOf = (id) => (P[id] ? P[id].name : id);
 
-        $('[data-type-name]').textContent = r.profile.label;
-        $('[data-type-text]').textContent = r.explanation;
+        // b. Intro
+        $('[data-intro]').textContent = r.explanation + ' ';
 
-        $('[data-priorities]').replaceChildren(...r.priorities.map((p, i) => el('li', null, `${i + 1}. ${p.label}`)));
+        // c. Summary table
+        $('[data-summary-type]').replaceChildren(
+          el('li', null, typeLabel(r.profile)),
+          ...conditionsOf(r.profile).map((c) => el('li', null, (TEXTS.conditions[c] || {}).label || c))
+        );
+        $('[data-summary-priorities]').replaceChildren(...r.priorities.map((p) => el('li', null, concernLabel(p.id, p.label))));
 
-        // Routine card
-        const list = $('[data-routine]');
-        list.replaceChildren(
+        // e. Product cards, in routine order
+        const priorityIds = r.priorities.map((p) => p.id);
+        $('[data-cards]').replaceChildren(
           ...r.products.map((item) => {
+            const product = P[item.id];
             const m = shopifyProducts[item.id];
-            const li = el('li', 'skin-quiz__routine-item');
-            const link = el(m ? 'a' : 'span', 'skin-quiz__routine-link');
-            if (m) link.href = m.url;
+            const li = el('li', 'skin-quiz__card');
+
+            const media = el(m ? 'a' : 'span', 'skin-quiz__card-media');
+            if (m) media.href = m.url;
             if (m && m.image) {
               const img = el('img');
               img.src = m.image;
-              img.alt = '';
+              img.alt = item.name;
               img.loading = 'lazy';
-              link.append(img);
+              media.append(img);
             }
-            const info = el('span', 'skin-quiz__routine-info');
-            info.append(el('span', 'skin-quiz__routine-step', `${item.when} · ${item.size}`));
-            info.append(el('span', 'skin-quiz__routine-title', item.name));
-            link.append(info);
-            const canBuy = m && m.available && m.variantId;
-            const price = canBuy
-              ? el('span', 'skin-quiz__routine-price', money(item.price))
-              : el('span', 'skin-quiz__routine-price is-unavailable', m ? 'Out of stock' : 'Coming soon');
-            li.append(link, price);
+            li.append(media);
+
+            const body = el('div', 'skin-quiz__card-body');
+            const title = el(m ? 'a' : 'span', 'skin-quiz__card-title', item.name);
+            if (m) title.href = m.url;
+            body.append(title);
+            const actives = (product.keyActives || []).slice(0, 2).map((k) => k.name.replace(/\s*\(.*\)$/, ''));
+            if (actives.length) body.append(el('p', 'skin-quiz__card-sub', actives.join(' / ')));
+
+            const targets = [...product.targets.primary, ...product.targets.secondary];
+            const topConcern = priorityIds.find((id) => targets.includes(id)) || targets[0];
+            const typeTag =
+              product.skinTypes.length >= 4
+                ? 'All skin types'
+                : product.skinTypes.includes(r.profile.type)
+                  ? (TEXTS.types[r.profile.type] || {}).label || r.profile.type
+                  : 'Selected skin types';
+            const tags = el('div', 'skin-quiz__card-tags');
+            const CATEGORY = { cleanser: 'Cleanser', exfoliant: 'Exfoliant', serum: 'Serum', eye: 'Eye care', moisturizer: 'Moisturizer', spf: 'Sun protection', spf_reapply: 'Sun protection' };
+            tags.append(el('span', 'skin-quiz__pill', topConcern ? concernLabel(topConcern, topConcern) : CATEGORY[product.category] || 'Daily care'));
+            tags.append(el('span', 'skin-quiz__pill', typeTag));
+            body.append(tags);
+
+            body.append(el('p', 'skin-quiz__card-text', item.mainBenefit || item.why || ''));
+
+            const foot = el('div', 'skin-quiz__card-foot');
+            foot.append(el('span', 'skin-quiz__card-price', canBuy(item.id) ? money(item.price) : m ? 'Out of stock' : 'Coming soon'));
+            if (canBuy(item.id)) {
+              const add = el('button', 'skin-quiz__card-add', 'Add');
+              add.type = 'button';
+              add.dataset.addOne = m.variantId;
+              foot.append(add);
+            }
+            body.append(foot);
+            li.append(body);
             return li;
           })
         );
-        $('[data-total]').textContent = money(r.totalPrice);
 
-        const buyable = r.products.filter((p) => {
-          const m = shopifyProducts[p.id];
-          return m && m.available && m.variantId;
-        });
+        // f. Routine box
+        const buyable = r.products.filter((p) => canBuy(p.id));
         const buyTotal = buyable.reduce((s, p) => s + p.price, 0);
+        $('[data-count]').textContent = `[${String(r.products.length).padStart(3, '0')}]`;
         const addBtn = $('[data-add-routine]');
         addBtn.textContent = `Add to cart - ${money(buyTotal)}`;
         addBtn.disabled = buyable.length === 0;
@@ -607,21 +729,17 @@
         const note = $('[data-routine-note]');
         note.hidden = missing === 0;
         note.textContent =
-          missing === 0 ? '' : `${missing} product${missing > 1 ? 's' : ''} can't be bought online right now and ${missing > 1 ? 'are' : 'is'} not included in the cart total.`;
+          missing === 0 ? '' : `${missing} product${missing > 1 ? 's' : ''} can't be bought online right now and ${missing > 1 ? 'are' : 'is'} not included in this total.`;
 
-        // How to use
+        // h. How to use: "<step role>, <product name>. Why: <reason>"
         const stepItem = (s) => {
+          const extra = [s.nightsOnly ? 'some evenings' : '', s.optional ? 'optional' : ''].filter(Boolean);
           const li = el('li');
-          const head = el('p', 'skin-quiz__step-head');
-          head.append(el('strong', null, s.name));
-          const tags = [s.role];
-          if (s.nightsOnly) tags.push('some evenings');
-          if (s.optional) tags.push('optional');
-          head.append(el('span', 'skin-quiz__step-tag', ` · ${tags.join(' · ')}`));
-          li.append(head);
-          const card = cards[s.id];
-          if (card && card.howTo) li.append(el('p', 'skin-quiz__step-text', card.howTo));
-          if (card && card.frequency && card.frequency !== 'Every day') li.append(el('p', 'skin-quiz__step-text', card.frequency));
+          const line = el('p', 'skin-quiz__step-head');
+          line.append(el('strong', null, `${s.role}${extra.length ? ` (${extra.join(', ')})` : ''}, ${s.name}.`));
+          const why = (cards[s.id] || {}).why;
+          if (why) line.append(el('span', 'skin-quiz__step-text', ` Why: ${why}`));
+          li.append(line);
           return li;
         };
         $('[data-morning]').replaceChildren(...r.routine.AM.map(stepItem));
@@ -655,9 +773,7 @@
             return li;
           })
         );
-        const nameOf = (id) => (P[id] ? P[id].name : id);
-        const hasEveningActives = r.routine.schedule.some((n) => n.items.length);
-        $('[data-schedule-wrap]').hidden = !hasEveningActives;
+        $('[data-schedule-wrap]').hidden = !r.routine.schedule.some((n) => n.items.length);
         $('[data-schedule]').replaceChildren(
           ...r.routine.schedule.map((n) => {
             const li = el('li');
@@ -670,8 +786,55 @@
         $('[data-medical]').replaceChildren(...r.medicalNotes.map((t) => el('li', null, t)));
         $('[data-notes]').replaceChildren(...r.notes.map((t) => el('li', null, t)));
         $('[data-disclaimer]').textContent = r.disclaimer;
+
+        // j. Detailed profile (draft texts in assets/avure-profile-texts.js)
+        const profileItem = (label, entry) => {
+          const li = el('li');
+          li.append(el('p', 'skin-quiz__profile-label', label));
+          if (entry && entry.what) li.append(el('p', null, entry.what));
+          if (entry && entry.helps) li.append(el('p', null, `What helps: ${entry.helps}`));
+          if (entry && entry.easy) li.append(el('p', null, `Go easy on: ${entry.easy}`));
+          if (entry && entry.text) li.append(el('p', null, entry.text));
+          return li;
+        };
+        $('[data-profile-type]').replaceChildren(
+          profileItem(typeLabel(r.profile), TEXTS.types[r.profile.type]),
+          ...conditionsOf(r.profile).map((c) => profileItem((TEXTS.conditions[c] || {}).label || c, TEXTS.conditions[c]))
+        );
+        $('[data-profile-priorities]').replaceChildren(
+          ...r.priorities.map((p) => profileItem(concernLabel(p.id, p.label), TEXTS.concerns[p.id]))
+        );
       };
 
+      // [Read more] -> detailed profile
+      $('[data-read-more]').addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = root.querySelector(e.currentTarget.getAttribute('href'));
+        if (!target) return;
+        target.querySelectorAll('details').forEach((d, i) => i === 0 && (d.open = true));
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // e. Add a single product
+      $('[data-cards]').addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-add-one]');
+        if (!btn || btn.classList.contains('is-added')) return;
+        btn.disabled = true;
+        const cartError = $('[data-cart-error]');
+        cartError.hidden = true;
+        try {
+          await addToCart([Number(btn.dataset.addOne)]);
+          btn.classList.add('is-added');
+          btn.textContent = 'Added ✓';
+        } catch (err) {
+          cartError.textContent = err.message;
+          cartError.hidden = false;
+        } finally {
+          btn.disabled = false;
+        }
+      });
+
+      // f. Add the whole routine
       $('[data-add-routine]').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const cartError = $('[data-cart-error]');
@@ -680,15 +843,11 @@
         btn.disabled = true;
         cartError.hidden = true;
         try {
-          const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-          const res = await fetch(`${rootUrl}cart/add.js`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: ids.map((id) => ({ id, quantity: 1 })) }),
+          await addToCart(ids);
+          root.querySelectorAll('[data-add-one]').forEach((b) => {
+            b.classList.add('is-added');
+            b.textContent = 'Added ✓';
           });
-          if (!res.ok) throw new Error((await res.json()).description || 'Could not add to cart');
-          const cart = await (await fetch(`${rootUrl}cart.js`)).json();
-          document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
           if (window.openCartDrawer) window.openCartDrawer();
         } catch (err) {
           cartError.textContent = err.message;
@@ -719,6 +878,9 @@
 </script>
 
 {% style %}
+  #SkinQuiz-{{ section.id }} .skin-quiz__profile-title {
+    font-family: '{{ script_font | escape }}', cursive;
+  }
   #SkinQuiz-{{ section.id }} {
     --skin-quiz-plus: url("{{ 'plus-small.svg' | asset_url }}");
     --skin-quiz-minus: url("{{ 'minus-small.svg' | asset_url }}");
@@ -1009,16 +1171,6 @@
     font-size: var(--type-body-sm);
     line-height: var(--leading-normal);
   }
-  .skin-quiz__type-name {
-    font-family: var(--text-font-primary);
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .skin-quiz__type-text {
-    margin-top: 0.35rem;
-    color: var(--text-color-muted);
-    text-align: justify;
-  }
   .skin-quiz__sensitive {
     margin-top: 0.75rem;
     padding: 0.75rem;
@@ -1032,82 +1184,6 @@
     letter-spacing: var(--tracking-eyebrow);
     text-transform: uppercase;
     margin-bottom: 0.25rem;
-  }
-  .skin-quiz__priorities {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-weight: 500;
-  }
-  .skin-quiz__routine-card {
-    padding: 1rem;
-    border-radius: 12px;
-    background: var(--bg-elevated);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .skin-quiz__routine {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .skin-quiz__routine-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-  .skin-quiz__routine-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    min-width: 0;
-  }
-  .skin-quiz__routine-link img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 6px;
-    background: var(--bg-light);
-  }
-  .skin-quiz__routine-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  .skin-quiz__routine-step {
-    font-family: var(--text-font-accent);
-    font-size: var(--type-caption);
-    letter-spacing: var(--tracking-eyebrow);
-    text-transform: uppercase;
-    color: var(--text-color-muted);
-  }
-  .skin-quiz__routine-title {
-    font-family: var(--text-font-primary);
-    font-size: 13px;
-    font-weight: 700;
-  }
-  .skin-quiz__routine-price {
-    flex-shrink: 0;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .skin-quiz__routine-price.is-unavailable {
-    font-family: var(--text-font-accent);
-    font-size: var(--type-caption);
-    text-transform: uppercase;
-    color: var(--text-color-muted);
-  }
-  .skin-quiz__total {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--avure-black-300);
-    font-weight: 700;
-  }
-  .skin-quiz__routine-card .avure-button {
-    min-height: 48px;
   }
   .skin-quiz__how {
     display: grid;
@@ -1215,6 +1291,242 @@
     font-size: var(--type-caption);
     color: var(--text-color-muted);
   }
+
+  /* ---------- results (Figma "Diagnostic Results") ---------- */
+  .skin-quiz__results + .skin-quiz__wide-image,
+  .skin-quiz__wide-image + .skin-quiz__results {
+    margin-top: 0;
+  }
+  .skin-quiz__profile-title {
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--text-color-secondary);
+  }
+  .skin-quiz__intro {
+    margin-top: 0.75rem;
+    font-size: var(--type-body-sm);
+    line-height: var(--leading-normal);
+    text-align: center;
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__read-more {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+  .skin-quiz__summary {
+    width: 100%;
+    margin-top: 1.5rem;
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+  .skin-quiz__summary th,
+  .skin-quiz__summary td {
+    padding: 12px;
+    border: 1px solid #000;
+    vertical-align: top;
+    text-align: left;
+  }
+  .skin-quiz__summary th {
+    width: 40%;
+    font-family: var(--text-font-accent);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: #000;
+  }
+  .skin-quiz__summary ul {
+    padding-left: 1rem;
+    list-style: disc;
+    font-size: 13px;
+  }
+  .skin-quiz__routine-head {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+  .skin-quiz__routine-head .skin-quiz__eyebrow {
+    margin-top: 0;
+  }
+  .skin-quiz__section-title {
+    margin-top: 0.4rem;
+    font-family: var(--text-font-primary);
+    font-size: var(--type-title);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .skin-quiz__section-subtitle {
+    margin-top: 0.4rem;
+    font-size: var(--type-body-sm);
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__cards {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .skin-quiz__card {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 0.9rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--avure-black-200);
+  }
+  .skin-quiz__card:last-child {
+    border-bottom: 1px solid var(--avure-black-200);
+  }
+  .skin-quiz__card-media {
+    display: block;
+    width: 96px;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+  .skin-quiz__card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .skin-quiz__card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .skin-quiz__card-title {
+    font-family: var(--text-font-primary);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-color-secondary);
+  }
+  .skin-quiz__card-sub {
+    font-size: var(--type-caption);
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .skin-quiz__pill {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--avure-black-200);
+    font-size: var(--type-caption);
+    line-height: 1.3;
+  }
+  .skin-quiz__card-text {
+    font-size: var(--type-body-sm);
+    line-height: 1.4;
+    color: var(--text-color-muted);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+  .skin-quiz__card-foot {
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .skin-quiz__card-price {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .skin-quiz__card-add {
+    min-height: 32px;
+    padding: 0 1.1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--text-color-primary);
+    font-family: var(--text-font-primary);
+    font-size: var(--type-label);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .skin-quiz__card-add.is-added {
+    background: var(--avure-blue-100);
+    color: var(--color-primary);
+    cursor: default;
+  }
+  .skin-quiz__box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+  }
+  .skin-quiz__box-eyebrow,
+  .skin-quiz__box-shipping {
+    font-family: var(--text-font-accent);
+    font-size: var(--type-label);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+  }
+  .skin-quiz__box-title {
+    font-family: var(--text-font-primary);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .skin-quiz__box-title sup {
+    margin-left: 0.15rem;
+    font-family: var(--text-font-accent);
+    font-size: 12px;
+    font-weight: 500;
+    vertical-align: super;
+  }
+  .skin-quiz__box-text {
+    max-width: 280px;
+    font-size: var(--type-body-sm);
+    color: var(--text-color-muted);
+  }
+  .skin-quiz__box .avure-button {
+    margin-top: 0.5rem;
+    min-height: 48px;
+  }
+  .skin-quiz__wide-image {
+    display: block;
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+  }
+  .skin-quiz__profile {
+    scroll-margin-top: 1rem;
+  }
+  .skin-quiz__profile .skin-quiz__eyebrow {
+    margin: 0 0 1rem;
+  }
+  .skin-quiz__profile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 1rem;
+    list-style: disc;
+  }
+  .skin-quiz__profile-list p + p {
+    margin-top: 0.3rem;
+  }
+  .skin-quiz__profile-label {
+    font-family: var(--text-font-primary);
+    font-weight: 700;
+    color: var(--text-color-secondary);
+  }
 {%- endstylesheet -%}
 
 {% schema %}
@@ -1284,6 +1596,60 @@
       "id": "results_eyebrow",
       "label": "Eyebrow",
       "default": "//Your skin profile"
+    },
+    {
+      "type": "text",
+      "id": "results_title",
+      "label": "Title",
+      "default": "Your Skin Profile"
+    },
+    {
+      "type": "text",
+      "id": "script_font",
+      "label": "Title font (Google Fonts name)",
+      "info": "A script font from fonts.google.com, e.g. Great Vibes, Pinyon Script, Allura. Loaded only on this page.",
+      "default": "Great Vibes"
+    },
+    {
+      "type": "text",
+      "id": "routine_eyebrow",
+      "label": "Routine eyebrow",
+      "default": "Morning · Evening / Simple · Balanced"
+    },
+    {
+      "type": "text",
+      "id": "routine_title",
+      "label": "Routine title",
+      "default": "Your routine"
+    },
+    {
+      "type": "text",
+      "id": "routine_subtitle",
+      "label": "Routine subtitle",
+      "default": "Start with these steps, in this order. Add one new step at a time."
+    },
+    {
+      "type": "text",
+      "id": "routine_box_text",
+      "label": "Routine box text",
+      "default": "Your routine is based on a dermatologist-approved methodology."
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Routine box shipping line",
+      "default": "Free shipping 0 DZD"
+    },
+    {
+      "type": "image_picker",
+      "id": "routine_image",
+      "label": "Image after the routine",
+      "info": "Defaults to the kit photo."
+    },
+    {
+      "type": "image_picker",
+      "id": "profile_image",
+      "label": "Image before the detailed profile"
     },
     {
       "type": "header",
