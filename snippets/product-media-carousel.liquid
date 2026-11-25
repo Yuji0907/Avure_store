@@ -1,9 +1,11 @@
-<div class="carousel-wrraper">
-    {%- assign i = 0 -%}
-    {%- assign media_total = product.media.size -%}
+<div class="carousel-wrraper" data-product-gallery>
+    {%- assign media_total = 0 -%}
+    {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}{%- assign media_total = media_total | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
     <div class="break-points">
         {%- for p in (1..media_total) -%}
-            <div  data-selected="false"></div>
+            <div data-selected="{% if forloop.first %}true{% else %}false{% endif %}"></div>
         {%- endfor -%}
     </div>
     <ul class="product-media_container">
@@ -22,6 +24,14 @@
             {% endif %}
         {% endfor %}
     </ul>
+    {%- if media_total > 1 -%}
+        <button type="button" class="gallery-arrow gallery-arrow--prev" aria-label="Previous image" data-gallery-prev>
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9.5 2L4 7l5.5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="gallery-arrow gallery-arrow--next" aria-label="Next image" data-gallery-next>
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.5 2L10 7l-5.5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    {%- endif -%}
 </div>
 {%- stylesheet -%}
     .carousel-wrraper{
@@ -70,4 +80,95 @@
             }
         }
     }
+    .gallery-arrow{
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgb(255 255 255 / 0.8);
+        color: var(--color-primary);
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.12);
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    .gallery-arrow--prev{
+        left: 0.75rem;
+    }
+    .gallery-arrow--next{
+        right: 0.75rem;
+    }
+    .product-media-sm_item.is-active{
+        outline: 2px solid var(--color-primary);
+        outline-offset: -2px;
+    }
+    .product-media-sm_item{
+        cursor: pointer;
+    }
 {%- endstylesheet -%}
+
+{%- javascript -%}
+  /* Product gallery: arrows, swipe, progress bars and thumbnails kept in sync. Wraps around at the ends. */
+  (() => {
+    const init = (gallery) => {
+      if (gallery.dataset.galleryReady) return;
+      gallery.dataset.galleryReady = 'true';
+      const track = gallery.querySelector('.product-media_container');
+      if (!track) return;
+      const slides = Array.from(track.querySelectorAll('.product-media_item'));
+      const bars = Array.from(gallery.querySelectorAll('.break-points > div'));
+      const thumbsTrack = gallery.parentElement && gallery.parentElement.querySelector('.product-media-sm_container');
+      const thumbs = thumbsTrack ? Array.from(thumbsTrack.querySelectorAll('.product-media-sm_item')) : [];
+      if (!slides.length) return;
+
+      const n = slides.length;
+      const fromScroll = () => Math.min(n - 1, Math.max(0, Math.round(track.scrollLeft / Math.max(track.clientWidth, 1))));
+      let index = fromScroll();
+      let settle = 0;
+
+      const sync = () => {
+        bars.forEach((b, k) => (b.dataset.selected = String(k === index)));
+        thumbs.forEach((t, k) => {
+          t.classList.toggle('is-active', k === index);
+          t.setAttribute('aria-current', k === index ? 'true' : 'false');
+        });
+        const active = thumbs[index];
+        if (active && thumbsTrack) {
+          const left = active.offsetLeft - (thumbsTrack.clientWidth - active.offsetWidth) / 2;
+          thumbsTrack.scrollTo({ left, behavior: 'smooth' });
+        }
+      };
+      const goTo = (i) => {
+        index = ((i % n) + n) % n; // wrap around
+        sync();
+        track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
+      };
+
+      /* Swipes: read the position once scrolling has settled */
+      track.addEventListener('scroll', () => {
+        clearTimeout(settle);
+        settle = setTimeout(() => {
+          const i = fromScroll();
+          if (i !== index) {
+            index = i;
+            sync();
+          }
+        }, 120);
+      }, { passive: true });
+      gallery.querySelector('[data-gallery-prev]')?.addEventListener('click', () => goTo(index - 1));
+      gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => goTo(index + 1));
+      thumbs.forEach((t, k) => t.addEventListener('click', () => goTo(k)));
+      sync();
+    };
+
+    const initAll = () => document.querySelectorAll('[data-product-gallery]').forEach(init);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+    else initAll();
+    document.addEventListener('shopify:section:load', initAll);
+  })();
+{%- endjavascript -%}

@@ -52,6 +52,7 @@
       {% comment %} {%- render 'button', text: 'buy now', variant: 'border' -%} {% endcomment %}
     </div>
   </div>
+  {%- render 'product-about-content', product: product -%}
 </div>
 
 {%- stylesheet -%}
@@ -75,7 +76,9 @@
     width: 100%;
     display: grid;
     place-items: center;
-    padding-block: 1.5rem;
+    /* same spacing as when "about" was its own section: 1.5rem above, 1.5rem between */
+    padding-block: 1.5rem 0;
+    row-gap: 1.5rem;
   }
   .main-conatiner {
     width: 90%;

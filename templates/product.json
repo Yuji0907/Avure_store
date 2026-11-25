@@ -17,10 +17,6 @@
       "type": "product-info",
       "settings": {}
     },
-    "product_about": {
-      "type": "product-about",
-      "settings": {}
-    },
     "product_ingredients": {
       "type": "product-ingredients",
       "settings": {}
@@ -55,7 +51,6 @@
   "order": [
     "main",
     "product_info",
-    "product_about",
     "product_ingredients",
     "testimonials",
     "customer_feedbacks",

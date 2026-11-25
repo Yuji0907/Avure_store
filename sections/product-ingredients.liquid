@@ -5,6 +5,13 @@
 
 <div class="product-ingredients_wrapper">
     <div class="product-ingredients-main_container">
+        {%- comment -%} Desktop-only intro (hidden below 1024px; shown in assets/avure-desktop.css) {%- endcomment -%}
+        <div class="product-ingredients__intro">
+            <h2 class="product-ingredients__title">{{ section.settings.title | escape }}</h2>
+            {%- if section.settings.description != blank -%}
+                <p class="product-ingredients__description">{{ section.settings.description | escape }}</p>
+            {%- endif -%}
+        </div>
 
         
         <div class="product-ingredients-carousel">
@@ -56,4 +63,22 @@
     font-weight: 700;
     text-align: left;
 }
+.product-ingredients__intro{
+    display: none;
+}
 {%- endstylesheet -%}
+
+{% schema %}
+{
+  "name": "Product ingredients",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title (desktop)", "default": "Clinical ingredients" },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description (desktop)",
+      "default": "The active ingredients in this formula, what each one does, and why it's here."
+    }
+  ]
+}
+{% endschema %}

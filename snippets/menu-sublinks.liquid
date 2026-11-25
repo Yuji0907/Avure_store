@@ -1,0 +1,63 @@
+{%- comment -%}
+  Sub-menu items for a main-menu link, shared by the mobile drawer (nav-drawer) and the desktop
+  header dropdown, so both always list the same items.
+  Outputs only <li> elements; renders nothing for links without a sub-menu.
+  Usage: {% render 'menu-sublinks', link: link %}
+{%- endcomment -%}
+{%- case link.handle -%}
+  {%- when 'all-products' -%}
+    {%- comment -%}
+      Fixed step order. Each entry matches a collection by handle, or by its handleized title.
+    {%- endcomment -%}
+    {%- assign step_order = 'cleanse,exfoliate,treat,hydrate,protect' | split: ',' -%}
+    {%- assign step_number = 0 -%}
+    {%- for step in step_order -%}
+      {%- assign step_collection = collections[step] -%}
+      {%- if step_collection.id == blank -%}
+        {%- for candidate in collections -%}
+          {%- assign candidate_handle = candidate.title | handleize -%}
+          {%- if candidate_handle == step -%}
+            {%- assign step_collection = candidate -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- if step_collection.id != blank -%}
+        {%- assign step_number = step_number | plus: 1 -%}
+        {%- assign step_badge = step_collection.metafields.custom.badge.value | strip -%}
+        <li>
+          <span class="list-number">{{ step_number | prepend: '0' | slice: -2, 2 }}.</span
+          ><a class="main-links" href="{{ step_collection.url }}">
+            {{- step_collection.title -}}
+            {%- if step_badge != blank -%}<sup class="menu-badge">{{ step_badge }}</sup>{%- endif -%}
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+
+  {%- when 'routines-duos' -%}
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage'
+        or collection.handle == 'all'
+        or collection.title != 'routines-duos'
+      -%}
+        {% for product in collection.products %}
+          {%- assign product_badge = product.metafields.custom.badge.value | strip -%}
+          <li>
+            <a class="main-links" href="{{ product.url }}">
+              {{- product.title -}}
+              {%- if product_badge != blank -%}<sup class="menu-badge">{{ product_badge }}</sup>{%- endif -%}
+            </a>
+          </li>
+        {% endfor %}
+      {%- endunless -%}
+    {%- endfor -%}
+
+  {%- when 'by-concern' -%}
+    {%- assign concerns = shop.metaobjects.concerns.values -%}
+    {%- for concern in concerns -%}
+      <li>
+        <a class="main-links" href="{{ concern.system.url }}">{{ concern.lable }}</a>
+      </li>
+    {%- endfor -%}
+{%- endcase -%}
