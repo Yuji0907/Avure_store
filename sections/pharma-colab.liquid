@@ -134,6 +134,15 @@
     line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.description_alignment }};
   }
+
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .pharma-colab__eyebrow { font-size: 11px; letter-spacing: -0.08em; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .pharma-colab__heading { font-size: 24px; line-height: 1.1; }
+    #shopify-section-{{ section.id }} .pharma-colab__description { font-size: 13px; line-height: 1.4; }
+  }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -203,7 +212,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 22,
+      "default": 20,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -214,7 +223,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": -8
+      "default": 0
     },
     {
       "type": "range",
@@ -224,7 +233,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -244,7 +253,7 @@
       "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 48,
+      "default": 36,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -265,7 +274,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -285,7 +294,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 26,
+      "default": 24,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -306,7 +315,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 110
     },
     {
       "type": "text_alignment",

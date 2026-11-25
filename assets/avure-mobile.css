@@ -1709,4 +1709,316 @@
   body #MainContent .faqs-wrapper .accordings_container .accordion ul {
     padding: 0 0 calc(20 * var(--fu));
   }
+
+  /* ------------------------------------------------------------------ 5. About us, Pharmacist collaboration, Pharmacist form
+     (About_Us.md, Pharmacist_Collaboration.md, Pharma_Formulaire*.md). Text sizes: section settings. */
+
+  /* About: hero 768x701; "ABOUT US" JBM 20/500 #F9FAF9 centred (top 53), title Acumin 36 (-1.44px) uppercase 15 below */
+  body #MainContent .section-about {
+    gap: 0;
+  }
+  body #MainContent .section-about > .about-container {
+    position: relative;
+    height: calc(701 * var(--fu));
+  }
+  body #MainContent .section-about .about-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .section-about .about-content {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: calc(53 * var(--fu)) calc(64 * var(--fu)) 0;
+    justify-content: flex-start;
+    gap: calc(15 * var(--fu));
+  }
+  body #MainContent .section-about .about-label {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    color: #f9faf9;
+  }
+  body #MainContent .section-about .about-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    color: #f9faf9;
+  }
+  /* "//SKINCARE FOR SENSITIVE SKIN." JBM 20/500 (52 below the hero), "ABOUT AVURE" Acumin 36 15 below;
+     accordion titles Acumin 40 (-1.44px) from x64, rows 88 apart, 48 below; icon 20 at 74 from the right;
+     answers Acumin 24 #41413F; bottom 50 */
+  body #MainContent .about-us-values__container {
+    width: 100%;
+    margin: 0;
+    padding: calc(52 * var(--fu)) calc(74 * var(--fu)) calc(26 * var(--fu)) calc(64 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .about-us-values__container > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(15 * var(--fu));
+    text-align: center;
+  }
+  body #MainContent .about-us-values__slogen {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values_lable {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values__container .accordings_container {
+    margin-top: calc(48 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion-title {
+    padding: calc(24 * var(--fu)) 0;
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion-icon {
+    width: calc(20 * var(--fu));
+    height: calc(20 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion > ul {
+    padding: 0 0 calc(24 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion > ul li {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+    text-align: left;
+  }
+
+  /* Pharmacist collaboration: image 768x961, text below: eyebrow JBM 20/500 #1D1D1B (52 below),
+     title Acumin 36 (-1.44px) uppercase 27 below, text Acumin 24/26 #0B0B0A 11 below, CTA 640x110 #0B0B0A 49 below */
+  body #MainContent .pharma-colab__hero {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body #MainContent .pharma-colab__hero .pharma-colab__image {
+    position: static;
+    width: 100%;
+    max-height: none;
+    height: calc(961 * var(--fu));
+    object-fit: cover;
+  }
+  body #MainContent .pharma-colab__content {
+    position: static;
+    width: 100%;
+    margin: 0;
+    padding: calc(52 * var(--fu)) calc(64 * var(--fu)) 0;
+    gap: 0;
+    align-items: center;
+    text-align: center;
+    color: #1d1d1b;
+    background: none;
+  }
+  body #MainContent .pharma-colab__eyebrow {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .pharma-colab__heading {
+    margin-top: calc(27 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .pharma-colab__description {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .pharma-colab__content .btton-wrrapper {
+    width: calc(640 * var(--fu));
+    margin-top: calc(49 * var(--fu));
+  }
+  body #MainContent .pharma-colab__content .pharma-colab__cta {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+  /* claims: JBM 40 (-3px) #0B0B0A, labels Acumin 22 (-0.44px) 17 below; 112 below the CTA */
+  body #MainContent .claims-wrapper {
+    margin: 0;
+    padding: calc(112 * var(--fu)) calc(37 * var(--fu)) 0;
+  }
+  body #MainContent .claims-container {
+    width: 100%;
+    justify-content: space-around;
+    gap: 0;
+  }
+  body #MainContent .claim-item__container {
+    gap: calc(17 * var(--fu));
+  }
+  body #MainContent .claims-wrapper .stat-number {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .claims-wrapper .stat-text {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  /* FAQs without a head here: questions start 77 below the claims; no bottom space */
+  body.template-page--pharmacist-colaboration #MainContent .faqs-wrapper {
+    padding-top: calc(57 * var(--fu));
+    padding-bottom: 0;
+  }
+  body.template-page--pharmacist-colaboration #MainContent .faqs-wrapper .accordings_container {
+    margin-top: 0;
+  }
+
+  /* Pharmacist form: eyebrow JBM 24/500, title Acumin 36 (-1.44px) uppercase 35 below, text Acumin 24/26 11 below;
+     fields 638x93 outline #1D1D1B from x65, 14 apart, 38 below; placeholder Acumin 31.5 #545451 at +31;
+     dropdown caret 19x11 39 from the right; message 638x225; CTA 640x110 49 below */
+  body.template-page--pharmacist-form #MainContent .get-in-touch__section {
+    margin: 0;
+    padding: calc(53 * var(--fu)) calc(65 * var(--fu)) calc(64 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__wrapper {
+    width: 100%;
+    height: auto;
+    gap: 0;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container {
+    flex-shrink: 0;
+    height: auto;
+    padding: 0;
+    gap: 0;
+    text-align: center;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-combo-box {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: 0;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container h2 {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container h1 {
+    margin-top: calc(35 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container p {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form {
+    margin-top: calc(38 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(14 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-input,
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-top {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding: 0 calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-top {
+    display: flex;
+    align-items: center;
+    padding-right: calc(39 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-input {
+    flex: 1;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-icon {
+    width: calc(19 * var(--fu));
+    height: calc(11 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-area {
+    width: 100%;
+    height: calc(225 * var(--fu));
+    padding: calc(25 * var(--fu)) calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form ::placeholder {
+    color: #545451;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-button {
+    width: calc(640 * var(--fu));
+    height: calc(110 * var(--fu));
+    margin: calc(35 * var(--fu)) calc(-1 * var(--fu)) 0;
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+  /* success: full-bleed photo, title Acumin 56 (-1.44px) #F9FAF9 uppercase, text Acumin 28/31 #F4F5F4,
+     BACK HOME 640x110 #F9FAF9 with #1D1D1B text */
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .text-container h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .text-container p {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #f4f5f4;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .back-home__btn {
+    width: calc(640 * var(--fu));
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #f9faf9;
+    color: #1d1d1b;
+  }
 }
