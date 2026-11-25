@@ -954,4 +954,440 @@
     text-transform: uppercase;
     color: #1d1d1b;
   }
+
+  /* ------------------------------------------------------------------ 3. Product page + routine page
+     (Product_Page.md, Routine_Page.md: same layout) */
+
+  /* back arrow in the nav bar: 23x20 at x42 (button keeps a 44px tap area) */
+  body:not(#_) .header-container .header-back {
+    width: 44px;
+    height: 44px;
+    margin-left: calc(9 * var(--fu) - (44px - 23 * var(--fu)) / 2);
+  }
+  body:not(#_) .header-container .header-back__icon {
+    width: calc(23 * var(--fu));
+    height: calc(20 * var(--fu));
+  }
+
+  /* Gallery: main image area 768x960; thumbnails 185x231 r8, 14 apart, from x64, 33 above and below */
+  body.template-product #MainContent .carousel-wrraper .product-media_container .product-media_item {
+    aspect-ratio: auto;
+    height: calc(960 * var(--fu));
+  }
+  body.template-product #MainContent .carousel-sm-wrraper {
+    padding-block: calc(33 * var(--fu));
+  }
+  body.template-product #MainContent .product-media-sm_container {
+    padding-inline: calc(64 * var(--fu));
+    grid-auto-columns: calc(185 * var(--fu));
+    gap: calc(14 * var(--fu));
+    scroll-padding-inline: calc(64 * var(--fu));
+  }
+  body.template-product #MainContent .product-media-sm_item {
+    width: calc(185 * var(--fu));
+    height: calc(231 * var(--fu));
+    border-radius: calc(8 * var(--fu));
+    overflow: hidden;
+  }
+  body.template-product #MainContent .product-media-sm_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Info: side padding 64. Step JBM 24 (-0.03em) #292929; name Acumin 48 bold (-0.02em) #0B0B0B 7 below;
+     subtitle Acumin 32 (-0.03em) #292929 13 below */
+  body #MainContent .product-info_wrapper {
+    padding: calc(62 * var(--fu)) calc(64 * var(--fu)) 0;
+    row-gap: 0;
+  }
+  body #MainContent .product-info_wrapper .main-conatiner {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-info_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-info_container .category {
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #292929;
+  }
+  body #MainContent .product-info_container .product-title {
+    margin-top: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-info_container .product-description {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  /* sizes 72x32 r8 (outline #272726, selected filled), 12 apart, 16 below; quantity on the right */
+  body #MainContent .product-variant_container {
+    margin-top: calc(16 * var(--fu));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  body #MainContent .product-variant_container .selector {
+    gap: calc(12 * var(--fu));
+  }
+  body #MainContent .product-variant_container .radio-custom {
+    min-width: calc(72 * var(--fu));
+    height: calc(32 * var(--fu));
+    padding: 0 calc(8 * var(--fu));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #272726;
+    border-radius: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #292929;
+    background: transparent;
+  }
+  body #MainContent .product-variant_container input:checked + .radio-custom {
+    background-color: #272726;
+    color: #f9faf9;
+  }
+  /* quantity: 29x29 r7 outline #545451 buttons (icon 15), number Acumin 30.1 #292929 */
+  body #MainContent .product-variant_container .quantity-selector_container {
+    gap: calc(23 * var(--fu));
+  }
+  body #MainContent .product-variant_container .icon-button {
+    width: calc(29 * var(--fu));
+    height: calc(29 * var(--fu));
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #545451;
+    border-radius: calc(7 * var(--fu));
+    background: transparent;
+    color: #545451;
+  }
+  body #MainContent .product-variant_container .icon-button svg {
+    width: calc(15 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .product-variant_container .quanity-input {
+    width: calc(24 * var(--fu));
+    font-family: var(--text-font-primary);
+    color: #292929;
+    text-align: center;
+  }
+  /* price Acumin 36 (-0.02em) #292929, old price 32 #A5A5A1; 31 below the sizes */
+  body #MainContent .product-price_container {
+    margin-top: calc(31 * var(--fu));
+    gap: calc(14 * var(--fu));
+    align-items: baseline;
+  }
+  body #MainContent .product-price_container .price {
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #292929;
+  }
+  body #MainContent .product-price_container .price[data-type='old'] {
+    font-size: calc(32 * var(--fu));
+    color: #a5a5a1;
+  }
+  /* CTAs: ADD TO CART 320x106 #0B0B0A, BUY NOW 317x103 outline, 14 apart, 46 below the price; Acumin 36 */
+  body #MainContent .product-info_wrapper .cta {
+    margin: calc(46 * var(--fu)) calc(-6 * var(--fu)) 0;
+    display: flex;
+    align-items: center;
+    gap: calc(14 * var(--fu));
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button {
+    flex: 0 0 auto;
+    width: calc(320 * var(--fu));
+    height: calc(106 * var(--fu));
+    padding: 0;
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button--filled {
+    background-color: #0b0b0a;
+    border: 1px solid #0b0b0a;
+    color: #f9faf9;
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button--outline {
+    width: calc(317 * var(--fu));
+    height: calc(103 * var(--fu));
+    background: transparent;
+    border: 1px solid #0b0b0a;
+    color: #0b0b0a;
+  }
+
+  /* About: name Acumin 40 bold (-0.02em) 43 below the CTAs; tagline Acumin 32/38 (-0.03em) #272726;
+     features Acumin 32 #292929 from x108, 42 apart, 32 below */
+  body #MainContent .product-about_wrapper {
+    width: 100%;
+    margin-top: calc(43 * var(--fu));
+    padding: 0;
+  }
+  body #MainContent .product-about-main_container,
+  body #MainContent .product-details_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-details_container .product-lable {
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-details_container .product-tagline {
+    margin-top: calc(4 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: calc(38 * var(--fu));
+    letter-spacing: -0.03em;
+    color: #272726;
+  }
+  body #MainContent .product-features_list {
+    margin-top: calc(32 * var(--fu));
+    padding-left: calc(44 * var(--fu));
+    gap: calc(10 * var(--fu));
+  }
+  body #MainContent .product-features_list .product-feature,
+  body #MainContent .product-features_list .product-feature p {
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  /* accordions: titles Acumin 28 (-1.44px) #1D1D1B, rows 76 apart, icon 14 (71 from the right);
+     content Acumin 24 #41413F from x100; 73 below the features */
+  body #MainContent .accordings_container {
+    width: 100%;
+    margin-top: calc(73 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .accordings_container .accordion {
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .accordings_container .accordion-title {
+    padding-block: calc(24 * var(--fu));
+    padding-right: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #1d1d1b;
+  }
+  body #MainContent .accordings_container .accordion-icon {
+    width: calc(14 * var(--fu));
+    height: calc(14 * var(--fu));
+  }
+  body #MainContent .accordings_container .accordion ul {
+    padding: 0 0 calc(24 * var(--fu)) calc(36 * var(--fu));
+  }
+  body #MainContent .accordings_container .accordion li {
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: #41413f;
+  }
+
+  /* Ingredients: cards 506 wide from x64, 16 apart, 60 below the accordions; image 506x631 #B9B9B9;
+     name Acumin 36 bold (35 below), INCI Acumin 28 (13 below), tags Acumin 28 with a 29 circle plus,
+     38 apart; description Acumin 24 #41413F */
+  body #MainContent .product-ingredients_wrapper {
+    margin: 0;
+    padding: calc(60 * var(--fu)) 0 0;
+  }
+  body #MainContent .product-ingredients-main_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-ingredients-carousel {
+    padding-inline: calc(64 * var(--fu));
+    grid-auto-columns: calc(506 * var(--fu));
+    gap: calc(16 * var(--fu));
+    scroll-padding-inline: calc(64 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .product-ingredient_wrapper {
+    gap: 0;
+    scroll-snap-align: start;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-image_container {
+    width: calc(506 * var(--fu));
+    height: calc(631 * var(--fu));
+    background-color: #b9b9b9;
+    overflow: hidden;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-info_container {
+    padding-top: calc(35 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-name {
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-inci {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefits_container {
+    margin-top: calc(16 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(9 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit {
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit .icon-button {
+    width: calc(29 * var(--fu));
+    height: calc(29 * var(--fu));
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #1d1d1b;
+    border-radius: 50%;
+    background: transparent;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit svg {
+    width: calc(15 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit p {
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-desc {
+    margin-top: calc(24 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #41413f;
+  }
+
+  /* Best sellers on product pages: same as the homepage block; "VIEW ALL" 12 here */
+  body.template-product #MainContent .products-hero_link {
+    font-size: calc(12 * var(--fu));
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+  /* Routines on product pages: 593 high, smaller cards (title Poppins 20, text 13, price 16, old 14) */
+  body.template-product #MainContent .routines-slider__content {
+    padding-bottom: calc(41 * var(--fu));
+  }
+
+  /* Get in touch: title Acumin 36 bold #1D1D1B (top 50), text Acumin 24/31 (-0.02em) 35 below;
+     fields 691x93 outline #1D1D1B, 26 apart, placeholder Acumin 31.5 #545451, 34 below the text;
+     message 692x241; SENT 689x110 #0B0B0A, Acumin 39.4; bottom 48 */
+  body #MainContent .get-in-touch__section {
+    margin: 0;
+    padding: calc(50 * var(--fu)) calc(38 * var(--fu)) calc(48 * var(--fu));
+  }
+  body #MainContent .get-in-touch__wrapper {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container {
+    gap: 0;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container p {
+    margin-top: calc(35 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__form {
+    margin-top: calc(34 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(26 * var(--fu));
+  }
+  body #MainContent .get-in-touch__form .avure-input,
+  body #MainContent .get-in-touch__form .avure-area {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding: 0 calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__form .avure-area {
+    height: calc(241 * var(--fu));
+    padding-block: calc(25 * var(--fu));
+  }
+  body #MainContent .get-in-touch__form ::placeholder {
+    color: #545451;
+  }
+  body #MainContent .get-in-touch__form .avure-button {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    margin-top: calc(-1 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
 }
