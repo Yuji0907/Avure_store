@@ -60,7 +60,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 4rem;
+    gap: calc(128 * var(--fu));
     font-family: var(--text-font-secondary);
     .about-us-values__container {
       width: 90%;
@@ -68,7 +68,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 1.5rem;
+      gap: calc(48 * var(--fu));
       .about-us-values__slogen {
         font-family: var(--text-font-accent);
         font-weight: 500;
@@ -82,7 +82,7 @@
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
-        margin-top: 1.5rem;
+        margin-top: calc(48 * var(--fu));
         width: 100%;
         font-family: var(--text-font-primary);
       }
@@ -108,11 +108,11 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    gap: 1rem;
+    gap: calc(32 * var(--fu));
     color: var(--text-color-primary);
     width: 100%;
 
-    margin-top: 5rem;
+    margin-top: calc(160 * var(--fu));
   }
   .about-label {
     text-wrap: balance;
@@ -124,14 +124,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
   }
   .about-heading {
     font-family: var(--text-font-primary);
     font-weight: 700;
     text-transform: uppercase;
     width: 90%;
-    max-width: 320px;
+    max-width: calc(640 * var(--fu));
     margin-inline: auto;
     text-wrap: balance;
   }
@@ -145,7 +145,7 @@
   /* Label */
   #shopify-section-{{ section.id }} .about-label {
     width: 100%;
-    font-size: {{ section.settings.label_size }}px;
+    font-size: calc({{ section.settings.label_size }} * var(--fu));
     letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.label_alignment }};
@@ -153,7 +153,7 @@
 
   /* Hero heading */
   #shopify-section-{{ section.id }} .about-heading {
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -161,7 +161,7 @@
 
   /* Values slogan */
   #shopify-section-{{ section.id }} .about-us-values__slogen {
-    font-size: {{ section.settings.slogan_size }}px;
+    font-size: calc({{ section.settings.slogan_size }} * var(--fu));
     letter-spacing: {{ section.settings.slogan_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.slogan_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.slogan_alignment }};
@@ -169,7 +169,7 @@
 
   /* Values title */
   #shopify-section-{{ section.id }} .about-us-values_lable {
-    font-size: {{ section.settings.values_title_size }}px;
+    font-size: calc({{ section.settings.values_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.values_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.values_title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.values_title_alignment }};
@@ -199,7 +199,7 @@
 
   /* Accordion titles (flex row with the icon, so no alignment setting) */
   #shopify-section-{{ section.id }} .accordings_container .accordion-title {
-    font-size: {{ section.settings.accordion_title_size }}px;
+    font-size: calc({{ section.settings.accordion_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.accordion_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.accordion_title_line_height | divided_by: 100.0 }};
   }
@@ -213,7 +213,7 @@
     text-align: {% if section.settings.accordion_item_alignment == 'left' %}justify{% else %}{{ section.settings.accordion_item_alignment }}{% endif %};
     color: var(--avure-black-900);
     font-family: var(--text-font-secondary);
-    font-size: {{ section.settings.accordion_item_size }}px;
+    font-size: calc({{ section.settings.accordion_item_size }} * var(--fu));
     letter-spacing: {{ section.settings.accordion_item_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.accordion_item_line_height | divided_by: 100.0 }};
   }
@@ -225,22 +225,47 @@
   "tag": "section",
   "class": "section-about",
   "settings": [
-    { "type": "header", "content": "Main image" },
-    { "type": "image_picker", "id": "about_image", "label": "Image" },
-
-    { "type": "header", "content": "Content" },
+    {
+      "type": "header",
+      "content": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "about_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "hero_title",
       "label": "Hero Title",
       "default": "Skincare for sensitive skin, explained plainly."
     },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "about us" },
-
-    { "type": "header", "content": "Values" },
-    { "type": "text", "id": "slogen", "label": "About us values slogen", "default": "Skincare for Sensitive Skin." },
-    { "type": "text", "id": "about_us_values_lable", "label": "About us values lable", "default": "About avure" },
-
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "about us"
+    },
+    {
+      "type": "header",
+      "content": "Values"
+    },
+    {
+      "type": "text",
+      "id": "slogen",
+      "label": "About us values slogen",
+      "default": "Skincare for Sensitive Skin."
+    },
+    {
+      "type": "text",
+      "id": "about_us_values_lable",
+      "label": "About us values lable",
+      "default": "About avure"
+    },
     {
       "type": "range",
       "id": "open_item_index",
@@ -251,17 +276,20 @@
       "step": 1,
       "default": 2
     },
-
-    { "type": "header", "content": "Label typography" },
+    {
+      "type": "header",
+      "content": "Label typography"
+    },
     {
       "type": "range",
       "id": "label_size",
       "label": "Font size",
       "min": 9,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 9
+      "default": 18,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -283,18 +311,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "label_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Hero heading typography" },
+    {
+      "type": "text_alignment",
+      "id": "label_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Hero heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 20
+      "default": 40,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -316,18 +352,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Values slogan typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Values slogan typography"
+    },
     {
       "type": "range",
       "id": "slogan_size",
       "label": "Font size",
       "min": 9,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 9
+      "default": 18,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -349,18 +393,26 @@
       "unit": "%",
       "default": 120
     },
-    { "type": "text_alignment", "id": "slogan_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Values title typography" },
+    {
+      "type": "text_alignment",
+      "id": "slogan_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Values title typography"
+    },
     {
       "type": "range",
       "id": "values_title_size",
       "label": "Font size",
       "min": 14,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 32,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -382,18 +434,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "values_title_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Accordion title typography" },
+    {
+      "type": "text_alignment",
+      "id": "values_title_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Accordion title typography"
+    },
     {
       "type": "range",
       "id": "accordion_title_size",
       "label": "Font size",
       "min": 14,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 32,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -415,17 +475,20 @@
       "unit": "%",
       "default": 120
     },
-
-    { "type": "header", "content": "Accordion items typography" },
+    {
+      "type": "header",
+      "content": "Accordion items typography"
+    },
     {
       "type": "range",
       "id": "accordion_item_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -452,14 +515,30 @@
       "id": "accordion_item_alignment",
       "label": "Alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" },
-        { "value": "justify", "label": "Justify" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
       ],
       "default": "justify"
     }
   ],
-  "presets": [{ "name": "hero" }]
+  "presets": [
+    {
+      "name": "hero"
+    }
+  ]
 }
 {% endschema %}

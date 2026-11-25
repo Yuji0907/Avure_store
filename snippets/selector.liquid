@@ -21,7 +21,7 @@
 {%- stylesheet -%}
   .selector {
     display: flex;
-    gap: 0.9rem;
+    gap: calc(28.8 * var(--fu));
     /* line-height: 1;     */
     line-height: 1;
     /* text-box: trim-both cap alphabetic; */
@@ -29,7 +29,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 1rem;
+      gap: calc(32 * var(--fu));
       display: grid;
       place-items: center;
     }
@@ -49,13 +49,13 @@
       font-family: var(--text-font-primary);
       font-size: var(--text-lg);
       font-weight: 400;
-      padding: 0.25rem;
-      padding-inline: 0.4rem;
-      border-radius: 8px;
+      padding: calc(8 * var(--fu));
+      padding-inline: calc(12.8 * var(--fu));
+      border-radius: calc(16 * var(--fu));
       border: 1px solid var(--bg-dark);
       text-align: center;
       text-justify: auto;
-      padding-top: 0.4rem;
+      padding-top: calc(12.8 * var(--fu));
       cursor: pointer;
       user-select: none;
     }

@@ -104,15 +104,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-block: 32px;
-    gap: 2rem;
+    padding-block: calc(64 * var(--fu));
+    gap: calc(64 * var(--fu));
     .step-selector {
       width: 100%;
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: calc(16 * var(--fu));
       .selected {
         --color: var(--color-dark);
         font-weight: 700;
@@ -121,16 +121,16 @@
         content: '';
         position: absolute;
         left: 0;
-        bottom: -4px;
+        bottom: calc(-8 * var(--fu));
         width: 100%;
         height: 2px;
         background-color: var(--color);
-        border-radius: 100px;
+        border-radius: calc(200 * var(--fu));
       }
 
       h2 {
         --color: var(--color-dark-disabled);
-        /* border-bottom: 0.4rem solid;
+        /* border-bottom: calc(12.8 * var(--fu)) solid;
         border-color: var(--color); */
         font-family: var(--text-font-accent);
         font-weight: 400;
@@ -142,7 +142,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: calc(16 * var(--fu));
         flex: 0 1 auto;
         min-width: 0;
         white-space: nowrap;
@@ -165,7 +165,7 @@
   /* Section heading */
   #shopify-section-{{ section.id }} .skincare-steps__heading {
     width: 100%;
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -173,7 +173,7 @@
 
   /* Step tabs */
   #shopify-section-{{ section.id }} .step-selector h2 {
-    font-size: {{ section.settings.tab_size }}px;
+    font-size: calc({{ section.settings.tab_size }} * var(--fu));
     letter-spacing: {{ section.settings.tab_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.tab_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.tab_alignment }};
@@ -182,14 +182,14 @@
 
   /* View all link (flex item, so no alignment setting) */
   #shopify-section-{{ section.id }} .skincare-steps__link {
-    font-size: {{ section.settings.link_size }}px;
+    font-size: calc({{ section.settings.link_size }} * var(--fu));
     letter-spacing: {{ section.settings.link_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.link_line_height | divided_by: 100.0 }};
   }
 
   /* Card badge (positioned over the image, so no alignment setting) */
   #shopify-section-{{ section.id }} .product-card_container .badge-title {
-    font-size: {{ section.settings.badge_size }}px;
+    font-size: calc({{ section.settings.badge_size }} * var(--fu));
     letter-spacing: {{ section.settings.badge_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.badge_line_height | divided_by: 100.0 }};
   }
@@ -197,7 +197,7 @@
   /* Card title */
   #shopify-section-{{ section.id }} .product-card_container .product-info > h3 {
     width: 100%;
-    font-size: {{ section.settings.card_title_size }}px;
+    font-size: calc({{ section.settings.card_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_title_alignment }};
@@ -206,7 +206,7 @@
   /* Card description */
   #shopify-section-{{ section.id }} .product-card_container .product-info > p {
     width: 100%;
-    font-size: {{ section.settings.card_description_size }}px;
+    font-size: calc({{ section.settings.card_description_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_description_alignment }};
@@ -216,10 +216,28 @@
   #shopify-section-{{ section.id }} .product-card_container .product-info .price {
     display: block;
     width: 100%;
-    font-size: {{ section.settings.card_price_size }}px;
+    font-size: calc({{ section.settings.card_price_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_price_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_price_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_price_alignment }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .skincare-steps__heading { font-family: var(--text-font-accent); font-weight: 600; text-transform: uppercase; }
+    #shopify-section-{{ section.id }} .step-selector h2 { font-family: var(--text-font-accent); font-weight: 700; }
+    #shopify-section-{{ section.id }} .skincare-steps__link { font-family: var(--text-font-primary); font-weight: 500; }
+  }
+
+  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
+     (Fixed here, so changing these settings only affects phones.) */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .skincare-steps__heading { font-size: 11px; letter-spacing: 0.14em; }
+    #shopify-section-{{ section.id }} .step-selector h2 { font-size: 11px; letter-spacing: 0em; }
+    #shopify-section-{{ section.id }} .skincare-steps__link { font-size: 11px; }
+    #shopify-section-{{ section.id }} .product-card_container .product-info > h3 { font-size: 13px; letter-spacing: 0em; line-height: 1.2; }
+    #shopify-section-{{ section.id }} .product-card_container .product-info > p { font-size: 11px; }
+    #shopify-section-{{ section.id }} .product-card_container .product-info .price { font-size: 13px; }
   }
 {% endstyle %}
 
@@ -228,18 +246,26 @@
   "name": "skin care steps",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "five (05) skincare steps" },
-
-    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "five (05) skincare steps"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 14,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -249,7 +275,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 14
+      "default": 10
     },
     {
       "type": "range",
@@ -261,18 +287,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Step tabs typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Step tabs typography"
+    },
     {
       "type": "range",
       "id": "tab_size",
       "label": "Font size",
-      "min": 11,
-      "max": 72,
-      "step": 1,
+      "min": 10,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 11
+      "default": 28,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -282,7 +316,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -10
     },
     {
       "type": "range",
@@ -294,18 +328,26 @@
       "unit": "%",
       "default": 120
     },
-    { "type": "text_alignment", "id": "tab_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "View all link typography" },
+    {
+      "type": "text_alignment",
+      "id": "tab_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "View all link typography"
+    },
     {
       "type": "range",
       "id": "link_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 12,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -327,17 +369,20 @@
       "unit": "%",
       "default": 140
     },
-
-    { "type": "header", "content": "Card badge typography" },
+    {
+      "type": "header",
+      "content": "Card badge typography"
+    },
     {
       "type": "range",
       "id": "badge_size",
       "label": "Font size",
       "min": 8,
-      "max": 24,
+      "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 10
+      "default": 20,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -359,17 +404,20 @@
       "unit": "%",
       "default": 120
     },
-
-    { "type": "header", "content": "Card title typography" },
+    {
+      "type": "header",
+      "content": "Card title typography"
+    },
     {
       "type": "range",
       "id": "card_title_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 28,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -379,7 +427,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -5
     },
     {
       "type": "range",
@@ -389,20 +437,28 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 100
     },
-    { "type": "text_alignment", "id": "card_title_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Card description typography" },
+    {
+      "type": "text_alignment",
+      "id": "card_title_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Card description typography"
+    },
     {
       "type": "range",
       "id": "card_description_size",
       "label": "Font size",
       "min": 8,
-      "max": 24,
+      "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 20,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -424,18 +480,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "card_description_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Card price typography" },
+    {
+      "type": "text_alignment",
+      "id": "card_description_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Card price typography"
+    },
     {
       "type": "range",
       "id": "card_price_size",
       "label": "Font size",
       "min": 8,
-      "max": 24,
+      "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -457,7 +521,12 @@
       "unit": "%",
       "default": 120
     },
-    { "type": "text_alignment", "id": "card_price_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "card_price_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ]
 }
 {% endschema %}

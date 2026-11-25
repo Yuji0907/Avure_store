@@ -86,22 +86,22 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
     color: var(--text-color-primary);
     width: 100%;
-    margin-bottom: 10rem;
+    margin-bottom: calc(320 * var(--fu));
 
     .btton-wrrapper {
       width: 30%;
       .colab-btn {
-        margin-top: 3rem;
+        margin-top: calc(96 * var(--fu));
       }
     }
   }
   .colab-hero-label {
     font-family: var(--text-font-accent);
     margin-bottom: auto;
-    margin-top: 2rem;
+    margin-top: calc(64 * var(--fu));
     text-transform: uppercase;
   }
   .colab-heading-container {
@@ -110,7 +110,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
   }
   .colab-hero-heading {
     font-family: var(--text-font-primary);
@@ -132,7 +132,7 @@
   /* Label */
   #shopify-section-{{ section.id }} .colab-hero-label {
     width: 100%;
-    font-size: {{ section.settings.label_size }}px;
+    font-size: calc({{ section.settings.label_size }} * var(--fu));
     letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.label_alignment }};
@@ -140,7 +140,7 @@
 
   /* Title */
   #shopify-section-{{ section.id }} .colab-hero-heading {
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -148,7 +148,7 @@
 
   /* Subheading */
   #shopify-section-{{ section.id }} .colab-hero-subheading {
-    font-size: {{ section.settings.subheading_size }}px;
+    font-size: calc({{ section.settings.subheading_size }} * var(--fu));
     letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.subheading_alignment }};
@@ -156,10 +156,25 @@
 
   /* Button text (alignment is handled by the button itself) */
   #shopify-section-{{ section.id }} .colab-btn {
-    --btn-text-size: {{ section.settings.cta_size }}px;
-    font-size: {{ section.settings.cta_size }}px;
+    --btn-text-size: calc({{ section.settings.cta_size }} * var(--fu));
+    font-size: calc({{ section.settings.cta_size }} * var(--fu));
     letter-spacing: {{ section.settings.cta_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.cta_line_height | divided_by: 100.0 }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .colab-hero-heading { font-family: var(--text-font-primary); font-weight: 600; }
+    #shopify-section-{{ section.id }} .colab-hero-subheading { font-family: var(--text-font-primary); font-weight: 500; }
+    #shopify-section-{{ section.id }} .colab-btn { font-family: var(--text-font-primary); font-weight: 600; }
+  }
+
+  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
+     (Fixed here, so changing these settings only affects phones.) */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .colab-hero-heading { line-height: 1.1; }
+    #shopify-section-{{ section.id }} .colab-hero-subheading { font-size: 13px; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .colab-btn { --btn-text-size: 12px; font-size: 12px; }
   }
 {% endstyle %}
 
@@ -169,30 +184,57 @@
   "tag": "section",
   "class": "section-colab",
   "settings": [
-    { "type": "header", "content": "Image" },
-    { "type": "image_picker", "id": "colab_image", "label": "Image" },
-
-    { "type": "header", "content": "Content" },
-    { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "Skincare shared with pharmacists." },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "colab_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Skincare shared with pharmacists."
+    },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
       "default": "Clear information, simple routines and a team that supports you."
     },
-    { "type": "text", "id": "label", "label": "label", "default": "Developed by Pharmacists. for  Pharmacists." },
-    { "type": "text", "id": "cta", "label": "call to action", "default": "collaborate now" },
-
-    { "type": "header", "content": "Label typography" },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "label",
+      "default": "Developed by Pharmacists. for  Pharmacists."
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "call to action",
+      "default": "collaborate now"
+    },
+    {
+      "type": "header",
+      "content": "Label typography"
+    },
     {
       "type": "range",
       "id": "label_size",
       "label": "Font size",
-      "min": 11,
-      "max": 72,
-      "step": 1,
+      "min": 10,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -214,18 +256,26 @@
       "unit": "%",
       "default": 130
     },
-    { "type": "text_alignment", "id": "label_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Title typography" },
+    {
+      "type": "text_alignment",
+      "id": "label_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -245,20 +295,28 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Subheading typography"
+    },
     {
       "type": "range",
       "id": "subheading_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -278,20 +336,28 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 110
     },
-    { "type": "text_alignment", "id": "subheading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Button typography" },
+    {
+      "type": "text_alignment",
+      "id": "subheading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Button typography"
+    },
     {
       "type": "range",
       "id": "cta_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -314,6 +380,10 @@
       "default": 100
     }
   ],
-  "presets": [{ "name": "hero" }]
+  "presets": [
+    {
+      "name": "hero"
+    }
+  ]
 }
 {% endschema %}

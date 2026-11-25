@@ -71,10 +71,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: calc(64 * var(--fu));
     margin-block: 0;
     justify-content: center;
-    padding-block: 0 32px;
+    padding-block: 0 calc(64 * var(--fu));
     div {
       display: flex;
       flex-direction: column;
@@ -83,7 +83,7 @@
     }
     .testimonials-container {
       width: 90%;
-      gap: 2rem;
+      gap: calc(64 * var(--fu));
       .testimonials-header {
         width: 100%;
         h2,
@@ -111,7 +111,7 @@
         display: grid;
 
         grid-template-columns: repeat(var(--cols-mobile, 2), minmax(0, 1fr));
-        gap: 1.5rem;
+        gap: calc(48 * var(--fu));
         padding: 0;
         place-items: center;
         .testimonials-vide__wrapper {
@@ -125,9 +125,9 @@
             height: auto;
             aspect-ratio: 9/16;
             object-fit: cover;
-            border-radius: 1rem;
+            border-radius: calc(32 * var(--fu));
             margin-top: auto;
-            box-shadow: 0px 0px 7px var(--shadow-clr-dark);
+            box-shadow: 0px 0px calc(14 * var(--fu)) var(--shadow-clr-dark);
           }
         }
 
@@ -146,7 +146,7 @@
   /* Title */
   #shopify-section-{{ section.id }} .testimonials-title {
     width: 100%;
-    font-size: {{ section.settings.title_size }}px;
+    font-size: calc({{ section.settings.title_size }} * var(--fu));
     letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.title_alignment }};
@@ -155,7 +155,7 @@
   /* Heading */
   #shopify-section-{{ section.id }} .testimonials-heading {
     width: 100%;
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -163,10 +163,23 @@
 
   /* Description */
   #shopify-section-{{ section.id }} .testimonials-description {
-    font-size: {{ section.settings.description_size }}px;
+    font-size: calc({{ section.settings.description_size }} * var(--fu));
     letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.description_alignment }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .testimonials-title { font-family: var(--text-font-accent); font-weight: 600; text-transform: uppercase; }
+    #shopify-section-{{ section.id }} .testimonials-heading { font-family: var(--text-font-primary); font-weight: 400; }
+  }
+
+  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
+     (Fixed here, so changing these settings only affects phones.) */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .testimonials-title { font-size: 11px; letter-spacing: 0em; }
+    #shopify-section-{{ section.id }} .testimonials-heading { line-height: 1.1; }
   }
 {% endstyle %}
 
@@ -174,25 +187,38 @@
 {
   "name": "Testimonials",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Testimonials" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "What people are saying" },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What people are saying"
+    },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "Real customers on how Avure fits into their routine, what it feels like, and what they'd tell a friend."
     },
-
-    { "type": "header", "content": "Title typography" },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
     {
       "type": "range",
       "id": "title_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 14,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -202,7 +228,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": 10
     },
     {
       "type": "range",
@@ -214,18 +240,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "title_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "text_alignment",
+      "id": "title_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -245,20 +279,28 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Description typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Description typography"
+    },
     {
       "type": "range",
       "id": "description_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -280,7 +322,12 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "description_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ],
   "max_blocks": 5,
   "blocks": [

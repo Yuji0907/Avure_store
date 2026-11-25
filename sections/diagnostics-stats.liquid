@@ -24,14 +24,14 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     place-items: center;
-    margin-block: 4rem;
+    margin-block: calc(128 * var(--fu));
     .stat-item__container {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: calc(32 * var(--fu));
       .stat-number {
         width: 100%;
         font-family: var(--text-font-primary);
@@ -52,7 +52,7 @@
 {% style %}
   /* Stat number */
   #shopify-section-{{ section.id }} .stat-number {
-    font-size: {{ section.settings.number_size }}px;
+    font-size: calc({{ section.settings.number_size }} * var(--fu));
     letter-spacing: {{ section.settings.number_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.number_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.number_alignment }};
@@ -60,7 +60,7 @@
 
   /* Stat text */
   #shopify-section-{{ section.id }} .stat-text {
-    font-size: {{ section.settings.text_size }}px;
+    font-size: calc({{ section.settings.text_size }} * var(--fu));
     letter-spacing: {{ section.settings.text_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.text_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.text_alignment }};
@@ -71,16 +71,20 @@
 {
   "name": "Diagnostic stats",
   "settings": [
-    { "type": "header", "content": "Stat number typography" },
+    {
+      "type": "header",
+      "content": "Stat number typography"
+    },
     {
       "type": "range",
       "id": "number_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -102,18 +106,26 @@
       "unit": "%",
       "default": 100
     },
-    { "type": "text_alignment", "id": "number_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Stat text typography" },
+    {
+      "type": "text_alignment",
+      "id": "number_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Stat text typography"
+    },
     {
       "type": "range",
       "id": "text_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -135,8 +147,17 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "text_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "text_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ],
-  "presets": [{ "name": "Diagnostic stats" }]
+  "presets": [
+    {
+      "name": "Diagnostic stats"
+    }
+  ]
 }
 {% endschema %}

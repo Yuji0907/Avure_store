@@ -23,17 +23,17 @@
     width: 90%;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 0.75rem;
-    row-gap: 1.5rem;
+    column-gap: calc(24 * var(--fu));
+    row-gap: calc(48 * var(--fu));
     place-items: start center;
-    margin-block: 32px;
+    margin-block: calc(64 * var(--fu));
     .claim-item__container {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem;
+      gap: calc(8 * var(--fu));
       .stat-number {
         width: 100%;
         font-family: var(--text-font-accent);
@@ -54,7 +54,7 @@
 {% style %}
   /* Claim number */
   #shopify-section-{{ section.id }} .stat-number {
-    font-size: {{ section.settings.number_size }}px;
+    font-size: calc({{ section.settings.number_size }} * var(--fu));
     letter-spacing: {{ section.settings.number_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.number_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.number_alignment }};
@@ -62,7 +62,7 @@
 
   /* Claim text */
   #shopify-section-{{ section.id }} .stat-text {
-    font-size: {{ section.settings.text_size }}px;
+    font-size: calc({{ section.settings.text_size }} * var(--fu));
     letter-spacing: {{ section.settings.text_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.text_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.text_alignment }};
@@ -73,16 +73,20 @@
 {
   "name": "Claims",
   "settings": [
-    { "type": "header", "content": "Claim number typography" },
+    {
+      "type": "header",
+      "content": "Claim number typography"
+    },
     {
       "type": "range",
       "id": "number_size",
       "label": "Font size",
       "min": 16,
-      "max": 120,
+      "max": 216,
       "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 32,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -104,18 +108,26 @@
       "unit": "%",
       "default": 100
     },
-    { "type": "text_alignment", "id": "number_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Claim text typography" },
+    {
+      "type": "text_alignment",
+      "id": "number_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Claim text typography"
+    },
     {
       "type": "range",
       "id": "text_size",
       "label": "Font size",
       "min": 9,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 9
+      "default": 18,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -137,8 +149,17 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "text_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "text_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ],
-  "presets": [{ "name": "Claims" }]
+  "presets": [
+    {
+      "name": "Claims"
+    }
+  ]
 }
 {% endschema %}

@@ -20,7 +20,7 @@
     width: 100%;
     display: grid;
     place-items: center;
-    margin-block: 4rem 32px;
+    margin-block: calc(128 * var(--fu)) calc(64 * var(--fu));
   }
   .science-behind-avure_container {
     width: 90%;
@@ -34,7 +34,7 @@
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
-      gap: 0.9rem;
+      gap: calc(28.8 * var(--fu));
       .science-avure_subheading {
         font-family: var(--text-font-accent);
       }
@@ -57,8 +57,8 @@
       overflow-y: hidden;
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      gap: 1.2rem;
-      padding-block: 1.5rem 0;
+      gap: calc(38.4 * var(--fu));
+      padding-block: calc(48 * var(--fu)) 0;
       > * {
         direction: ltr;
       }
@@ -74,7 +74,7 @@
     text-transform: uppercase;
   }
   .science-behind-avure_wrapper .science-behind-avure_carousel .product-ingredient_wrapper {
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
   }
 {%- endstylesheet -%}
 
@@ -84,7 +84,7 @@
 {% style %}
   /* Subheading */
   #shopify-section-{{ section.id }} .science-avure_subheading {
-    font-size: {{ section.settings.subheading_size }}px;
+    font-size: calc({{ section.settings.subheading_size }} * var(--fu));
     letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.subheading_alignment }};
@@ -92,7 +92,7 @@
 
   /* Heading */
   #shopify-section-{{ section.id }} .science-avure_heading {
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -100,10 +100,16 @@
 
   /* Description */
   #shopify-section-{{ section.id }} .science-avure_description {
-    font-size: {{ section.settings.description_size }}px;
+    font-size: calc({{ section.settings.description_size }} * var(--fu));
     letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.description_alignment }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .science-avure_subheading { font-family: var(--text-font-accent); font-weight: 600; text-transform: uppercase; }
+    #shopify-section-{{ section.id }} .science-avure_heading { font-family: var(--text-font-primary); font-weight: 400; }
   }
 {% endstyle %}
 
@@ -111,25 +117,38 @@
 {
   "name": "Science behind Avure",
   "settings": [
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "The science behind Avure" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Formulas designed around sensitive skin." },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "The science behind Avure"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Formulas designed around sensitive skin."
+    },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "We develops dermo-cosmetic care that respects the skin's natural balance."
     },
-
-    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "header",
+      "content": "Subheading typography"
+    },
     {
       "type": "range",
       "id": "subheading_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -151,18 +170,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "subheading_alignment", "label": "Alignment", "default": "left" },
-
-    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "text_alignment",
+      "id": "subheading_alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -184,18 +211,26 @@
       "unit": "%",
       "default": 100
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "left" },
-
-    { "type": "header", "content": "Description typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Description typography"
+    },
     {
       "type": "range",
       "id": "description_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -217,8 +252,17 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "left" }
+    {
+      "type": "text_alignment",
+      "id": "description_alignment",
+      "label": "Alignment",
+      "default": "left"
+    }
   ],
-  "presets": [{ "name": "Science behind Avure" }]
+  "presets": [
+    {
+      "name": "Science behind Avure"
+    }
+  ]
 }
 {% endschema %}

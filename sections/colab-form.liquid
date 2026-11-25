@@ -142,7 +142,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: calc(64 * var(--fu));
       color: var(--text-color-primary);
 
       h1 {
@@ -162,12 +162,12 @@
     width: 100%;
     display: grid;
     place-items: center;
-    margin-block: 4rem;
+    margin-block: calc(128 * var(--fu));
     .get-in-touch__wrapper {
       width: 90%;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: calc(64 * var(--fu));
     }
     .header-container {
       color: var(--text-color-secondary);
@@ -196,11 +196,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: calc(48 * var(--fu));
     }
     .back-home__btn {
-      margin-bottom: 5rem;
-      padding-inline: 2.2rem;
+      margin-bottom: calc(160 * var(--fu));
+      padding-inline: calc(70.4 * var(--fu));
       font-weight: 600;
     }
   }
@@ -212,7 +212,7 @@
 {% style %}
   /* Eyebrow */
   #shopify-section-{{ section.id }} .header-container h2 {
-    font-size: {{ section.settings.eyebrow_size }}px;
+    font-size: calc({{ section.settings.eyebrow_size }} * var(--fu));
     letter-spacing: {{ section.settings.eyebrow_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.eyebrow_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.eyebrow_alignment }};
@@ -220,7 +220,7 @@
 
   /* Heading */
   #shopify-section-{{ section.id }} .header-container h1 {
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -228,7 +228,7 @@
 
   /* Description */
   #shopify-section-{{ section.id }} .header-container p {
-    font-size: {{ section.settings.description_size }}px;
+    font-size: calc({{ section.settings.description_size }} * var(--fu));
     letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.description_alignment }};
@@ -236,7 +236,7 @@
 
   /* Success title */
   #shopify-section-{{ section.id }} .get-in-touch-success__overlay .text-container h1 {
-    font-size: {{ section.settings.success_title_size }}px;
+    font-size: calc({{ section.settings.success_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.success_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.success_title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.success_title_alignment }};
@@ -244,7 +244,7 @@
 
   /* Success text */
   #shopify-section-{{ section.id }} .get-in-touch-success__overlay .text-container p {
-    font-size: {{ section.settings.success_text_size }}px;
+    font-size: calc({{ section.settings.success_text_size }} * var(--fu));
     letter-spacing: {{ section.settings.success_text_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.success_text_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.success_text_alignment }};
@@ -252,7 +252,7 @@
 
   /* Success button (alignment is handled by the button) */
   #shopify-section-{{ section.id }} .get-in-touch-success__overlay .back-home__btn {
-    font-size: {{ section.settings.success_button_size }}px;
+    font-size: calc({{ section.settings.success_button_size }} * var(--fu));
     letter-spacing: {{ section.settings.success_button_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.success_button_line_height | divided_by: 100.0 }};
   }
@@ -262,33 +262,56 @@
 {
   "name": "Get in touch",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Collaborate with Avure" },
-    { "type": "text", "id": "label", "label": "Label", "default": "For pharmacists" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collaborate with Avure"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "For pharmacists"
+    },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
       "default": "Tell us about your pharmacy. We’ll reply within [X working days] with the price list and formula sheets."
     },
-    { "type": "text", "id": "working_days", "label": "Working Days", "default": "3-5" },
+    {
+      "type": "text",
+      "id": "working_days",
+      "label": "Working Days",
+      "default": "3-5"
+    },
     {
       "type": "textarea",
       "id": "roles",
       "label": "Roles (one per line)",
       "default": "Pharmacist\nPharmacy owner\nPharmacy manager\nOther"
     },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send request" },
-
-    { "type": "header", "content": "Label typography" },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send request"
+    },
+    {
+      "type": "header",
+      "content": "Label typography"
+    },
     {
       "type": "range",
       "id": "eyebrow_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -310,18 +333,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "eyebrow_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "text_alignment",
+      "id": "eyebrow_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -343,18 +374,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Description typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Description typography"
+    },
     {
       "type": "range",
       "id": "description_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -376,18 +415,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Success title typography" },
+    {
+      "type": "text_alignment",
+      "id": "description_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Success title typography"
+    },
     {
       "type": "range",
       "id": "success_title_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -409,18 +456,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "success_title_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Success text typography" },
+    {
+      "type": "text_alignment",
+      "id": "success_title_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Success text typography"
+    },
     {
       "type": "range",
       "id": "success_text_size",
       "label": "Font size",
       "min": 14,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 14
+      "default": 28,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -442,18 +497,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "success_text_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Success button typography" },
+    {
+      "type": "text_alignment",
+      "id": "success_text_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Success button typography"
+    },
     {
       "type": "range",
       "id": "success_button_size",
       "label": "Font size",
       "min": 12,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 12
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",

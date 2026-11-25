@@ -8,7 +8,7 @@
     #shopify-section-{{ section_id }} h6,
     #shopify-section-{{ section_id }} [class*="heading"],
     #shopify-section-{{ section_id }} [class*="title"] {
-      font-size: {{ section_settings.typography_heading_size }}px;
+      font-size: calc({{ section_settings.typography_heading_size }} * var(--fu));
       letter-spacing: {{ section_settings.typography_heading_letter_spacing | divided_by: 100.0 }}em;
       line-height: {{ section_settings.typography_heading_line_height | divided_by: 100.0 }};
       text-align: {{ section_settings.typography_heading_alignment }};
@@ -19,7 +19,7 @@
     #shopify-section-{{ section_id }} p,
     #shopify-section-{{ section_id }} [class*="description"],
     #shopify-section-{{ section_id }} [class*="subheading"] {
-      font-size: {{ section_settings.typography_body_size }}px;
+      font-size: calc({{ section_settings.typography_body_size }} * var(--fu));
       letter-spacing: {{ section_settings.typography_body_letter_spacing | divided_by: 100.0 }}em;
       line-height: {{ section_settings.typography_body_line_height | divided_by: 100.0 }};
       text-align: {{ section_settings.typography_body_alignment }};
@@ -31,7 +31,7 @@
     #shopify-section-{{ section_id }} label,
     #shopify-section-{{ section_id }} [class*="label"],
     #shopify-section-{{ section_id }} [class*="eyebrow"] {
-      font-size: {{ section_settings.typography_label_size }}px;
+      font-size: calc({{ section_settings.typography_label_size }} * var(--fu));
       letter-spacing: {{ section_settings.typography_label_letter_spacing | divided_by: 100.0 }}em;
       line-height: {{ section_settings.typography_label_line_height | divided_by: 100.0 }};
       text-align: {{ section_settings.typography_label_alignment }};
@@ -41,7 +41,7 @@
   {% if section_settings.typography_action_enabled %}
     #shopify-section-{{ section_id }} a,
     #shopify-section-{{ section_id }} button {
-      font-size: {{ section_settings.typography_action_size }}px;
+      font-size: calc({{ section_settings.typography_action_size }} * var(--fu));
       letter-spacing: {{ section_settings.typography_action_letter_spacing | divided_by: 100.0 }}em;
       line-height: {{ section_settings.typography_action_line_height | divided_by: 100.0 }};
       text-align: {{ section_settings.typography_action_alignment }};

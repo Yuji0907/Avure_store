@@ -63,11 +63,11 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
     color: var(--text-color-primary);
     width: 80%;
     height: 100%;
-    margin-bottom: 10rem;
+    margin-bottom: calc(320 * var(--fu));
   }
 
   .hero-label,
@@ -84,13 +84,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
   }
 
   /* Label */
   .hero-label {
     font-family: var(--text-font-accent);
-    font-size: {{ section.settings.label_size | divided_by: 16.0 }}rem;
+    font-size: calc({{ section.settings.label_size }} * var(--fu));
     letter-spacing: {{ section.settings.label_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.label_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.label_alignment }};
@@ -100,7 +100,7 @@
   .hero-heading {
     font-family: var(--text-font-primary);
     font-weight: 600;
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -109,7 +109,7 @@
   /* Subheading */
   .hero-subheading {
     font-family: var(--text-font-secondary);
-    font-size: {{ section.settings.subheading_size | divided_by: 16.0 }}rem;
+    font-size: calc({{ section.settings.subheading_size }} * var(--fu));
     letter-spacing: {{ section.settings.subheading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.subheading_alignment }};
@@ -122,10 +122,19 @@
   "tag": "section",
   "class": "section-hero",
   "settings": [
-    { "type": "header", "content": "Video" },
-    { "type": "video", "id": "video", "label": "Shopify-hosted video (MP4)" },
-
-    { "type": "header", "content": "Content" },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify-hosted video (MP4)"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "label",
@@ -144,17 +153,20 @@
       "label": "Subheading",
       "default": "A clear approach to daily skincare, shaped by dermo-cosmetic expertise."
     },
-
-    { "type": "header", "content": "Label typography" },
+    {
+      "type": "header",
+      "content": "Label typography"
+    },
     {
       "type": "range",
       "id": "label_size",
       "label": "Font size",
       "min": 10,
-      "max": 32,
+      "max": 64,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -182,17 +194,20 @@
       "label": "Alignment",
       "default": "center"
     },
-
-    { "type": "header", "content": "Title typography" },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 24,
-      "max": 120,
+      "max": 224,
       "step": 2,
       "unit": "px",
-      "default": 32
+      "default": 64,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -220,17 +235,20 @@
       "label": "Alignment",
       "default": "center"
     },
-
-    { "type": "header", "content": "Subheading typography" },
+    {
+      "type": "header",
+      "content": "Subheading typography"
+    },
     {
       "type": "range",
       "id": "subheading_size",
       "label": "Font size",
       "min": 12,
-      "max": 48,
+      "max": 96,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -259,6 +277,10 @@
       "default": "center"
     }
   ],
-  "presets": [{ "name": "hero" }]
+  "presets": [
+    {
+      "name": "hero"
+    }
+  ]
 }
 {% endschema %}

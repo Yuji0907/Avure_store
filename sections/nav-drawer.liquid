@@ -205,9 +205,9 @@
     }
   }
   .menu-badge {
-    margin-left: 0.25rem;
+    margin-left: calc(8 * var(--fu));
     font-family: var(--text-font-accent);
-    font-size: 9px;
+    font-size: calc(18 * var(--fu));
     font-weight: 600;
     line-height: 1;
     letter-spacing: 0.04em;
@@ -221,7 +221,7 @@
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    gap: 1rem;
+    gap: calc(32 * var(--fu));
     .main-links,
     .list-number {
       font-size: var(--text-h1);
@@ -245,7 +245,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: calc(128 * var(--fu));
     /* justify-content: center; */
     inset: 0;
     z-index: 100;
@@ -292,7 +292,7 @@
       }
       .menu-label {
         font-family: var(--text-font-accent);
-        font-size: 10px;
+        font-size: calc(20 * var(--fu));
         font-weight: 500;
         line-height: 1.4;
         letter-spacing: var(--tracking-eyebrow);
@@ -315,7 +315,7 @@
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: calc(96 * var(--fu));
     align-items: center;
     background-color: var(--bg-light);
     transform: translateX(-100%);
@@ -345,8 +345,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: calc(96 * var(--fu));
+    height: calc(96 * var(--fu));
     border: 0;
     background: transparent;
     padding: 0;

@@ -43,13 +43,13 @@
     .routines-duos__title {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: calc(16 * var(--fu));
       .title-dot {
-        --size: 1.1rem;
+        --size: calc(35.2 * var(--fu));
         width: var(--size);
         height: var(--size);
         aspect-ratio: 1/1;
-        border-radius: 50rem;
+        border-radius: calc(1600 * var(--fu));
         background-color: var(--color-dark);
       }
     }
@@ -58,8 +58,8 @@
   .routines-duos {
     display: flex;
     flex-direction: column;
-    margin: 2rem;
-    gap: 4rem;
+    margin: calc(64 * var(--fu));
+    gap: calc(128 * var(--fu));
     ._title {
       font-family: var(--text-font-primary);
       width: auto;
@@ -77,8 +77,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); */
-    gap: 1.5rem;
+    /* grid-template-columns: repeat(auto-fit, minmax(calc(320 * var(--fu)), 1fr)); */
+    gap: calc(48 * var(--fu));
     padding: 0;
     list-style: none;
   }

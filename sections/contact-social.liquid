@@ -58,25 +58,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-block: 3rem;
+    padding-block: calc(96 * var(--fu));
   }
   .site-footer__inner {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 3rem 1.5rem 0;
+    gap: calc(16 * var(--fu));
+    padding: calc(96 * var(--fu)) calc(48 * var(--fu)) 0;
   }
   .site-footer__title {
     width: 100%;
     font-weight: 700;
     font-family: var(--text-font-primary);
-    margin-bottom: 1rem;
+    margin-bottom: calc(32 * var(--fu));
   }
   .site-footer__social {
     display: flex;
-    gap: 1.2rem;
+    gap: calc(38.4 * var(--fu));
     list-style: none;
     margin: 0;
     padding: 0;
@@ -84,9 +84,9 @@
   .site-footer__social a {
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.6rem;
+    width: calc(96 * var(--fu));
+    height: calc(96 * var(--fu));
+    border-radius: calc(19.2 * var(--fu));
     background: var(--bg-dark);
     color: var(--color-light);
     .social-icon {
@@ -126,11 +126,11 @@
   .site-footer__divider {
     width: 90%;
     border: 0;
-    border-top: 0.18rem solid var(--color-dark);
-    margin-top: 1.8rem;
+    border-top: calc(5.76 * var(--fu)) solid var(--color-dark);
+    margin-top: calc(57.6 * var(--fu));
   }
   .site-footer__bottom {
-    padding-block: 0.5rem;
+    padding-block: calc(16 * var(--fu));
   }
 {%- endstylesheet -%}
 
@@ -140,7 +140,7 @@
 {% style %}
   /* Title */
   #shopify-section-{{ section.id }} .site-footer__title {
-    font-size: {{ section.settings.title_size }}px;
+    font-size: calc({{ section.settings.title_size }} * var(--fu));
     letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.title_alignment }};
@@ -148,14 +148,14 @@
 
   /* Email (flex item that shrinks to its text, so no alignment setting) */
   #shopify-section-{{ section.id }} .site-footer__email {
-    font-size: {{ section.settings.email_size }}px;
+    font-size: calc({{ section.settings.email_size }} * var(--fu));
     letter-spacing: {{ section.settings.email_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.email_line_height | divided_by: 100.0 }};
   }
 
   /* Copyright */
   #shopify-section-{{ section.id }} .site-footer__bottom p {
-    font-size: {{ section.settings.copyright_size }}px;
+    font-size: calc({{ section.settings.copyright_size }} * var(--fu));
     letter-spacing: {{ section.settings.copyright_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.copyright_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.copyright_alignment }};
@@ -166,33 +166,56 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Follow us" },
-    {"type": "text", "id": "brand_name", "label": "Brand name (copyright)", "default": "Avure"},
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Follow us"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name (copyright)",
+      "default": "Avure"
+    },
     {
       "type": "text",
       "id": "instagram",
       "label": "Instagram link",
       "default": "https://www.instagram.com/avure_skincare/"
     },
-    { "type": "text", "id": "tiktok", "label": "TikTok link", "default": "https://www.tiktok.com/@avure_skincare" },
+    {
+      "type": "text",
+      "id": "tiktok",
+      "label": "TikTok link",
+      "default": "https://www.tiktok.com/@avure_skincare"
+    },
     {
       "type": "text",
       "id": "facebook",
       "label": "Facebook link",
       "default": "https://www.facebook.com/avure_skincare"
     },
-    { "type": "text", "id": "email", "label": "Contact email", "default": "contact@avure-skincare.com" },
-
-    { "type": "header", "content": "Title typography" },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email",
+      "default": "contact@avure-skincare.com"
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
     {
       "type": "range",
       "id": "title_size",
       "label": "Font size",
       "min": 14,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 32,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -214,18 +237,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "title_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Email typography" },
+    {
+      "type": "text_alignment",
+      "id": "title_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Email typography"
+    },
     {
       "type": "range",
       "id": "email_size",
       "label": "Font size",
       "min": 14,
-      "max": 72,
-      "step": 1,
+      "max": 144,
+      "step": 2,
       "unit": "px",
-      "default": 14
+      "default": 28,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -247,17 +278,20 @@
       "unit": "%",
       "default": 100
     },
-
-    { "type": "header", "content": "Copyright typography" },
+    {
+      "type": "header",
+      "content": "Copyright typography"
+    },
     {
       "type": "range",
       "id": "copyright_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -279,8 +313,17 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "copyright_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "copyright_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ],
-  "presets": [{ "name": "Footer" }]
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
 }
 {% endschema %}

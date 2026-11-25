@@ -157,9 +157,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding-block: 1rem;
-    padding-inline: 0.5rem;
+    gap: calc(32 * var(--fu));
+    padding-block: calc(32 * var(--fu));
+    padding-inline: calc(16 * var(--fu));
     .cart-bag svg {
       --size: 3rem;
       width: var(--size);
@@ -195,8 +195,8 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 2rem;
-    padding: 1.5rem;
+    gap: calc(64 * var(--fu));
+    padding: calc(48 * var(--fu));
     background-color: var(--bg-light);
     transform: translateX(100%);
     visibility: hidden;
@@ -207,7 +207,7 @@
     transform: translateX(0);
     visibility: visible;
     width: 100%;
-    padding-inline: 4rem;
+    padding-inline: calc(128 * var(--fu));
     pointer-events: auto;
   }
 
@@ -232,15 +232,15 @@
     width: 100%;
     margin-inline: auto;
     display: flex;
-    gap: 1rem;
-    padding-block: 1rem;
+    gap: calc(32 * var(--fu));
+    padding-block: calc(32 * var(--fu));
     border-block: 2px solid var(--border-clr-muted);
   }
   .cart-drawer__image {
   }
   .cart-drawer__item img {
     display: block;
-    width: 13rem;
+    width: calc(416 * var(--fu));
     height: auto;
   }
   .cart-drawer__details {
@@ -249,7 +249,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.45rem;
+    gap: calc(14.4 * var(--fu));
   }
   .cart-drawer__category {
     font-size: var(--type-caption);
@@ -274,19 +274,19 @@
     width: 100%;
     display: inline-flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: calc(25.6 * var(--fu));
     justify-content: space-between;
     margin-top: auto;
   }
   .cart-drawer__variants {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: calc(12.8 * var(--fu));
   }
   .cart-drawer__variant {
-    padding: 0.3rem 0.6rem;
+    padding: calc(9.6 * var(--fu)) calc(19.2 * var(--fu));
     border: 1px solid var(--color-dark);
-    border-radius: 8px;
+    border-radius: calc(16 * var(--fu));
     background: transparent;
     color: var(--text-color-secondary);
     font-family: var(--text-font-primary);
@@ -306,19 +306,19 @@
   .cart-drawer__stepper {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
   }
   .cart-drawer__step {
-    width: 28px;
-    height: 28px;
+    width: calc(56 * var(--fu));
+    height: calc(56 * var(--fu));
     display: grid;
     place-items: center;
     padding: 0;
     border: 1px solid var(--color-dark);
-    border-radius: 8px;
+    border-radius: calc(16 * var(--fu));
     background: transparent;
     color: var(--text-color-secondary);
-    font-size: 16px;
+    font-size: calc(32 * var(--fu));
     line-height: 1;
     cursor: pointer;
   }
@@ -337,7 +337,7 @@
   .cart-drawer__prices {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
     font-weight: 600;
   }
   .cart-drawer__prices s {
@@ -347,7 +347,7 @@
   }
   .cart-drawer__footer {
     display: grid;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
   }
   .cart-drawer__subtotal {
     display: flex;
@@ -357,7 +357,7 @@
   .cart-drawer__view-cart,
   .cart-drawer__checkout {
     display: block;
-    padding: 0.85rem 1rem;
+    padding: calc(27.2 * var(--fu)) calc(32 * var(--fu));
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
@@ -378,7 +378,7 @@
     display: flex;
     flex-grow: 1;
     align-items: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
   }
   .cart-drawer__close svg {
     display: block;
@@ -404,7 +404,7 @@
     text-align: center;
   }
   .cart-shipping-progress p {
-    margin: 0 0 0.5rem;
+    margin: 0 0 calc(16 * var(--fu));
     color: var(--text-color-muted);
     font-size: var(--text-h4);
     span {
@@ -412,10 +412,10 @@
     }
   }
   .cart-shipping-progress__track {
-    height: 0.5rem;
+    height: calc(16 * var(--fu));
     overflow: hidden;
     background: var(--border-clr-muted);
-    border-radius: 999px;
+    border-radius: calc(1998 * var(--fu));
   }
   .cart-shipping-progress__track span {
     display: block;

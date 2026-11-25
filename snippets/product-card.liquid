@@ -57,7 +57,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    gap: 0.6rem;
+    gap: calc(19.2 * var(--fu));
 
     .product-image_container {
       position: relative;
@@ -79,7 +79,7 @@
       .product-card_hedear {
         position: absolute;
         inset: 0 0 auto 0;
-        padding: 1.5rem;
+        padding: calc(48 * var(--fu));
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
@@ -107,8 +107,8 @@
           border: 0;
           cursor: pointer;
           background-color: var(--surface-icon);
-          padding: 0.8rem;
-          border-radius: 0.8rem;
+          padding: calc(25.6 * var(--fu));
+          border-radius: calc(25.6 * var(--fu));
 
           &:disabled {
             opacity: 0.5;
@@ -144,7 +144,7 @@
 
       > h3 {
         width: 100%;
-        font-size: 13px;
+        font-size: calc(26 * var(--fu));
         font-family: var(--text-font-primary);
         color: var(--text-color-secondary);
         font-weight: 700;
@@ -153,17 +153,35 @@
       > p {
         width: 100%;
         font-family: var(--text-font-secondary);
-        font-size: 11px;
+        font-size: calc(22 * var(--fu));
         color: var(--text-color-muted);
         text-align: center;
       }
       .price {
         width: 100%;
         text-align: center;
-        font-size: 13px;
+        font-size: calc(26 * var(--fu));
         color: var(--text-color-secondary);
         font-weight: 600;
       }
+    }
+  }
+  /* Figma mobile (768 frame): name Poppins 28 semibold, subtitle Acumin 20, price Poppins 24 */
+  @media (max-width: 767px) {
+    .product-card_container .product-info > h3 {
+      font-family: var(--font-poppins);
+      font-size: calc(28 * var(--fu));
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .product-card_container .product-info > p {
+      font-family: var(--text-font-primary);
+      font-size: calc(20 * var(--fu));
+    }
+    .product-card_container .product-info .price {
+      font-family: var(--font-poppins);
+      font-size: calc(24 * var(--fu));
     }
   }
 {%- endstylesheet -%}
