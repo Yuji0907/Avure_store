@@ -15,16 +15,52 @@
     </div>
 
     <div class="testimonials-carousel">
-      {%- for testimonial in testimonials -%}
-        <div class="testimonials-vide__wrapper">
-          {%- if testimonial.media != blank -%}
-            {{
-              testimonial.media.value
-              | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'testi-video'
-            }}
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+      {%- if section.blocks.size > 0 -%}
+        {%- comment -%} Video blocks added in the theme editor. Blocks without a video are skipped. {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- assign video = block.settings.video -%}
+          {%- if video == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign poster = block.settings.poster | default: video.preview_image -%}
+          <div class="testimonials-vide__wrapper" {{ block.shopify_attributes }}>
+            <video
+              class="testi-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              {% if poster != blank %}
+                poster="{{ poster | image_url: width: 720 }}"
+              {% endif %}
+              {% if video.alt != blank %}
+                aria-label="{{ video.alt | escape }}"
+              {% endif %}
+            >
+              {%- for source in video.sources -%}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            </video>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for testimonial in testimonials -%}
+          <div class="testimonials-vide__wrapper">
+            {%- if testimonial.media != blank -%}
+              {{
+                testimonial.media.value
+                | video_tag:
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  playsinline: true,
+                  preload: 'metadata',
+                  controls: false,
+                  class: 'testi-video'
+              }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -245,6 +281,27 @@
       "default": 140
     },
     { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "center" }
+  ],
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Plays muted on a loop. Vertical (9:16) videos fit best."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster image",
+          "info": "Optional. Shown while the video loads. Defaults to the video's own preview image."
+        }
+      ]
+    }
   ],
   "presets": [
     {
