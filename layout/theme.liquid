@@ -69,6 +69,8 @@
     {% render 'css-variables' %}
     {{ content_for_header }}
     {{ 'avure-desktop.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} Phone layout from the Figma mobile spec (max-width: 767px only) {%- endcomment -%}
+    {{ 'avure-mobile.css' | asset_url | stylesheet_tag }}
   </head>
 
   {%- comment -%} e.g. template-index, template-product, template-page--about, template-metaobject--concerns {%- endcomment -%}

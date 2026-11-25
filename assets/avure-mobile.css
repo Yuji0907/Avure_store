@@ -1,0 +1,438 @@
+/* ==========================================================================
+   Avure — phone layout from the Figma mobile spec (_reference/figma-spec).
+   Every number is a Figma px from the 768px frame: calc(N * var(--fu)),
+   with --fu = 100vw / 768 below 768px (snippets/css-variables.liquid).
+   Phones only: tablet and desktop never read this file's rules.
+
+   Text "y" values in the spec are baselines; vertical gaps below are
+   (next element's top) - (previous element's bottom).
+   Sizes that come from a section's typography settings are NOT set here:
+   those settings hold the Figma values (templates/*.json), so the theme
+   editor still controls them.
+
+   Selector prefixes: "body #MainContent" for page sections, "body:not(#_)"
+   for the header, menu drawer, cart and footer (outside <main>); both
+   outrank the section stylesheets.
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  /* ------------------------------------------------------------------ 1. Global */
+
+  /* Claims (announcement) bar: 61 high, JetBrains Mono 24 */
+  body:not(#_) .announcement-bar {
+    height: calc(61 * var(--fu));
+    padding-block: 0;
+  }
+  body:not(#_) .announcement-text {
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+
+  /* Nav bar: 104 high; burger 40x27 at x33, logo 166x56 centred, bag 40x40 31 from the right */
+  body:not(#_) .header-container {
+    height: calc(104 * var(--fu));
+    padding-block: 0;
+    padding-inline: calc(33 * var(--fu)) calc(31 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body:not(#_) .header-container .menu-trigger {
+    /* tap target stays >= 44px; the icon inside is the Figma size */
+    width: max(44px, calc(40 * var(--fu)));
+    height: 44px;
+    justify-content: flex-start;
+  }
+  body:not(#_) .header-container .menu {
+    width: calc(40 * var(--fu));
+    height: calc(27 * var(--fu));
+  }
+  body:not(#_) .header-container .header-logo img {
+    width: calc(166 * var(--fu));
+    height: calc(56 * var(--fu));
+    object-fit: contain;
+  }
+  body:not(#_) .header-container .shopping-bag {
+    width: calc(40 * var(--fu));
+    height: calc(40 * var(--fu));
+  }
+
+  /* Menu drawer (Menu.md, Menu_-_*.md): 302-high image, links Acumin 48 / sub-links 40 */
+  body:not(#_) .header-drawer__panel {
+    gap: calc(55 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover {
+    width: 100%;
+    height: calc(302 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .menu-image {
+    height: 100%;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .menu-label {
+    width: auto;
+    left: calc(43 * var(--fu));
+    top: auto;
+    bottom: calc(21 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 700;
+    line-height: calc(29 * var(--fu));
+    letter-spacing: 0;
+    color: #003865;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .sub-menu-label {
+    width: auto;
+    left: calc(43 * var(--fu));
+    top: calc(69 * var(--fu));
+    bottom: auto;
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em; /* -1.44px */
+    color: #0b0b0a;
+  }
+  /* close: 25x25, 29 from the top, 36 from the right (button keeps a 44px tap area) */
+  body:not(#_) .header-drawer__panel button {
+    top: calc(29 * var(--fu) - (44px - 25 * var(--fu)) / 2);
+    right: calc(36 * var(--fu) - (44px - 25 * var(--fu)) / 2);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  body:not(#_) .header-drawer__panel .close-icon {
+    width: calc(25 * var(--fu));
+    height: calc(25 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .link-group {
+    width: 100%;
+    padding-inline: calc(64 * var(--fu)) calc(73 * var(--fu));
+    gap: calc(24 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .link-group .full-link > .main-links {
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em; /* -1.44px */
+    color: #0b0b0a;
+  }
+  body:not(#_) .header-drawer__panel .full-link .chevron {
+    width: calc(28 * var(--fu));
+    height: calc(14 * var(--fu));
+  }
+  body:not(#_) .sub-links {
+    gap: calc(55 * var(--fu));
+  }
+  body:not(#_) .sub-links .all-liks__container {
+    width: 100%;
+    padding-inline: calc(64 * var(--fu));
+    gap: calc(32 * var(--fu));
+  }
+  body:not(#_) .sub-links .all-liks__container li {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+  body:not(#_) .sub-links .list-number {
+    flex: 0 0 calc(76 * var(--fu));
+    width: auto;
+    font-family: var(--text-font-accent);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-2.44 * var(--fu));
+    color: #0b0b0a;
+  }
+  body:not(#_) .sub-links .main-links {
+    width: auto;
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #0b0b0a;
+  }
+  /* badge after the name: same Acumin 40 as the name in the spec */
+  body:not(#_) .sub-links .menu-badge {
+    margin-left: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    vertical-align: baseline;
+    color: #0b0b0a;
+  }
+
+  /* Buttons / CTA: Acumin 600, uppercase (sizes per section below) */
+  body:not(#_) .avure-button,
+  body:not(#_) .avure-outline-button {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  body:not(#_) .avure-outline-button {
+    border-width: 1px;
+  }
+
+  /* Section head: title Acumin 48/400 (-1.88px) with the dot, "VIEW ALL" underlined.
+     Title and link sizes come from the section settings (Figma values). */
+  body #MainContent .products-hero_header {
+    align-items: baseline;
+  }
+  body #MainContent .products-hero_title {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .products-hero_title::before {
+    --size: calc(16 * var(--fu));
+    align-self: center;
+  }
+  body #MainContent .products-hero_link {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+
+  /* Product card: image 341x450 #E6E6E5; cart button 60x60 r14.3 #D8E5F0 (icon 34) 20 from the top,
+     22 from the right; badge Acumin 18.1 #003865; name Poppins 28/600; subtitle Acumin 20; price Poppins 24.
+     Gaps: image -> name 14, name -> subtitle 8, subtitle -> price 23. */
+  body:not(#_) .product-card_container {
+    gap: 0;
+  }
+  /* product sliders: 341-wide cards, 14 apart */
+  body:not(#_) .product-slider_container {
+    grid-auto-columns: calc(341 * var(--fu));
+    gap: calc(14 * var(--fu));
+  }
+  body:not(#_) .product-card_container .product-image_container {
+    aspect-ratio: 341 / 450;
+    background-color: #e6e6e5;
+  }
+  body:not(#_) .product-card_container .product-card_hedear {
+    padding: calc(20 * var(--fu)) calc(22 * var(--fu)) 0 calc(23 * var(--fu));
+    align-items: flex-start;
+  }
+  body:not(#_) .product-card_container .shopping-cart-add_container {
+    width: calc(60 * var(--fu));
+    height: calc(60 * var(--fu));
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border-radius: calc(14.3 * var(--fu));
+    background-color: #d8e5f0;
+  }
+  body:not(#_) .product-card_container .shopping-cart-add_container svg {
+    width: calc(34 * var(--fu));
+    height: calc(34 * var(--fu));
+  }
+  body:not(#_) .product-card_container .badge-title {
+    margin-top: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(18.1 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  body:not(#_) .product-card_container .product-info {
+    padding-top: calc(14 * var(--fu));
+    gap: 0;
+    text-align: center;
+  }
+  body:not(#_) .product-card_container .product-info > h3 {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    color: #1d1d1b;
+  }
+  body:not(#_) .product-card_container .product-info > p {
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #41413f;
+  }
+  body:not(#_) .product-card_container .product-info .price {
+    margin-top: calc(23 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #1d1d1b;
+  }
+
+  /* Footer (Homepage.md "Footer"): #0B0B0A, side padding 40 */
+  body:not(#_) .section-footer {
+    padding-block: calc(95 * var(--fu)) 0;
+    background-color: #0b0b0a;
+  }
+  body:not(#_) .footer-container {
+    width: 100%;
+    padding-inline: calc(40 * var(--fu)) calc(32 * var(--fu));
+    gap: 0;
+  }
+  body:not(#_) .footer-logo_container {
+    align-items: flex-end;
+  }
+  body:not(#_) .footer-logo_container .footer-logo img,
+  body:not(#_) .footer-logo_container .footer-logo_icon {
+    width: calc(279 * var(--fu));
+    height: auto;
+  }
+  body:not(#_) .footer-logo_container .footer-logo {
+    margin-left: calc(-8 * var(--fu)); /* logo at x32 */
+  }
+  body:not(#_) .footer-logo_container .footer-logo_text {
+    font-family: var(--text-font-accent);
+    font-size: calc(16 * var(--fu));
+    font-weight: 500;
+    line-height: calc(19 * var(--fu));
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+  /* columns: "Product" at x40, "Help Center" at x417 */
+  body:not(#_) .footer-links_container {
+    margin-top: calc(173 * var(--fu));
+    justify-content: flex-start;
+  }
+  body:not(#_) .footer-links_container > div {
+    justify-content: flex-start;
+  }
+  body:not(#_) .footer-links_container .footer-products_links {
+    width: calc(377 * var(--fu));
+    flex: 0 0 auto;
+  }
+  body:not(#_) .footer-links_container .footer-products_heading,
+  body:not(#_) .footer-links_container .footer-help_heading,
+  body:not(#_) .footer-contact_container .footer-contact_heading,
+  body:not(#_) .site-footer__title {
+    font-family: var(--text-font-primary);
+    font-size: calc(31.5 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+  body:not(#_) .footer-links_container .footer-products_list,
+  body:not(#_) .footer-links_container .footer-help_list {
+    margin-top: calc(39 * var(--fu));
+  }
+  body:not(#_) .footer-links_container .footer-products_list a,
+  body:not(#_) .footer-links_container .footer-help_list a,
+  body:not(#_) .footer-links_container .footer-products_list li,
+  body:not(#_) .footer-links_container .footer-help_list li {
+    font-family: var(--text-font-primary);
+    font-size: calc(23.6 * var(--fu));
+    font-weight: 400;
+    line-height: calc(35 * var(--fu));
+    letter-spacing: 0;
+    color: #d4d4d3;
+  }
+  body:not(#_) .footer-contact_container {
+    margin-top: calc(40 * var(--fu));
+    gap: calc(40 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_text {
+    gap: calc(43 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_description {
+    font-family: var(--text-font-primary);
+    font-size: calc(23.6 * var(--fu));
+    font-weight: 400;
+    line-height: calc(28 * var(--fu));
+    color: #d4d4d3;
+  }
+  /* inputs 691x93, 1px #F9FAF9, text x+31; gap 25; subscribe 689x110 #F9FAF9, Acumin 39.4 */
+  body:not(#_) .footer-contact_container .footer-contact_form {
+    gap: calc(25 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_input {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding-block: 0;
+    padding-inline: calc(31 * var(--fu));
+    border: 1px solid #f9faf9;
+    font-family: var(--text-font-primary);
+    color: #f9faf9;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_input::placeholder {
+    color: #a5a5a1;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_button {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #f9faf9;
+    color: #0b0b0a;
+    font-family: var(--text-font-primary);
+    font-size: calc(39.4 * var(--fu));
+    font-weight: 600;
+    line-height: 1;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_terms {
+    margin-top: calc(-9 * var(--fu)); /* 31 below the button */
+    font-family: var(--text-font-primary);
+    font-size: calc(19.7 * var(--fu));
+    font-weight: 400;
+    line-height: calc(22 * var(--fu));
+    color: #f9faf9;
+  }
+  /* "FOLLOW US", socials 48x48 (gap 23), email Acumin 27.6, copyright 19.7 */
+  body:not(#_) .site-footer {
+    padding-block: calc(47 * var(--fu)) calc(70 * var(--fu));
+    background-color: #0b0b0a;
+  }
+  body:not(#_) .site-footer__inner {
+    width: 100%;
+    padding: 0;
+    gap: 0;
+  }
+  body:not(#_) .site-footer__title {
+    margin-bottom: calc(39 * var(--fu));
+  }
+  body:not(#_) .site-footer__social {
+    gap: calc(23 * var(--fu));
+  }
+  body:not(#_) .site-footer__social a {
+    width: calc(48 * var(--fu));
+    height: calc(48 * var(--fu));
+    border-radius: calc(10 * var(--fu));
+  }
+  body:not(#_) .site-footer__social svg {
+    width: calc(34 * var(--fu));
+    height: calc(34 * var(--fu));
+  }
+  body:not(#_) .site-footer__social a.facebook-wrapper svg {
+    width: calc(48 * var(--fu));
+    height: calc(48 * var(--fu));
+  }
+  body:not(#_) .site-footer__email {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(27.6 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #f9faf9;
+  }
+  body:not(#_) .site-footer__divider {
+    display: none; /* not in the Figma footer */
+  }
+  body:not(#_) .site-footer__bottom {
+    padding-block: calc(46 * var(--fu)) 0;
+    font-family: var(--text-font-primary);
+    font-size: calc(19.7 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #f9faf9;
+  }
+}
