@@ -47,18 +47,18 @@
   }
   .routines-slider__content {
     width: 90%;
-    margin: 0 auto 32px;
+    margin: 0 auto calc(64 * var(--fu));
   }
   .routines-slider__header {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: calc(64 * var(--fu));
+    margin-bottom: calc(64 * var(--fu));
   }
   .routines-slider__title {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
     margin: 0 auto 0 0;
     color: var(--text-color-dark);
     font-family: var(--text-primary);
@@ -66,9 +66,9 @@
   }
   .routines-slider__title::before {
     content: '';
-    width: 1rem;
+    width: calc(32 * var(--fu));
     aspect-ratio: 1;
-    flex: 0 0 1rem;
+    flex: 0 0 calc(32 * var(--fu));
     border-radius: 50%;
     background: var(--bg-dark);
   }
@@ -85,11 +85,11 @@
     overflow-y: hidden;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
-    gap: 2rem;
+    gap: calc(64 * var(--fu));
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 48%;
-    padding-bottom: 1rem;
+    padding-bottom: calc(32 * var(--fu));
 
     .routin-product__card {
       display: flex;
@@ -119,9 +119,9 @@
           flex-wrap: nowrap;
           width: 100%;
           justify-content: space-between;
-          padding-top: 1rem;
+          padding-top: calc(32 * var(--fu));
           align-items: center;
-          gap: 0.5rem;
+          gap: calc(16 * var(--fu));
           > h1 {
             flex: 1 1 auto;
             min-width: 0;
@@ -142,7 +142,7 @@
           -webkit-line-clamp: 2;
           line-clamp: 2;
           overflow: hidden;
-          margin-top: 0.25rem;
+          margin-top: calc(8 * var(--fu));
         }
         > p,
         .price {
@@ -156,8 +156,8 @@
           display: flex;
           flex-direction: row;
           align-items: baseline;
-          gap: 0.4rem;
-          margin-top: 0.5rem;
+          gap: calc(12.8 * var(--fu));
+          margin-top: calc(16 * var(--fu));
           .compare-at-price {
             color: var(--text-color-disabled);
             font-weight: 500;
@@ -174,28 +174,28 @@
 {% style %}
   /* Section title (flex item with a dot, so no alignment setting) */
   #shopify-section-{{ section.id }} .routines-slider__title {
-    font-size: {{ section.settings.title_size }}px;
+    font-size: calc({{ section.settings.title_size }} * var(--fu));
     letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.title_line_height | divided_by: 100.0 }};
   }
 
   /* View all link */
   #shopify-section-{{ section.id }} .routines-slider__link {
-    font-size: {{ section.settings.link_size }}px;
+    font-size: calc({{ section.settings.link_size }} * var(--fu));
     letter-spacing: {{ section.settings.link_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.link_line_height | divided_by: 100.0 }};
   }
 
   /* Card title (shares a row with the rating, so no alignment setting) */
   #shopify-section-{{ section.id }} .routin-details__container .row-flex__group > h1 {
-    font-size: {{ section.settings.card_title_size }}px;
+    font-size: calc({{ section.settings.card_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_title_line_height | divided_by: 100.0 }};
   }
 
   /* Card description */
   #shopify-section-{{ section.id }} .routin-details__container > p {
-    font-size: {{ section.settings.card_description_size }}px;
+    font-size: calc({{ section.settings.card_description_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_description_alignment }};
@@ -203,16 +203,31 @@
 
   /* Card price */
   #shopify-section-{{ section.id }} .routin-details__container .price {
-    font-size: {{ section.settings.card_price_size }}px;
+    font-size: calc({{ section.settings.card_price_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_price_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_price_line_height | divided_by: 100.0 }};
   }
 
   /* Compare-at price */
   #shopify-section-{{ section.id }} .routin-details__container .compare-at-price {
-    font-size: {{ section.settings.card_compare_size }}px;
+    font-size: calc({{ section.settings.card_compare_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_compare_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_compare_line_height | divided_by: 100.0 }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .routines-slider__title { font-family: var(--text-font-primary); font-weight: 400; }
+    #shopify-section-{{ section.id }} .routines-slider__link { font-family: var(--text-font-primary); font-weight: 500; }
+    #shopify-section-{{ section.id }} .routin-details__container .row-flex__group > h1 { font-family: var(--font-poppins); font-weight: 600; }
+    #shopify-section-{{ section.id }} .routin-details__container .price { font-family: var(--font-poppins); }
+  }
+
+  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
+     (Fixed here, so changing these settings only affects phones.) */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .routines-slider__title { letter-spacing: 0em; line-height: 1.1; }
+    #shopify-section-{{ section.id }} .routines-slider__link { font-size: 11px; }
   }
 {% endstyle %}
 
@@ -237,8 +252,18 @@
   "name": "Routines & duos slider",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "routines & duos" },
-    { "type": "text", "id": "link_label", "label": "View all link label", "default": "view all" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "routines & duos"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "View all link label",
+      "default": "view all"
+    },
     {
       "type": "range",
       "id": "products_to_show",
@@ -248,17 +273,20 @@
       "default": 8,
       "label": "Products to show"
     },
-
-    { "type": "header", "content": "Section title typography" },
+    {
+      "type": "header",
+      "content": "Section title typography"
+    },
     {
       "type": "range",
       "id": "title_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -268,7 +296,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -4
     },
     {
       "type": "range",
@@ -278,19 +306,22 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
-
-    { "type": "header", "content": "View all link typography" },
+    {
+      "type": "header",
+      "content": "View all link typography"
+    },
     {
       "type": "range",
       "id": "link_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 12,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -312,17 +343,20 @@
       "unit": "%",
       "default": 140
     },
-
-    { "type": "header", "content": "Card title typography" },
+    {
+      "type": "header",
+      "content": "Card title typography"
+    },
     {
       "type": "range",
       "id": "card_title_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 28,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -344,17 +378,20 @@
       "unit": "%",
       "default": 120
     },
-
-    { "type": "header", "content": "Card description typography" },
+    {
+      "type": "header",
+      "content": "Card description typography"
+    },
     {
       "type": "range",
       "id": "card_description_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -376,18 +413,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "card_description_alignment", "label": "Alignment", "default": "left" },
-
-    { "type": "header", "content": "Card price typography" },
+    {
+      "type": "text_alignment",
+      "id": "card_description_alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Card price typography"
+    },
     {
       "type": "range",
       "id": "card_price_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -409,17 +454,20 @@
       "unit": "%",
       "default": 140
     },
-
-    { "type": "header", "content": "Compare-at price typography" },
+    {
+      "type": "header",
+      "content": "Compare-at price typography"
+    },
     {
       "type": "range",
       "id": "card_compare_size",
       "label": "Font size",
       "min": 8,
-      "max": 24,
+      "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -442,6 +490,10 @@
       "default": 140
     }
   ],
-  "presets": [{ "name": "Routines & duos slider" }]
+  "presets": [
+    {
+      "name": "Routines & duos slider"
+    }
+  ]
 }
 {% endschema %}

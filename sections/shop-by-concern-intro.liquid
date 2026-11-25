@@ -22,7 +22,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-block: 32px;
+    margin-block: calc(64 * var(--fu));
     .products-hero_header {
       width: 100%;
       display: flex;
@@ -36,11 +36,11 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: calc(16 * var(--fu));
     }
     .products-hero_title::before {
       content: '';
-      --size: 1rem;
+      --size: calc(32 * var(--fu));
       width: var(--size);
       aspect-ratio: 1/1;
       border-radius: var(--size);
@@ -63,21 +63,21 @@
 {% style %}
   /* Section title (flex item with a dot, so no alignment setting) */
   #shopify-section-{{ section.id }} .products-hero_title {
-    font-size: {{ section.settings.title_size }}px;
+    font-size: calc({{ section.settings.title_size }} * var(--fu));
     letter-spacing: {{ section.settings.title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.title_line_height | divided_by: 100.0 }};
   }
 
   /* "View all" link */
   #shopify-section-{{ section.id }} .products-hero_link {
-    font-size: {{ section.settings.link_size }}px;
+    font-size: calc({{ section.settings.link_size }} * var(--fu));
     letter-spacing: {{ section.settings.link_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.link_line_height | divided_by: 100.0 }};
   }
 
   /* Card title */
   #shopify-section-{{ section.id }} .concern-card__title {
-    font-size: {{ section.settings.card_title_size }}px;
+    font-size: calc({{ section.settings.card_title_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_title_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_title_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_title_alignment }};
@@ -85,10 +85,29 @@
 
   /* Card description (symptoms) */
   #shopify-section-{{ section.id }} .concern-card__description {
-    font-size: {{ section.settings.card_description_size }}px;
+    font-size: calc({{ section.settings.card_description_size }} * var(--fu));
     letter-spacing: {{ section.settings.card_description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.card_description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.card_description_alignment }};
+  }
+
+  /* Figma mobile (768 frame): fonts and weights, phones only */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .products-hero_title { font-family: var(--text-font-primary); font-weight: 400; }
+    #shopify-section-{{ section.id }} .products-hero_link { font-family: var(--text-font-primary); font-weight: 500; }
+    #shopify-section-{{ section.id }} .concern-card__title { font-family: var(--font-poppins); font-weight: 600; }
+    #shopify-section-{{ section.id }} .concern-card__description { font-family: var(--text-font-primary); }
+    /* Figma: 217px cards, three fill the row */
+    #shopify-section-{{ section.id }} .concern-slider_container { grid-auto-columns: calc(217 * var(--fu)); column-gap: calc((100% - 651 * var(--fu)) / 2); }
+  }
+
+  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
+     (Fixed here, so changing these settings only affects phones.) */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .products-hero_title { letter-spacing: 0em; line-height: 1.1; }
+    #shopify-section-{{ section.id }} .products-hero_link { font-size: 11px; }
+    #shopify-section-{{ section.id }} .concern-card__title { font-size: 14px; }
+    #shopify-section-{{ section.id }} .concern-card__description { font-size: 12px; line-height: 1.2; }
   }
 {% endstyle %}
 
@@ -98,16 +117,20 @@
   "tag": "section",
   "class": "hero-products",
   "settings": [
-    { "type": "header", "content": "Section title typography" },
+    {
+      "type": "header",
+      "content": "Section title typography"
+    },
     {
       "type": "range",
       "id": "title_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -117,7 +140,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -4
     },
     {
       "type": "range",
@@ -127,19 +150,22 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
-
-    { "type": "header", "content": "View all link typography" },
+    {
+      "type": "header",
+      "content": "View all link typography"
+    },
     {
       "type": "range",
       "id": "link_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 12,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -161,17 +187,20 @@
       "unit": "%",
       "default": 140
     },
-
-    { "type": "header", "content": "Card title typography" },
+    {
+      "type": "header",
+      "content": "Card title typography"
+    },
     {
       "type": "range",
       "id": "card_title_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 14
+      "default": 24,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -193,18 +222,26 @@
       "unit": "%",
       "default": 100
     },
-    { "type": "text_alignment", "id": "card_title_alignment", "label": "Alignment", "default": "left" },
-
-    { "type": "header", "content": "Card description typography" },
+    {
+      "type": "text_alignment",
+      "id": "card_title_alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Card description typography"
+    },
     {
       "type": "range",
       "id": "card_description_size",
       "label": "Font size",
       "min": 8,
-      "max": 24,
+      "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 14,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -224,10 +261,19 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 110
     },
-    { "type": "text_alignment", "id": "card_description_alignment", "label": "Alignment", "default": "left" }
+    {
+      "type": "text_alignment",
+      "id": "card_description_alignment",
+      "label": "Alignment",
+      "default": "left"
+    }
   ],
-  "presets": [{ "name": "hero products" }]
+  "presets": [
+    {
+      "name": "hero products"
+    }
+  ]
 }
 {% endschema %}

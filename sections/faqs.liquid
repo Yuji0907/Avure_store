@@ -31,7 +31,7 @@
   
   .faqs-wrapper{
     width: 100%;
-    margin-block: 32px;
+    margin-block: calc(64 * var(--fu));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,8 +41,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* gap: 1.5rem; */
-        margin-top: 1.5rem;
+        /* gap: calc(48 * var(--fu)); */
+        margin-top: calc(48 * var(--fu));
         width: 90%;
         font-family: var(--text-font-primary);
         font-size: var(--text-h3);
@@ -51,7 +51,7 @@
     width: 90%;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: calc(8 * var(--fu));
   }
   .faqs-eyebrow{
     font-family: var(--text-font-accent);

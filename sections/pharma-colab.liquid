@@ -60,7 +60,7 @@
     display: block;
     width: 100%;
     height: auto;
-    max-height: 420px;
+    max-height: calc(840 * var(--fu));
     object-fit: cover;
     object-position: top;
   }
@@ -75,15 +75,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.75rem;
+    gap: calc(24 * var(--fu));
     color: var(--text-color-secondary);
     width: 80%;
-    margin-bottom: 3rem;
+    margin-bottom: calc(96 * var(--fu));
   }
 
   .pharma-colab__eyebrow {
     font-family: var(--text-font-accent);
-    margin: 2rem 0 0;
+    margin: calc(64 * var(--fu)) 0 0;
     text-transform: uppercase;
   }
 
@@ -101,7 +101,7 @@
   }
 
   .btton-wrrapper {
-    margin-top: 3rem;
+    margin-top: calc(96 * var(--fu));
     width: 100%;
   }
 {% endstylesheet %}
@@ -113,7 +113,7 @@
   /* Eyebrow */
   #shopify-section-{{ section.id }} .pharma-colab__eyebrow {
     width: 100%;
-    font-size: {{ section.settings.eyebrow_size }}px;
+    font-size: calc({{ section.settings.eyebrow_size }} * var(--fu));
     letter-spacing: {{ section.settings.eyebrow_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.eyebrow_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.eyebrow_alignment }};
@@ -121,7 +121,7 @@
 
   /* Heading */
   #shopify-section-{{ section.id }} .pharma-colab__heading {
-    font-size: {{ section.settings.heading_size }}px;
+    font-size: calc({{ section.settings.heading_size }} * var(--fu));
     letter-spacing: {{ section.settings.heading_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.heading_alignment }};
@@ -129,7 +129,7 @@
 
   /* Description */
   #shopify-section-{{ section.id }} .pharma-colab__description {
-    font-size: {{ section.settings.description_size }}px;
+    font-size: calc({{ section.settings.description_size }} * var(--fu));
     letter-spacing: {{ section.settings.description_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.description_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.description_alignment }};
@@ -142,11 +142,25 @@
   "tag": "section",
   "class": "section-colab",
   "settings": [
-    { "type": "header", "content": "Hero image" },
-    { "type": "image_picker", "id": "colab_image", "label": "Image" },
-    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Pharmacist in a lab coat" },
-
-    { "type": "header", "content": "Content" },
+    {
+      "type": "header",
+      "content": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "colab_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Pharmacist in a lab coat"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "hero_title",
@@ -159,20 +173,38 @@
       "label": "Subheading",
       "default": "Avure makes dermo-cosmetic care for sensitive skin.We give pharmacists the formula information, the simple routines and the support to recommend it"
     },
-    { "type": "text", "id": "label", "label": "Eyebrow", "default": "For pharmacists & Dermatologists" },
-    { "type": "text", "id": "cta", "label": "Call to action", "default": "Collaborate now" },
-    {"type": "url", "id": "cta_link", "label": "Call to action link", "info": "Leave empty to use /pages/colab-form (the pharmacist form page)"},
-
-    { "type": "header", "content": "Eyebrow typography" },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow",
+      "default": "For pharmacists & Dermatologists"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Call to action",
+      "default": "Collaborate now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Call to action link",
+      "info": "Leave empty to use /pages/colab-form (the pharmacist form page)"
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow typography"
+    },
     {
       "type": "range",
       "id": "eyebrow_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 22,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -194,18 +226,26 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "eyebrow_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Heading typography" },
+    {
+      "type": "text_alignment",
+      "id": "eyebrow_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading typography"
+    },
     {
       "type": "range",
       "id": "heading_size",
       "label": "Font size",
       "min": 20,
-      "max": 120,
+      "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 24
+      "default": 48,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -227,18 +267,26 @@
       "unit": "%",
       "default": 110
     },
-    { "type": "text_alignment", "id": "heading_alignment", "label": "Alignment", "default": "center" },
-
-    { "type": "header", "content": "Description typography" },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Description typography"
+    },
     {
       "type": "range",
       "id": "description_size",
       "label": "Font size",
       "min": 10,
-      "max": 40,
+      "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 13
+      "default": 26,
+      "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
       "type": "range",
@@ -260,8 +308,17 @@
       "unit": "%",
       "default": 140
     },
-    { "type": "text_alignment", "id": "description_alignment", "label": "Alignment", "default": "center" }
+    {
+      "type": "text_alignment",
+      "id": "description_alignment",
+      "label": "Alignment",
+      "default": "center"
+    }
   ],
-  "presets": [{ "name": "Pharma collaboration hero" }]
+  "presets": [
+    {
+      "name": "Pharma collaboration hero"
+    }
+  ]
 }
 {% endschema %}

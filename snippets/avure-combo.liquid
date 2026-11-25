@@ -29,13 +29,13 @@
 
   .combo-input {
     width: 100%;
-    padding: 10px 36px 10px 10px;
+    padding: calc(20 * var(--fu)) calc(72 * var(--fu)) calc(20 * var(--fu)) calc(20 * var(--fu));
     outline: none;
     background-color: transparent;
     border: none;
     font-size: var(--type-input);
-    padding-block: 1rem;
-    padding-inline: 2rem;
+    padding-block: calc(32 * var(--fu));
+    padding-inline: calc(64 * var(--fu));
     user-select: none;
     cursor: pointer;
   }
@@ -64,7 +64,7 @@
   .combo-dropdown {
     width: 100%;
     background: transparent;
-    margin-top: 4px;
+    margin-top: calc(8 * var(--fu));
     overflow-y: auto;
     display: none;
     z-index: 10;
@@ -75,11 +75,11 @@
   }
 
   .combo-option {
-    padding: 10px;
+    padding: calc(20 * var(--fu));
     cursor: pointer;
     font-size: var(--type-input);
-    padding-block: 1rem;
-    padding-inline: 2rem;
+    padding-block: calc(32 * var(--fu));
+    padding-inline: calc(64 * var(--fu));
   }
 
   .combo-option:hover {

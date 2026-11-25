@@ -29,35 +29,35 @@
     --avure-dark: rgba(11, 11, 10, 1);
 
     /* font sizes */
-    --font-size-xs: 0.75rem; /* 12px */
-    --font-size-sm: 0.875rem; /* 14px */
-    --font-size-md: 1rem; /* 16px */
-    --font-size-lg: 1.125rem; /* 18px */
-    --font-size-xl: 1.25rem; /* 20px */
-    --font-size-2xl: 1.5rem; /* 24px */
-    --font-size-3xl: 2rem; /* 32px */
-    --font-size-4xl: 2.5rem; /* 40px */
-    --font-size-5xl: 3rem; /* 48px */
-    --font-size-6xl: 3.5rem; /* 56px */
-    --font-size-7xl: 4rem; /* 64px */
-    --font-size-8xl: 5rem; /* 80px */
-    --font-size-9xl: 7.5rem; /* 120px */
+    --font-size-xs: calc(24 * var(--fu)); /* 12px */
+    --font-size-sm: calc(28 * var(--fu)); /* 14px */
+    --font-size-md: calc(32 * var(--fu)); /* 16px */
+    --font-size-lg: calc(36 * var(--fu)); /* 18px */
+    --font-size-xl: calc(40 * var(--fu)); /* 20px */
+    --font-size-2xl: calc(48 * var(--fu)); /* 24px */
+    --font-size-3xl: calc(64 * var(--fu)); /* 32px */
+    --font-size-4xl: calc(80 * var(--fu)); /* 40px */
+    --font-size-5xl: calc(96 * var(--fu)); /* 48px */
+    --font-size-6xl: calc(112 * var(--fu)); /* 56px */
+    --font-size-7xl: calc(128 * var(--fu)); /* 64px */
+    --font-size-8xl: calc(160 * var(--fu)); /* 80px */
+    --font-size-9xl: calc(240 * var(--fu)); /* 120px */
 
     /* ------------------------------------------------------------------
        Type scale (mobile-first, matches the 384px Figma frames).
        Fixed px values: no vw-based sizing. Desktop sizes can be layered
        on later with media queries that override these tokens.
        ------------------------------------------------------------------ */
-    --type-display: 32px; /* hero headline */
-    --type-title: 24px; /* section / page titles */
-    --type-subtitle: 18px; /* sub-titles, cart totals */
-    --type-product: 14px; /* product / card names */
-    --type-body: 13px; /* body copy, descriptions */
-    --type-body-sm: 12px; /* secondary body, card descriptions */
-    --type-label: 11px; /* eyebrows, links, tags */
-    --type-caption: 10px; /* badges, small mono captions */
-    --type-button: 12px; /* button text */
-    --type-input: 13px; /* form fields */
+    --type-display: calc(64 * var(--fu)); /* hero headline */
+    --type-title: calc(48 * var(--fu)); /* section / page titles */
+    --type-subtitle: calc(36 * var(--fu)); /* sub-titles, cart totals */
+    --type-product: calc(28 * var(--fu)); /* product / card names */
+    --type-body: calc(26 * var(--fu)); /* body copy, descriptions */
+    --type-body-sm: calc(24 * var(--fu)); /* secondary body, card descriptions */
+    --type-label: calc(22 * var(--fu)); /* eyebrows, links, tags */
+    --type-caption: calc(20 * var(--fu)); /* badges, small mono captions */
+    --type-button: calc(24 * var(--fu)); /* button text */
+    --type-input: calc(26 * var(--fu)); /* form fields */
 
     --leading-none: 1;
     --leading-tight: 1.15;
@@ -92,7 +92,7 @@
     --text-hero: var(--type-display);
     --text-hero-leading: var(--leading-none);
 
-    --text-masive: 40px;
+    --text-masive: calc(80 * var(--fu));
     --text-masive-leading: var(--leading-none);
 
     /* Brand colors */
@@ -137,6 +137,31 @@
     --text-primary: var(--text-font-primary);
     --text-secondary: var(--text-font-secondary);
     --font-heading: var(--text-font-primary);
+    --font-poppins: 'Poppins', system-ui, sans-serif; /* product / card names and prices */
+
+    /* ------------------------------------------------------------------
+       --fu = one Figma px. The mobile Figma frames are 768px wide (2x), so
+       on phones every size is calc(<figma px> * var(--fu)) and follows the
+       screen width. From 768px up it is a fixed 0.5px, so tablet and desktop
+       render exactly the px values they had before.
+       ------------------------------------------------------------------ */
+    --fu: 0.5px;
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      --fu: calc(100vw / 768);
+      /* Figma mobile: titles and body in Acumin; Poppins only for product/card names (--font-poppins) */
+      --text-font-secondary: var(--text-font-primary);
+      --tracking-eyebrow: 0.1em;
+    }
+
+    /* Form fields: at least 16px so iPhone doesn't zoom in on focus (not scaled) */
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='hidden']),
+    select,
+    textarea {
+      font-size: max(16px, 1em) !important;
+    }
   }
 
   /* ------------------------------------------------------------------
@@ -168,6 +193,25 @@
     font-family: var(--text-font-accent);
     text-transform: uppercase;
     letter-spacing: var(--tracking-eyebrow);
+  }
+  @media (max-width: 767px) {
+    .u-eyebrow,
+    .announcement-text,
+    .hero-label,
+    .colab-hero-label,
+    .about-label,
+    .about-us-values__slogen,
+    .science-avure_subheading,
+    .testimonials-title,
+    .feedbacks-title,
+    .diagnostics__eyebrow,
+    .pharma-colab__eyebrow,
+    .skincare-steps__heading,
+    .skin-type__header h4,
+    .product-info_container .category,
+    .diagnostics__container > h3 {
+      font-weight: 600;
+    }
   }
 
   /* ------------------------------------------------------------------

@@ -32,7 +32,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: calc(64 * var(--fu));
     .ingredient-image_container{
         display: flex;
         .ingredient-image{
@@ -49,7 +49,7 @@
         display: flex;
         flex-direction: column;
         /* align-items: center; */
-        gap: .8rem;
+        gap: calc(25.6 * var(--fu));
         
         .ingredient-name{
     		font-family: var(--text-font-primary);
@@ -64,17 +64,17 @@
 
         }
         .ingredient-benefits_container{
-            /* margin-top: .8rem; */
+            /* margin-top: calc(25.6 * var(--fu)); */
             display: flex;
             flex-direction: column;
-            gap: .25rem;
+            gap: calc(8 * var(--fu));
             .ingredient-benefit{
                 display: flex;
                 align-items: center;
-                gap: .25rem;
+                gap: calc(8 * var(--fu));
                 /* justify-content: center; */
                 >p{
-                    margin-top:  clamp( .5rem,.8vw, 1rem);;
+                    margin-top:  clamp( calc(16 * var(--fu)),.8vw, calc(32 * var(--fu)));;
                     line-height: 1;
                 }
             }

@@ -44,15 +44,15 @@
             left: auto;
             width: 100%;
             display: grid;
-            grid-template-columns:  repeat(auto-fit, minmax(1rem, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            grid-template-columns:  repeat(auto-fit, minmax(calc(32 * var(--fu)), 1fr));
+            gap: calc(32 * var(--fu));
+            margin-top: calc(32 * var(--fu));
             >div{
-                min-width: 1rem;
-                border-radius: 500px;
-                height: 10px;
+                min-width: calc(32 * var(--fu));
+                border-radius: calc(1000 * var(--fu));
+                height: calc(20 * var(--fu));
                 background-color: var(--fill-carousel-points);
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 2px calc(12 * var(--fu)) rgba(0, 0, 0, 0.2);
                 
             }
             >div[data-selected="true"]{

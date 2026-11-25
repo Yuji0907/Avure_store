@@ -27,7 +27,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: calc(16 * var(--fu));
   }
   .products-hero_content {
     width: 90%;
@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-block: 6rem;
+    margin-block: calc(192 * var(--fu));
     /* background-color: red; */
     .products-hero_header {
       width: 100%;
@@ -51,11 +51,11 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: calc(16 * var(--fu));
     }
     .products-hero_title::before {
       content: '';
-      --size: 1rem;
+      --size: calc(32 * var(--fu));
       width: var(--size);
       aspect-ratio: 1/1;
       border-radius: var(--size);
