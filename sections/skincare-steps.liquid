@@ -225,8 +225,8 @@
   /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
      Figma mobile values (768 frame), so changing them only affects phones. */
   @media (min-width: 768px) {
-    #shopify-section-{{ section.id }} .skincare-steps__heading { font-size: 11px; letter-spacing: 0.14em; }
-    #shopify-section-{{ section.id }} .step-selector h2 { font-size: 11px; letter-spacing: 0em; }
+    #shopify-section-{{ section.id }} .skincare-steps__heading { font-size: 11px; letter-spacing: 0.14em; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .step-selector h2 { font-size: 11px; letter-spacing: 0em; line-height: 1.2; }
     #shopify-section-{{ section.id }} .skincare-steps__link { font-size: 11px; letter-spacing: 0em; line-height: 1.4; }
     #shopify-section-{{ section.id }} .product-card_container .badge-title { font-size: 10px; letter-spacing: 0em; line-height: 1.2; }
     #shopify-section-{{ section.id }} .product-card_container .product-info > h3 { font-size: 13px; letter-spacing: 0em; line-height: 1.2; }
@@ -280,7 +280,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -321,7 +321,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 100
     },
     {
       "type": "text_alignment",

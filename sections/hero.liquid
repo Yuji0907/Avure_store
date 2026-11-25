@@ -114,6 +114,15 @@
     line-height: {{ section.settings.subheading_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.subheading_alignment }};
   }
+
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
+  @media (min-width: 768px) {
+    .hero-label { font-size: 11px; line-height: 1.4; }
+    .hero-heading { font-size: 32px; letter-spacing: 0em; line-height: 1.1; }
+    .hero-subheading { font-size: 13px; line-height: 1.5; }
+  }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -165,7 +174,7 @@
       "max": 64,
       "step": 1,
       "unit": "px",
-      "default": 22,
+      "default": 20,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -186,7 +195,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -206,7 +215,7 @@
       "max": 224,
       "step": 2,
       "unit": "px",
-      "default": 64,
+      "default": 48,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -217,7 +226,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -3
     },
     {
       "type": "range",
@@ -227,7 +236,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -247,7 +256,7 @@
       "max": 96,
       "step": 1,
       "unit": "px",
-      "default": 26,
+      "default": 24,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -268,7 +277,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 150
+      "default": 120
     },
     {
       "type": "text_alignment",

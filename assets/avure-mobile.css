@@ -435,4 +435,523 @@
     line-height: 1;
     color: #f9faf9;
   }
+
+  /* ------------------------------------------------------------------ 2. Homepage (Homepage.md) */
+
+  /* Hero: 1497 high; label JBM 20, title Acumin 48 (-1.44px) uppercase, text Acumin 24/29.
+     Label -> title 13, title -> text 7, text -> bottom 136. Sizes: hero settings. */
+  body #MainContent .section-hero .hero-container {
+    height: calc(1497 * var(--fu));
+  }
+  body #MainContent .section-hero .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .section-hero .hero-content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 calc(37 * var(--fu)) calc(136 * var(--fu));
+    gap: calc(13 * var(--fu));
+    color: #f9faf9;
+  }
+  body #MainContent .section-hero .heading-container {
+    gap: calc(7 * var(--fu));
+  }
+  body #MainContent .section-hero .hero-label {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  body #MainContent .section-hero .hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  body #MainContent .section-hero .hero-subheading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-align: center;
+  }
+
+  /* Section heads + sliders: side padding 37 */
+  body #MainContent .products-hero_content {
+    width: 100%;
+    margin-block: 0;
+    padding-inline: calc(37 * var(--fu));
+  }
+  /* Best Sellers: 824 high; top 71, head -> cards 24, bottom 85 */
+  body #MainContent .products-hero_content:has(.product-slider_container) {
+    padding-block: calc(71 * var(--fu)) calc(85 * var(--fu));
+    gap: calc(24 * var(--fu));
+  }
+  /* Shop by concern: 593 high; top 63, head -> cards 19; cards 230x292, 3 apart */
+  body #MainContent .products-hero_content:has(.concern-slider_container) {
+    padding-block: calc(63 * var(--fu)) calc(89 * var(--fu));
+    gap: calc(19 * var(--fu));
+  }
+  body #MainContent .concern-slider_container {
+    grid-auto-columns: calc(230 * var(--fu));
+    gap: calc(3 * var(--fu));
+    padding-bottom: 0;
+  }
+  body #MainContent .concern-card {
+    gap: 0;
+  }
+  body #MainContent .concern-card .concern-card__image-wrap {
+    aspect-ratio: auto;
+    height: calc(292 * var(--fu));
+    background-color: #e6e6e5;
+  }
+  body #MainContent .concern-card .concern-card__info {
+    padding-top: calc(9 * var(--fu));
+    gap: calc(4 * var(--fu));
+  }
+  body #MainContent .concern-card .concern-card__title {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .concern-card .concern-card__description {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #545451;
+  }
+
+  /* Routines & Duos: 641 high; top 63, head -> cards 19, bottom 74; cards 345 (image 288), 6 apart */
+  body #MainContent .routines-slider__content {
+    width: 100%;
+    margin-block: 0;
+    padding: calc(63 * var(--fu)) calc(37 * var(--fu)) calc(74 * var(--fu));
+    gap: calc(19 * var(--fu));
+  }
+  body #MainContent .routines-slider__header {
+    align-items: baseline;
+    margin: 0 0 calc(19 * var(--fu));
+  }
+  body #MainContent .routines-slider__title {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .routines-slider__title::before {
+    --size: calc(16 * var(--fu));
+    width: var(--size);
+    height: var(--size);
+    align-self: center;
+  }
+  body #MainContent .routines-slider__link {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .routines-slider__track {
+    margin: 0;
+    padding: 0;
+    grid-auto-columns: calc(345 * var(--fu));
+    gap: calc(6 * var(--fu));
+  }
+  body #MainContent .routin-product__card .product-image__container {
+    height: calc(288 * var(--fu));
+    background-color: #e6e6e5;
+  }
+  body #MainContent .routin-product__card .routin-details__container {
+    padding-top: calc(18 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .routin-details__container .row-flex__group {
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: calc(6 * var(--fu));
+  }
+  body #MainContent .routin-details__container .row-flex__group > h1 {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .routin-details__container .rating {
+    gap: calc(3 * var(--fu));
+  }
+  body #MainContent .routin-details__container .rating svg {
+    width: calc(16 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .routin-details__container > p {
+    margin-top: calc(6 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  body #MainContent .routin-details__container .price {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .routin-details__container .compare-at-price {
+    margin-left: calc(10 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    color: #a5a5a1;
+  }
+
+  /* Pharmacist banner: 1023 high; label JBM 28 bold at the top (58), title Acumin 48/600 uppercase,
+     text Acumin 24/500 (title -> text 8), CTA 258x66 outline (text -> CTA 51), bottom 91 */
+  body #MainContent .colab-hero-container {
+    height: calc(1023 * var(--fu));
+  }
+  body #MainContent .colab-hero-container .colab-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .colab-hero-content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: calc(58 * var(--fu)) calc(37 * var(--fu)) calc(91 * var(--fu));
+    gap: 0;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-content .colab-hero-label {
+    margin: 0 0 auto;
+    font-family: var(--text-font-accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-heading-container {
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .colab-hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-subheading {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-content .btton-wrrapper {
+    width: calc(258 * var(--fu));
+    margin-top: calc(51 * var(--fu));
+  }
+  body #MainContent .colab-hero-content .btton-wrrapper .colab-btn {
+    width: 100%;
+    height: calc(66 * var(--fu));
+    margin: 0;
+    padding: 0;
+    border: 1px solid #f9faf9;
+    color: #f9faf9;
+  }
+
+  /* Skin diagnostic: 576 high, image | #0B0B0A text half (padding 37 17 28);
+     label JBM 14 (0.1em), title Acumin 32/600 uppercase, text Acumin 20/500, CTA 212x54, footnote Acumin 16 uppercase */
+  body #MainContent .section-skin-type .skin-type-container {
+    height: calc(576 * var(--fu));
+    align-items: stretch;
+  }
+  body #MainContent .section-skin-type .skin-type-container > video {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
+  body #MainContent .section-skin-type .skin-type-info__container {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    max-height: none;
+    padding: calc(37 * var(--fu)) calc(17 * var(--fu)) calc(28 * var(--fu));
+    gap: 0;
+    background-color: #0b0b0a;
+  }
+  body #MainContent .section-skin-type .skin-type-info__container > div {
+    width: 100%;
+    max-width: none;
+    gap: 0;
+  }
+  body #MainContent .section-skin-type .skin-type__header h4 {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__header h4 span {
+    font-size: 1em;
+  }
+  body #MainContent .section-skin-type .skin-type__main > h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__main p {
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-care-btton__wrrapper {
+    width: calc(212 * var(--fu));
+    margin-top: calc(42 * var(--fu));
+  }
+  body #MainContent .section-skin-type .skin-type-btn {
+    width: 100%;
+    height: calc(54 * var(--fu));
+    padding: 0;
+    border: 1px solid #f9faf9;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__footer h3 {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+
+  /* Five steps: 920 high; eyebrow JBM 14 (top 57), tabs JBM 28 (-0.1em) 39 below, cards 45 below
+     (341x469, 18 apart, image -> name 26), "VIEW ALL" Poppins 12 67 below, bottom 59 */
+  body #MainContent .skincare-steps__container {
+    width: 100%;
+    padding: calc(57 * var(--fu)) calc(37 * var(--fu)) calc(59 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .skincare-steps__wrapper .skincare-steps__heading {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector {
+    width: 100%;
+    margin-top: calc(39 * var(--fu));
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector h2 {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #a5a5a1;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector h2.selected {
+    font-weight: 700;
+    color: #0b0b0a;
+  }
+  body #MainContent .skincare-steps__wrapper .all-collections__products {
+    margin-top: calc(45 * var(--fu));
+    grid-template-columns: repeat(2, calc(341 * var(--fu)));
+    justify-content: space-between;
+    gap: calc(18 * var(--fu));
+  }
+  body #MainContent .skincare-steps__wrapper .product-card_container .product-image_container {
+    aspect-ratio: 341 / 469;
+  }
+  body #MainContent .skincare-steps__wrapper .product-card_container .product-info {
+    padding-top: calc(26 * var(--fu));
+  }
+  body #MainContent .skincare-steps__wrapper .skincare-steps__link {
+    margin-top: calc(67 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #0b0b0a;
+  }
+
+  /* Testimonials / Customer feedbacks: eyebrow JBM 16/500 (top 55), title Acumin 40 uppercase (14 below),
+     text Acumin 20/22 #41413F (8 below) */
+  body #MainContent .testimonials-wrapper,
+  body #MainContent .feedbacks-wrapper {
+    margin-block: 0;
+    padding-block: calc(55 * var(--fu)) calc(85 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .feedbacks-wrapper {
+    padding-bottom: calc(91 * var(--fu));
+    background-color: #f4f5f4;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-container,
+  body #MainContent .feedbacks-wrapper .feedbacks-container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .testimonials-header,
+  body #MainContent .feedbacks-header {
+    gap: 0;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-title,
+  body #MainContent .feedbacks-wrapper .feedbacks-title {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-heading,
+  body #MainContent .feedbacks-wrapper .feedbacks-heading {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-description,
+  body #MainContent .feedbacks-wrapper .feedbacks-description {
+    width: calc(470 * var(--fu));
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  /* videos: 220x390 | 237x421 | 220x390, 8 apart, bottom-aligned, radius 14.8 / 16; 36 below the text */
+  body #MainContent .testimonials-wrapper .testimonials-carousel {
+    margin-top: calc(36 * var(--fu));
+    padding-inline: calc(39 * var(--fu));
+    grid-template-columns: calc(220 * var(--fu)) calc(237 * var(--fu)) calc(220 * var(--fu));
+    gap: calc(8 * var(--fu));
+    align-items: end;
+    justify-content: center;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper,
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(2) {
+    width: 100%;
+    height: auto;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(n + 4) {
+    display: none; /* the mobile design shows three */
+  }
+  body #MainContent .testimonials-carousel .testi-video {
+    height: calc(390 * var(--fu));
+    aspect-ratio: auto;
+    border-radius: calc(14.8 * var(--fu));
+    box-shadow: none;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(2) .testi-video {
+    height: calc(421 * var(--fu));
+    border-radius: calc(16 * var(--fu));
+  }
+  /* feedback cards: 401x131 r10 #F9FAF9, 8 apart (rows and cards), padding 20 12; 41 below the text */
+  body #MainContent .feedbacks-wrapper .feedbacks-carousel {
+    margin-top: calc(41 * var(--fu));
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .feedbacks-wrapper .feedbacks-row {
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .feedbacks-wrapper .feedbacks__wrapper {
+    flex: 0 0 calc(401 * var(--fu));
+    width: calc(401 * var(--fu));
+    min-width: calc(401 * var(--fu));
+    height: calc(131 * var(--fu));
+    max-height: calc(131 * var(--fu));
+    padding: calc(20 * var(--fu)) calc(12 * var(--fu));
+    border-radius: calc(10 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body #MainContent .feedbacks__wrapper .feedback-header .user p {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .feedbacks__wrapper .feedback-header .user span {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #545451;
+  }
+  body #MainContent .feedbacks__wrapper .rating {
+    gap: calc(2 * var(--fu));
+  }
+  body #MainContent .feedbacks__wrapper .rating svg {
+    width: calc(12 * var(--fu));
+    height: calc(12 * var(--fu));
+  }
+  body #MainContent .feedbacks__wrapper > p {
+    margin-top: calc(10 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+
+  /* The science behind Avure: 850 high, text left at x65; eyebrow JBM 16/500, title Acumin 40/40 (14 below),
+     text Acumin 20/22 (11 below); pillars 457x457 #D8E5F0, 12 apart, 68 below; caption JBM 20 bold 20 below */
+  body #MainContent .science-behind-avure_wrapper {
+    margin-block: 0;
+    padding-block: calc(55 * var(--fu)) calc(65 * var(--fu));
+  }
+  body #MainContent .science-behind-avure_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .science-behind-avure_header {
+    width: 100%;
+    padding-inline: calc(65 * var(--fu));
+    align-items: flex-start;
+    gap: 0;
+  }
+  body #MainContent .science-behind-avure_header > * {
+    text-align: left;
+  }
+  body #MainContent .science-avure_subheading {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .science-avure_heading {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .science-avure_description {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  body #MainContent .science-behind-avure_wrapper .science-behind-avure_carousel {
+    margin-top: calc(68 * var(--fu));
+    padding: 0 calc(37 * var(--fu));
+    grid-auto-columns: calc(457 * var(--fu));
+    gap: calc(12 * var(--fu));
+    scroll-padding-inline: calc(37 * var(--fu));
+  }
+  body #MainContent .science-behind-avure_carousel .product-ingredient_wrapper {
+    gap: calc(20 * var(--fu));
+    scroll-snap-align: start;
+  }
+  body #MainContent .science-behind-avure_carousel .ingredient-image_container {
+    width: calc(457 * var(--fu));
+    height: calc(457 * var(--fu));
+    background-color: #d8e5f0;
+  }
+  body #MainContent .science-behind-avure_carousel .ingredient-image_container img {
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .science-behind-avure_wrapper .science-behind-avure_carousel .ingredient-info_container .ingredient-name {
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
 }
