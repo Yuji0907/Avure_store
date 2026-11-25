@@ -19,15 +19,88 @@
     },
     "product_ingredients": {
       "type": "product-ingredients",
-      "settings": {}
+      "settings": {
+        "title": "Clinical ingredients",
+        "description": "The active ingredients in this formula, what each one does, and why it's here."
+      }
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": {}
+      "blocks": {
+        "video_7XVd8N": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_1589.MOV.mp4"
+          }
+        },
+        "video_MthcDB": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/1006.MOV.mp4"
+          }
+        },
+        "video_Uw8gUb": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_0468.MOV.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "video_7XVd8N",
+        "video_MthcDB",
+        "video_Uw8gUb"
+      ],
+      "settings": {
+        "title": "Testimonials",
+        "heading": "What people are saying",
+        "description": "Real customers on how Avure fits into their routine, what it feels like, and what they'd tell a friend.",
+        "title_size": 11,
+        "title_letter_spacing": 0,
+        "title_line_height": 140,
+        "title_alignment": "center",
+        "heading_size": 24,
+        "heading_letter_spacing": -4,
+        "heading_line_height": 110,
+        "heading_alignment": "center",
+        "description_size": 13,
+        "description_letter_spacing": 0,
+        "description_line_height": 140,
+        "description_alignment": "center"
+      }
     },
     "customer_feedbacks": {
       "type": "customer-feedbacks",
-      "settings": {}
+      "settings": {
+        "title": "Customer Feedbacks",
+        "heading": "In their words",
+        "description": "We have collected +100 reviews,all from verified purchases.",
+        "title_size": 11,
+        "title_letter_spacing": 0,
+        "title_line_height": 140,
+        "title_alignment": "center",
+        "heading_size": 24,
+        "heading_letter_spacing": -4,
+        "heading_line_height": 110,
+        "heading_alignment": "center",
+        "description_size": 13,
+        "description_letter_spacing": 0,
+        "description_line_height": 140,
+        "description_alignment": "center",
+        "card_name_size": 13,
+        "card_name_letter_spacing": 0,
+        "card_name_line_height": 100,
+        "card_type_size": 11,
+        "card_type_letter_spacing": 0,
+        "card_type_line_height": 100,
+        "card_rating_size": 12,
+        "card_rating_letter_spacing": 0,
+        "card_rating_line_height": 100,
+        "card_body_size": 12,
+        "card_body_letter_spacing": 0,
+        "card_body_line_height": 120,
+        "card_body_alignment": "left"
+      }
     },
     "best_sellers": {
       "type": "best-sellers",
@@ -36,16 +109,67 @@
     "routines": {
       "type": "routines_slider",
       "name": "routines",
-      "settings": {}
+      "settings": {
+        "heading": "routines & duos",
+        "link_label": "view all",
+        "products_to_show": 8,
+        "title_size": 24,
+        "title_letter_spacing": 0,
+        "title_line_height": 110,
+        "link_size": 11,
+        "link_letter_spacing": 0,
+        "link_line_height": 140,
+        "card_title_size": 14,
+        "card_title_letter_spacing": 0,
+        "card_title_line_height": 120,
+        "card_description_size": 12,
+        "card_description_letter_spacing": 0,
+        "card_description_line_height": 140,
+        "card_description_alignment": "left",
+        "card_price_size": 13,
+        "card_price_letter_spacing": 0,
+        "card_price_line_height": 140,
+        "card_compare_size": 12,
+        "card_compare_letter_spacing": 0,
+        "card_compare_line_height": 140
+      }
     },
     "science": {
       "type": "science-behinde-avure",
       "name": "science behinde avure",
-      "settings": {}
+      "settings": {
+        "subheading": "The science behind Avure",
+        "heading": "Formulas designed around sensitive skin.",
+        "description": "We develops dermo-cosmetic care that respects the skin's natural balance.",
+        "subheading_size": 11,
+        "subheading_letter_spacing": 0,
+        "subheading_line_height": 140,
+        "subheading_alignment": "left",
+        "heading_size": 24,
+        "heading_letter_spacing": -4,
+        "heading_line_height": 100,
+        "heading_alignment": "left",
+        "description_size": 13,
+        "description_letter_spacing": -8,
+        "description_line_height": 140,
+        "description_alignment": "left"
+      }
     },
     "get_in_touch": {
       "type": "get-in-touch",
-      "settings": {}
+      "settings": {
+        "heading": "Get in touch",
+        "description": "Questions about a product, an order or how to build a routine? Send us a message. We reply within 48 working hours.]",
+        "button_label": "Send message",
+        "heading_size": 24,
+        "heading_letter_spacing": 0,
+        "heading_line_height": 110,
+        "heading_alignment": "center",
+        "description_size": 13,
+        "description_letter_spacing": 0,
+        "description_line_height": 140,
+        "description_alignment": "center"
+      }
     }
   },
   "order": [
