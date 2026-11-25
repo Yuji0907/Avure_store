@@ -210,6 +210,7 @@
      Gaps: image -> name 14, name -> subtitle 8, subtitle -> price 23. */
   body:not(#_) .product-card_container {
     gap: 0;
+    justify-content: flex-start;
   }
   /* product sliders: 341-wide cards, 14 apart */
   body:not(#_) .product-slider_container {
@@ -974,10 +975,18 @@
     aspect-ratio: auto;
     height: calc(960 * var(--fu));
   }
+  body.template-product #MainContent .product-wrapper .product-container {
+    width: 100%;
+    margin: 0;
+  }
   body.template-product #MainContent .carousel-sm-wrraper {
+    width: 100%;
+    margin: 0;
     padding-block: calc(33 * var(--fu));
   }
   body.template-product #MainContent .product-media-sm_container {
+    margin: 0;
+    padding-block: 0;
     padding-inline: calc(64 * var(--fu));
     grid-auto-columns: calc(185 * var(--fu));
     gap: calc(14 * var(--fu));
@@ -1218,6 +1227,7 @@
     font-weight: 400;
     line-height: 1.2;
     letter-spacing: 0;
+    text-align: left;
     color: #41413f;
   }
 
@@ -1398,6 +1408,7 @@
      description Acumin 20/22 #41413F 12-20 below. The breadcrumb is not in the mobile design. */
   body #MainContent .all-collections .breadcrumb,
   body #MainContent .routines-duos .breadcrumb,
+  body #MainContent .concern-page .breadcrumb,
   body #MainContent .all-collections__header nav,
   body #MainContent .routines-duos__header nav {
     display: none;
@@ -1575,6 +1586,9 @@
   body #MainContent .routines-card_header .shopping-cart-add_container svg {
     width: calc(34 * var(--fu));
     height: calc(34 * var(--fu));
+  }
+  body #MainContent .routines-card_header .shopping-cart-add_container svg path {
+    fill: var(--color-primary);
   }
   body #MainContent .routines-card-info {
     padding: calc(41 * var(--fu)) calc(6 * var(--fu)) 0;
