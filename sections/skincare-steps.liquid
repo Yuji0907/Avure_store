@@ -222,23 +222,18 @@
     text-align: {{ section.settings.card_price_alignment }};
   }
 
-  /* Figma mobile (768 frame): fonts and weights, phones only */
-  @media (max-width: 767px) {
-    #shopify-section-{{ section.id }} .skincare-steps__heading { font-family: var(--text-font-accent); font-weight: 600; text-transform: uppercase; }
-    #shopify-section-{{ section.id }} .step-selector h2 { font-family: var(--text-font-accent); font-weight: 700; }
-    #shopify-section-{{ section.id }} .skincare-steps__link { font-family: var(--text-font-primary); font-weight: 500; }
-  }
-
-  /* Tablet and desktop keep the sizes they had before the Figma mobile values were entered.
-     (Fixed here, so changing these settings only affects phones.) */
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
   @media (min-width: 768px) {
-    #shopify-section-{{ section.id }} .skincare-steps__heading { font-size: 11px; letter-spacing: 0.14em; }
-    #shopify-section-{{ section.id }} .step-selector h2 { font-size: 11px; letter-spacing: 0em; }
-    #shopify-section-{{ section.id }} .skincare-steps__link { font-size: 11px; }
+    #shopify-section-{{ section.id }} .skincare-steps__heading { font-size: 11px; letter-spacing: 0.14em; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .step-selector h2 { font-size: 11px; letter-spacing: 0em; line-height: 1.2; }
+    #shopify-section-{{ section.id }} .skincare-steps__link { font-size: 11px; letter-spacing: 0em; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .product-card_container .badge-title { font-size: 10px; letter-spacing: 0em; line-height: 1.2; }
     #shopify-section-{{ section.id }} .product-card_container .product-info > h3 { font-size: 13px; letter-spacing: 0em; line-height: 1.2; }
-    #shopify-section-{{ section.id }} .product-card_container .product-info > p { font-size: 11px; }
-    #shopify-section-{{ section.id }} .product-card_container .product-info .price { font-size: 13px; }
+    #shopify-section-{{ section.id }} .product-card_container .product-info > p { font-size: 11px; letter-spacing: 0em; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .product-card_container .product-info .price { font-size: 13px; line-height: 1.2; }
   }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -285,7 +280,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -326,7 +321,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -357,7 +352,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": 10
     },
     {
       "type": "range",
@@ -367,7 +362,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "header",
@@ -381,7 +376,7 @@
       "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 20,
+      "default": 18,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -392,7 +387,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -4
     },
     {
       "type": "range",
@@ -402,7 +397,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 100
     },
     {
       "type": "header",
@@ -468,7 +463,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -2
     },
     {
       "type": "range",
@@ -478,7 +473,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -519,7 +514,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 120
+      "default": 100
     },
     {
       "type": "text_alignment",

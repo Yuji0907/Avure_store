@@ -1,0 +1,2949 @@
+/* ==========================================================================
+   Avure — phone layout from the Figma mobile spec (_reference/figma-spec).
+   Every number is a Figma px from the 768px frame: calc(N * var(--fu)),
+   with --fu = 100vw / 768 below 768px (snippets/css-variables.liquid).
+   Phones only: tablet and desktop never read this file's rules.
+
+   Text "y" values in the spec are baselines; vertical gaps below are
+   (next element's top) - (previous element's bottom).
+   Sizes that come from a section's typography settings are NOT set here:
+   those settings hold the Figma values (templates/*.json), so the theme
+   editor still controls them.
+
+   Selector prefixes: "body #MainContent" for page sections, "body:not(#_)"
+   for the header, menu drawer, cart and footer (outside <main>); both
+   outrank the section stylesheets.
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  /* ------------------------------------------------------------------ 1. Global */
+
+  /* Claims (announcement) bar: 61 high, JetBrains Mono 24 */
+  body:not(#_) .announcement-bar {
+    height: calc(61 * var(--fu));
+    padding-block: 0;
+  }
+  body:not(#_) .announcement-text {
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+
+  /* Nav bar: 104 high; burger 40x27 at x33, logo 166x56 centred, bag 40x40 31 from the right */
+  body:not(#_) .header-container {
+    height: calc(104 * var(--fu));
+    padding-block: 0;
+    padding-inline: calc(33 * var(--fu)) calc(31 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body:not(#_) .header-container .menu-trigger {
+    /* tap target stays >= 44px; the icon inside is the Figma size */
+    width: max(44px, calc(40 * var(--fu)));
+    height: 44px;
+    justify-content: flex-start;
+  }
+  body:not(#_) .header-container .menu {
+    width: calc(40 * var(--fu));
+    height: calc(27 * var(--fu));
+  }
+  body:not(#_) .header-container .header-logo img {
+    width: calc(166 * var(--fu));
+    height: calc(56 * var(--fu));
+    object-fit: contain;
+  }
+  body:not(#_) .header-container .shopping-bag {
+    width: calc(40 * var(--fu));
+    height: calc(40 * var(--fu));
+  }
+
+  /* Menu drawer (Menu.md, Menu_-_*.md): 302-high image, links Acumin 48 / sub-links 40 */
+  body:not(#_) .header-drawer__panel {
+    gap: calc(55 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover {
+    width: 100%;
+    height: calc(302 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .menu-image {
+    height: 100%;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .menu-label {
+    width: auto;
+    left: calc(43 * var(--fu));
+    top: auto;
+    bottom: calc(21 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 700;
+    line-height: calc(29 * var(--fu));
+    letter-spacing: 0;
+    color: #003865;
+  }
+  body:not(#_) .header-drawer__panel .menue-image__cover .sub-menu-label {
+    width: auto;
+    left: calc(43 * var(--fu));
+    top: calc(69 * var(--fu));
+    bottom: auto;
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em; /* -1.44px */
+    color: #0b0b0a;
+  }
+  /* close: 25x25, 29 from the top, 36 from the right (button keeps a 44px tap area) */
+  body:not(#_) .header-drawer__panel button {
+    top: calc(29 * var(--fu) - (44px - 25 * var(--fu)) / 2);
+    right: calc(36 * var(--fu) - (44px - 25 * var(--fu)) / 2);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  body:not(#_) .header-drawer__panel .close-icon {
+    width: calc(25 * var(--fu));
+    height: calc(25 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .link-group {
+    width: 100%;
+    padding-inline: calc(64 * var(--fu)) calc(73 * var(--fu));
+    gap: calc(24 * var(--fu));
+  }
+  body:not(#_) .header-drawer__panel .link-group .full-link > .main-links {
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em; /* -1.44px */
+    color: #0b0b0a;
+  }
+  body:not(#_) .header-drawer__panel .full-link .chevron {
+    width: calc(28 * var(--fu));
+    height: calc(14 * var(--fu));
+  }
+  body:not(#_) .sub-links {
+    gap: calc(55 * var(--fu));
+  }
+  body:not(#_) .sub-links .all-liks__container {
+    width: 100%;
+    padding-inline: calc(64 * var(--fu));
+    gap: calc(32 * var(--fu));
+  }
+  body:not(#_) .sub-links .all-liks__container li {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+  body:not(#_) .sub-links .list-number {
+    flex: 0 0 calc(76 * var(--fu));
+    width: auto;
+    font-family: var(--text-font-accent);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-2.44 * var(--fu));
+    color: #0b0b0a;
+  }
+  body:not(#_) .sub-links .main-links {
+    width: auto;
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #0b0b0a;
+  }
+  /* badge after the name: same Acumin 40 as the name in the spec */
+  body:not(#_) .sub-links .menu-badge {
+    margin-left: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    vertical-align: baseline;
+    color: #0b0b0a;
+  }
+
+  /* Buttons / CTA: Acumin 600, uppercase (sizes per section below) */
+  body:not(#_) .avure-button,
+  body:not(#_) .avure-outline-button {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  body:not(#_) .avure-outline-button {
+    border-width: 1px;
+  }
+
+  /* Section head: title Acumin 48/400 (-1.88px) with the dot, "VIEW ALL" underlined.
+     Title and link sizes come from the section settings (Figma values). */
+  body #MainContent .products-hero_header {
+    align-items: baseline;
+  }
+  body #MainContent .products-hero_title {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .products-hero_title::before {
+    --size: calc(16 * var(--fu));
+    align-self: center;
+  }
+  body #MainContent .products-hero_link {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+
+  /* Product card: image 341x450 #E6E6E5; cart button 60x60 r14.3 #D8E5F0 (icon 34) 20 from the top,
+     22 from the right; badge Acumin 18.1 #003865; name Poppins 28/600; subtitle Acumin 20; price Poppins 24.
+     Gaps: image -> name 14, name -> subtitle 8, subtitle -> price 23. */
+  body:not(#_) .product-card_container {
+    gap: 0;
+    justify-content: flex-start;
+  }
+  /* product sliders: 341-wide cards, 14 apart */
+  body:not(#_) .product-slider_container {
+    grid-auto-columns: calc(341 * var(--fu));
+    gap: calc(14 * var(--fu));
+  }
+  body:not(#_) .product-card_container .product-image_container {
+    aspect-ratio: 341 / 450;
+    background-color: #e6e6e5;
+  }
+  body:not(#_) .product-card_container .product-card_hedear {
+    padding: calc(20 * var(--fu)) calc(22 * var(--fu)) 0 calc(23 * var(--fu));
+    align-items: flex-start;
+  }
+  body:not(#_) .product-card_container .shopping-cart-add_container {
+    width: calc(60 * var(--fu));
+    height: calc(60 * var(--fu));
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border-radius: calc(14.3 * var(--fu));
+    background-color: #d8e5f0;
+  }
+  body:not(#_) .product-card_container .shopping-cart-add_container svg {
+    width: calc(34 * var(--fu));
+    height: calc(34 * var(--fu));
+  }
+  body:not(#_) .product-card_container .badge-title {
+    margin-top: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(18.1 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  body:not(#_) .product-card_container .product-info {
+    padding-top: calc(14 * var(--fu));
+    gap: 0;
+    text-align: center;
+  }
+  body:not(#_) .product-card_container .product-info > h3 {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    color: #1d1d1b;
+  }
+  body:not(#_) .product-card_container .product-info > p {
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #41413f;
+  }
+  body:not(#_) .product-card_container .product-info .price {
+    margin-top: calc(23 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #1d1d1b;
+  }
+
+  /* Footer (Homepage.md "Footer"): #0B0B0A, side padding 40 */
+  body:not(#_) .section-footer {
+    padding-block: calc(95 * var(--fu)) 0;
+    background-color: #0b0b0a;
+  }
+  body:not(#_) .footer-container {
+    width: 100%;
+    padding-inline: calc(40 * var(--fu)) calc(32 * var(--fu));
+    gap: 0;
+  }
+  body:not(#_) .footer-logo_container {
+    align-items: flex-end;
+  }
+  body:not(#_) .footer-logo_container .footer-logo img,
+  body:not(#_) .footer-logo_container .footer-logo_icon {
+    width: calc(279 * var(--fu));
+    height: auto;
+  }
+  body:not(#_) .footer-logo_container .footer-logo {
+    margin-left: calc(-8 * var(--fu)); /* logo at x32 */
+  }
+  body:not(#_) .footer-logo_container .footer-logo_text {
+    font-family: var(--text-font-accent);
+    font-size: calc(16 * var(--fu));
+    font-weight: 500;
+    line-height: calc(19 * var(--fu));
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+  /* columns: "Product" at x40, "Help Center" at x417 */
+  body:not(#_) .footer-links_container {
+    margin-top: calc(173 * var(--fu));
+    justify-content: flex-start;
+  }
+  body:not(#_) .footer-links_container > div {
+    justify-content: flex-start;
+  }
+  body:not(#_) .footer-links_container .footer-products_links {
+    width: calc(377 * var(--fu));
+    flex: 0 0 auto;
+  }
+  body:not(#_) .footer-links_container .footer-products_heading,
+  body:not(#_) .footer-links_container .footer-help_heading,
+  body:not(#_) .footer-contact_container .footer-contact_heading,
+  body:not(#_) .site-footer__title {
+    font-family: var(--text-font-primary);
+    font-size: calc(31.5 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #f9faf9;
+  }
+  body:not(#_) .footer-links_container .footer-products_list,
+  body:not(#_) .footer-links_container .footer-help_list {
+    margin-top: calc(39 * var(--fu));
+  }
+  body:not(#_) .footer-links_container .footer-products_list a,
+  body:not(#_) .footer-links_container .footer-help_list a,
+  body:not(#_) .footer-links_container .footer-products_list li,
+  body:not(#_) .footer-links_container .footer-help_list li {
+    font-family: var(--text-font-primary);
+    font-size: calc(23.6 * var(--fu));
+    font-weight: 400;
+    line-height: calc(35 * var(--fu));
+    letter-spacing: 0;
+    color: #d4d4d3;
+  }
+  body:not(#_) .footer-contact_container {
+    margin-top: calc(40 * var(--fu));
+    gap: calc(40 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_text {
+    gap: calc(43 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_description {
+    font-family: var(--text-font-primary);
+    font-size: calc(23.6 * var(--fu));
+    font-weight: 400;
+    line-height: calc(28 * var(--fu));
+    color: #d4d4d3;
+  }
+  /* inputs 691x93, 1px #F9FAF9, text x+31; gap 25; subscribe 689x110 #F9FAF9, Acumin 39.4 */
+  body:not(#_) .footer-contact_container .footer-contact_form {
+    gap: calc(25 * var(--fu));
+  }
+  body:not(#_) .footer-contact_container .footer-contact_input {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding-block: 0;
+    padding-inline: calc(31 * var(--fu));
+    border: 1px solid #f9faf9;
+    font-family: var(--text-font-primary);
+    color: #f9faf9;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_input::placeholder {
+    color: #a5a5a1;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_button {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #f9faf9;
+    color: #0b0b0a;
+    font-family: var(--text-font-primary);
+    font-size: calc(39.4 * var(--fu));
+    font-weight: 600;
+    line-height: 1;
+  }
+  body:not(#_) .footer-contact_container .footer-contact_terms {
+    margin-top: calc(-9 * var(--fu)); /* 31 below the button */
+    font-family: var(--text-font-primary);
+    font-size: calc(19.7 * var(--fu));
+    font-weight: 400;
+    line-height: calc(22 * var(--fu));
+    color: #f9faf9;
+  }
+  /* "FOLLOW US", socials 48x48 (gap 23), email Acumin 27.6, copyright 19.7 */
+  body:not(#_) .site-footer {
+    padding-block: calc(47 * var(--fu)) calc(70 * var(--fu));
+    background-color: #0b0b0a;
+  }
+  body:not(#_) .site-footer__inner {
+    width: 100%;
+    padding: 0;
+    gap: 0;
+  }
+  body:not(#_) .site-footer__title {
+    margin-bottom: calc(39 * var(--fu));
+  }
+  body:not(#_) .site-footer__social {
+    gap: calc(23 * var(--fu));
+  }
+  body:not(#_) .site-footer__social a {
+    width: calc(48 * var(--fu));
+    height: calc(48 * var(--fu));
+    border-radius: calc(10 * var(--fu));
+  }
+  body:not(#_) .site-footer__social svg {
+    width: calc(34 * var(--fu));
+    height: calc(34 * var(--fu));
+  }
+  body:not(#_) .site-footer__social a.facebook-wrapper svg {
+    width: calc(48 * var(--fu));
+    height: calc(48 * var(--fu));
+  }
+  body:not(#_) .site-footer__email {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(27.6 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #f9faf9;
+  }
+  body:not(#_) .site-footer__divider {
+    display: none; /* not in the Figma footer */
+  }
+  body:not(#_) .site-footer__bottom {
+    padding-block: calc(46 * var(--fu)) 0;
+    font-family: var(--text-font-primary);
+    font-size: calc(19.7 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #f9faf9;
+  }
+
+  /* ------------------------------------------------------------------ 2. Homepage (Homepage.md) */
+
+  /* Hero: 1497 high; label JBM 20, title Acumin 48 (-1.44px) uppercase, text Acumin 24/29.
+     Label -> title 13, title -> text 7, text -> bottom 136. Sizes: hero settings. */
+  body #MainContent .section-hero .hero-container {
+    height: calc(1497 * var(--fu));
+  }
+  body #MainContent .section-hero .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .section-hero .hero-content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 calc(37 * var(--fu)) calc(136 * var(--fu));
+    gap: calc(13 * var(--fu));
+    color: #f9faf9;
+  }
+  body #MainContent .section-hero .heading-container {
+    gap: calc(7 * var(--fu));
+  }
+  body #MainContent .section-hero .hero-label {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  body #MainContent .section-hero .hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  body #MainContent .section-hero .hero-subheading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-align: center;
+  }
+
+  /* Section heads + sliders: side padding 37 */
+  body #MainContent .products-hero_content {
+    width: 100%;
+    margin-block: 0;
+    padding-inline: calc(37 * var(--fu));
+  }
+  /* Best Sellers: 824 high; top 71, head -> cards 24, bottom 85 */
+  body #MainContent .products-hero_content:has(.product-slider_container) {
+    padding-block: calc(71 * var(--fu)) calc(85 * var(--fu));
+    gap: calc(24 * var(--fu));
+  }
+  /* Shop by concern: 593 high; top 63, head -> cards 19; cards 230x292, 3 apart */
+  body #MainContent .products-hero_content:has(.concern-slider_container) {
+    padding-block: calc(63 * var(--fu)) calc(89 * var(--fu));
+    gap: calc(19 * var(--fu));
+  }
+  body #MainContent .concern-slider_container {
+    grid-auto-columns: calc(230 * var(--fu));
+    gap: calc(3 * var(--fu));
+    padding-bottom: 0;
+  }
+  body #MainContent .concern-card {
+    gap: 0;
+  }
+  body #MainContent .concern-card .concern-card__image-wrap {
+    aspect-ratio: auto;
+    height: calc(292 * var(--fu));
+    background-color: #e6e6e5;
+  }
+  body #MainContent .concern-card .concern-card__info {
+    padding-top: calc(9 * var(--fu));
+    gap: calc(4 * var(--fu));
+  }
+  body #MainContent .concern-card .concern-card__title {
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .concern-card .concern-card__description {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #545451;
+  }
+
+  /* Routines & Duos: 641 high; top 63, head -> cards 19, bottom 74; cards 345 (image 288), 6 apart */
+  body #MainContent .routines-slider__content {
+    width: 100%;
+    margin-block: 0;
+    padding: calc(63 * var(--fu)) calc(37 * var(--fu)) calc(74 * var(--fu));
+    gap: calc(19 * var(--fu));
+  }
+  body #MainContent .routines-slider__header {
+    align-items: baseline;
+    margin: 0 0 calc(19 * var(--fu));
+  }
+  body #MainContent .routines-slider__title {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .routines-slider__title::before {
+    --size: calc(16 * var(--fu));
+    width: var(--size);
+    height: var(--size);
+    align-self: center;
+  }
+  body #MainContent .routines-slider__link {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .routines-slider__track {
+    margin: 0;
+    padding: 0;
+    grid-auto-columns: calc(345 * var(--fu));
+    gap: calc(6 * var(--fu));
+  }
+  body #MainContent .routin-product__card .product-image__container {
+    height: calc(288 * var(--fu));
+    background-color: #e6e6e5;
+  }
+  body #MainContent .routin-product__card .routin-details__container {
+    padding-top: calc(18 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .routin-details__container .row-flex__group {
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: calc(6 * var(--fu));
+  }
+  body #MainContent .routin-details__container .row-flex__group > h1 {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-family: var(--font-poppins);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .routin-details__container .rating {
+    gap: calc(3 * var(--fu));
+  }
+  body #MainContent .routin-details__container .rating svg {
+    width: calc(16 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .routin-details__container > p {
+    margin-top: calc(6 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  body #MainContent .routin-details__container .price {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .routin-details__container .compare-at-price {
+    margin-left: calc(10 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 300;
+    color: #a5a5a1;
+  }
+
+  /* Pharmacist banner: 1023 high; label JBM 28 bold at the top (58), title Acumin 48/600 uppercase,
+     text Acumin 24/500 (title -> text 8), CTA 258x66 outline (text -> CTA 51), bottom 91 */
+  body #MainContent .colab-hero-container {
+    height: calc(1023 * var(--fu));
+  }
+  body #MainContent .colab-hero-container .colab-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .colab-hero-content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: calc(58 * var(--fu)) calc(37 * var(--fu)) calc(91 * var(--fu));
+    gap: 0;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-content .colab-hero-label {
+    margin: 0 0 auto;
+    font-family: var(--text-font-accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-heading-container {
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .colab-hero-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-subheading {
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #f9faf9;
+  }
+  body #MainContent .colab-hero-content .btton-wrrapper {
+    width: calc(258 * var(--fu));
+    margin-top: calc(51 * var(--fu));
+  }
+  body #MainContent .colab-hero-content .btton-wrrapper .colab-btn {
+    width: 100%;
+    height: calc(66 * var(--fu));
+    margin: 0;
+    padding: 0;
+    border: 1px solid #f9faf9;
+    color: #f9faf9;
+  }
+
+  /* Skin diagnostic: 576 high, image | #0B0B0A text half (padding 37 17 28);
+     label JBM 14 (0.1em), title Acumin 32/600 uppercase, text Acumin 20/500, CTA 212x54, footnote Acumin 16 uppercase */
+  body #MainContent .section-skin-type .skin-type-container {
+    height: calc(576 * var(--fu));
+    align-items: stretch;
+  }
+  body #MainContent .section-skin-type .skin-type-container > video {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
+  body #MainContent .section-skin-type .skin-type-info__container {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    max-height: none;
+    padding: calc(37 * var(--fu)) calc(17 * var(--fu)) calc(28 * var(--fu));
+    gap: 0;
+    background-color: #0b0b0a;
+  }
+  body #MainContent .section-skin-type .skin-type-info__container > div {
+    width: 100%;
+    max-width: none;
+    gap: 0;
+  }
+  body #MainContent .section-skin-type .skin-type__header h4 {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__header h4 span {
+    font-size: 1em;
+  }
+  body #MainContent .section-skin-type .skin-type__main > h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__main p {
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 500;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-care-btton__wrrapper {
+    width: calc(212 * var(--fu));
+    margin-top: calc(42 * var(--fu));
+  }
+  body #MainContent .section-skin-type .skin-type-btn {
+    width: 100%;
+    height: calc(54 * var(--fu));
+    padding: 0;
+    border: 1px solid #f9faf9;
+    color: #f9faf9;
+  }
+  body #MainContent .section-skin-type .skin-type__footer h3 {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+
+  /* Five steps: 920 high; eyebrow JBM 14 (top 57), tabs JBM 28 (-0.1em) 39 below, cards 45 below
+     (341x469, 18 apart, image -> name 26), "VIEW ALL" Poppins 12 67 below, bottom 59 */
+  body #MainContent .skincare-steps__container {
+    width: 100%;
+    padding: calc(57 * var(--fu)) calc(37 * var(--fu)) calc(59 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .skincare-steps__wrapper .skincare-steps__heading {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector {
+    width: 100%;
+    margin-top: calc(39 * var(--fu));
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector h2 {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #a5a5a1;
+  }
+  body #MainContent .skincare-steps__wrapper .step-selector h2.selected {
+    font-weight: 700;
+    color: #0b0b0a;
+  }
+  body #MainContent .skincare-steps__wrapper .all-collections__products {
+    margin-top: calc(45 * var(--fu));
+    grid-template-columns: repeat(2, calc(341 * var(--fu)));
+    justify-content: space-between;
+    gap: calc(18 * var(--fu));
+  }
+  body #MainContent .skincare-steps__wrapper .product-card_container .product-image_container {
+    aspect-ratio: 341 / 469;
+  }
+  body #MainContent .skincare-steps__wrapper .product-card_container .product-info {
+    padding-top: calc(26 * var(--fu));
+  }
+  body #MainContent .skincare-steps__wrapper .skincare-steps__link {
+    margin-top: calc(67 * var(--fu));
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #0b0b0a;
+  }
+
+  /* Testimonials / Customer feedbacks: eyebrow JBM 16/500 (top 55), title Acumin 40 uppercase (14 below),
+     text Acumin 20/22 #41413F (8 below) */
+  body #MainContent .testimonials-wrapper,
+  body #MainContent .feedbacks-wrapper {
+    margin-block: 0;
+    padding-block: calc(55 * var(--fu)) calc(85 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .feedbacks-wrapper {
+    padding-bottom: calc(91 * var(--fu));
+    background-color: #f4f5f4;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-container,
+  body #MainContent .feedbacks-wrapper .feedbacks-container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .testimonials-header,
+  body #MainContent .feedbacks-header {
+    gap: 0;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-title,
+  body #MainContent .feedbacks-wrapper .feedbacks-title {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-heading,
+  body #MainContent .feedbacks-wrapper .feedbacks-heading {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .testimonials-wrapper .testimonials-description,
+  body #MainContent .feedbacks-wrapper .feedbacks-description {
+    width: calc(470 * var(--fu));
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  /* videos: 220x390 | 237x421 | 220x390, 8 apart, bottom-aligned, radius 14.8 / 16; 36 below the text */
+  body #MainContent .testimonials-wrapper .testimonials-carousel {
+    margin-top: calc(36 * var(--fu));
+    padding-inline: calc(39 * var(--fu));
+    grid-template-columns: calc(220 * var(--fu)) calc(237 * var(--fu)) calc(220 * var(--fu));
+    gap: calc(8 * var(--fu));
+    align-items: end;
+    justify-content: center;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper,
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(2) {
+    width: 100%;
+    height: auto;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(n + 4) {
+    display: none; /* the mobile design shows three */
+  }
+  body #MainContent .testimonials-carousel .testi-video {
+    height: calc(390 * var(--fu));
+    aspect-ratio: auto;
+    border-radius: calc(14.8 * var(--fu));
+    box-shadow: none;
+  }
+  body #MainContent .testimonials-carousel .testimonials-vide__wrapper:nth-child(2) .testi-video {
+    height: calc(421 * var(--fu));
+    border-radius: calc(16 * var(--fu));
+  }
+  /* feedback cards: 401x131 r10 #F9FAF9, 8 apart (rows and cards), padding 20 12; 41 below the text */
+  body #MainContent .feedbacks-wrapper .feedbacks-carousel {
+    margin-top: calc(41 * var(--fu));
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .feedbacks-wrapper .feedbacks-row {
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .feedbacks-wrapper .feedbacks__wrapper {
+    flex: 0 0 calc(401 * var(--fu));
+    width: calc(401 * var(--fu));
+    min-width: calc(401 * var(--fu));
+    height: calc(131 * var(--fu));
+    max-height: calc(131 * var(--fu));
+    padding: calc(20 * var(--fu)) calc(12 * var(--fu));
+    border-radius: calc(10 * var(--fu));
+    background-color: #f9faf9;
+  }
+  body #MainContent .feedbacks__wrapper .feedback-header .user p {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .feedbacks__wrapper .feedback-header .user span {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #545451;
+  }
+  body #MainContent .feedbacks__wrapper .rating {
+    gap: calc(2 * var(--fu));
+  }
+  body #MainContent .feedbacks__wrapper .rating svg {
+    width: calc(12 * var(--fu));
+    height: calc(12 * var(--fu));
+  }
+  body #MainContent .feedbacks__wrapper > p {
+    margin-top: calc(10 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+
+  /* The science behind Avure: 850 high, text left at x65; eyebrow JBM 16/500, title Acumin 40/40 (14 below),
+     text Acumin 20/22 (11 below); pillars 457x457 #D8E5F0, 12 apart, 68 below; caption JBM 20 bold 20 below */
+  body #MainContent .science-behind-avure_wrapper {
+    margin-block: 0;
+    padding-block: calc(55 * var(--fu)) calc(65 * var(--fu));
+  }
+  body #MainContent .science-behind-avure_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .science-behind-avure_header {
+    width: 100%;
+    padding-inline: calc(65 * var(--fu));
+    align-items: flex-start;
+    gap: 0;
+  }
+  body #MainContent .science-behind-avure_header > * {
+    text-align: left;
+  }
+  body #MainContent .science-avure_subheading {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .science-avure_heading {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .science-avure_description {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+  }
+  body #MainContent .science-behind-avure_wrapper .science-behind-avure_carousel {
+    margin-top: calc(68 * var(--fu));
+    padding: 0 calc(37 * var(--fu));
+    grid-auto-columns: calc(457 * var(--fu));
+    gap: calc(12 * var(--fu));
+    scroll-padding-inline: calc(37 * var(--fu));
+  }
+  body #MainContent .science-behind-avure_carousel .product-ingredient_wrapper {
+    gap: calc(20 * var(--fu));
+    scroll-snap-align: start;
+  }
+  body #MainContent .science-behind-avure_carousel .ingredient-image_container {
+    width: calc(457 * var(--fu));
+    height: calc(457 * var(--fu));
+    background-color: #d8e5f0;
+  }
+  body #MainContent .science-behind-avure_carousel .ingredient-image_container img {
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .science-behind-avure_wrapper .science-behind-avure_carousel .ingredient-info_container .ingredient-name {
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+
+  /* ------------------------------------------------------------------ 3. Product page + routine page
+     (Product_Page.md, Routine_Page.md: same layout) */
+
+  /* back arrow in the nav bar: 23x20 at x42 (button keeps a 44px tap area) */
+  body:not(#_) .header-container .header-back {
+    width: 44px;
+    height: 44px;
+    margin-left: calc(9 * var(--fu) - (44px - 23 * var(--fu)) / 2);
+  }
+  body:not(#_) .header-container .header-back__icon {
+    width: calc(23 * var(--fu));
+    height: calc(20 * var(--fu));
+  }
+
+  /* Gallery: main image area 768x960; thumbnails 185x231 r8, 14 apart, from x64, 33 above and below */
+  body.template-product #MainContent .carousel-wrraper .product-media_container .product-media_item {
+    aspect-ratio: auto;
+    height: calc(960 * var(--fu));
+  }
+  body.template-product #MainContent .product-wrapper .product-container {
+    width: 100%;
+    margin: 0;
+  }
+  body.template-product #MainContent .carousel-sm-wrraper {
+    width: 100%;
+    margin: 0;
+    padding-block: calc(33 * var(--fu));
+  }
+  body.template-product #MainContent .product-media-sm_container {
+    margin: 0;
+    padding-block: 0;
+    padding-inline: calc(64 * var(--fu));
+    grid-auto-columns: calc(185 * var(--fu));
+    gap: calc(14 * var(--fu));
+    scroll-padding-inline: calc(64 * var(--fu));
+  }
+  body.template-product #MainContent .product-media-sm_item {
+    width: calc(185 * var(--fu));
+    height: calc(231 * var(--fu));
+    border-radius: calc(8 * var(--fu));
+    overflow: hidden;
+  }
+  body.template-product #MainContent .product-media-sm_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Info: side padding 64. Step JBM 24 (-0.03em) #292929; name Acumin 48 bold (-0.02em) #0B0B0B 7 below;
+     subtitle Acumin 32 (-0.03em) #292929 13 below */
+  body #MainContent .product-info_wrapper {
+    padding: calc(62 * var(--fu)) calc(64 * var(--fu)) 0;
+    row-gap: 0;
+  }
+  body #MainContent .product-info_wrapper .main-conatiner {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-info_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-info_container .category {
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #292929;
+  }
+  body #MainContent .product-info_container .product-title {
+    margin-top: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-info_container .product-description {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  /* sizes 72x32 r8 (outline #272726, selected filled), 12 apart, 16 below; quantity on the right */
+  body #MainContent .product-variant_container {
+    margin-top: calc(16 * var(--fu));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  body #MainContent .product-variant_container .selector {
+    gap: calc(12 * var(--fu));
+  }
+  body #MainContent .product-variant_container .radio-custom {
+    min-width: calc(72 * var(--fu));
+    height: calc(32 * var(--fu));
+    padding: 0 calc(8 * var(--fu));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #272726;
+    border-radius: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #292929;
+    background: transparent;
+  }
+  body #MainContent .product-variant_container input:checked + .radio-custom {
+    background-color: #272726;
+    color: #f9faf9;
+  }
+  /* quantity: 29x29 r7 outline #545451 buttons (icon 15), number Acumin 30.1 #292929 */
+  body #MainContent .product-variant_container .quantity-selector_container {
+    gap: calc(23 * var(--fu));
+  }
+  body #MainContent .product-variant_container .icon-button {
+    width: calc(29 * var(--fu));
+    height: calc(29 * var(--fu));
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #545451;
+    border-radius: calc(7 * var(--fu));
+    background: transparent;
+    color: #545451;
+  }
+  body #MainContent .product-variant_container .icon-button svg {
+    width: calc(15 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .product-variant_container .quanity-input {
+    width: calc(24 * var(--fu));
+    font-family: var(--text-font-primary);
+    color: #292929;
+    text-align: center;
+  }
+  /* price Acumin 36 (-0.02em) #292929, old price 32 #A5A5A1; 31 below the sizes */
+  body #MainContent .product-price_container {
+    margin-top: calc(31 * var(--fu));
+    gap: calc(14 * var(--fu));
+    align-items: baseline;
+  }
+  body #MainContent .product-price_container .price {
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #292929;
+  }
+  body #MainContent .product-price_container .price[data-type='old'] {
+    font-size: calc(32 * var(--fu));
+    color: #a5a5a1;
+  }
+  /* CTAs: ADD TO CART 320x106 #0B0B0A, BUY NOW 317x103 outline, 14 apart, 46 below the price; Acumin 36 */
+  body #MainContent .product-info_wrapper .cta {
+    margin: calc(46 * var(--fu)) calc(-6 * var(--fu)) 0;
+    display: flex;
+    align-items: center;
+    gap: calc(14 * var(--fu));
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button {
+    flex: 0 0 auto;
+    width: calc(320 * var(--fu));
+    height: calc(106 * var(--fu));
+    padding: 0;
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button--filled {
+    background-color: #0b0b0a;
+    border: 1px solid #0b0b0a;
+    color: #f9faf9;
+  }
+  body #MainContent .product-info_wrapper .cta .custom-button--outline {
+    width: calc(317 * var(--fu));
+    height: calc(103 * var(--fu));
+    background: transparent;
+    border: 1px solid #0b0b0a;
+    color: #0b0b0a;
+  }
+
+  /* About: name Acumin 40 bold (-0.02em) 43 below the CTAs; tagline Acumin 32/38 (-0.03em) #272726;
+     features Acumin 32 #292929 from x108, 42 apart, 32 below */
+  body #MainContent .product-about_wrapper {
+    width: 100%;
+    margin-top: calc(43 * var(--fu));
+    padding: 0;
+  }
+  body #MainContent .product-about-main_container,
+  body #MainContent .product-details_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-details_container .product-lable {
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-details_container .product-tagline {
+    margin-top: calc(4 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: calc(38 * var(--fu));
+    letter-spacing: -0.03em;
+    color: #272726;
+  }
+  body #MainContent .product-features_list {
+    margin-top: calc(32 * var(--fu));
+    padding-left: calc(44 * var(--fu));
+    gap: calc(10 * var(--fu));
+  }
+  body #MainContent .product-features_list .product-feature,
+  body #MainContent .product-features_list .product-feature p {
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  /* accordions: titles Acumin 28 (-1.44px) #1D1D1B, rows 76 apart, icon 14 (71 from the right);
+     content Acumin 24 #41413F from x100; 73 below the features */
+  body #MainContent .accordings_container {
+    width: 100%;
+    margin-top: calc(73 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .accordings_container .accordion {
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .accordings_container .accordion-title {
+    padding-block: calc(24 * var(--fu));
+    padding-right: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #1d1d1b;
+  }
+  body #MainContent .accordings_container .accordion-icon {
+    width: calc(14 * var(--fu));
+    height: calc(14 * var(--fu));
+  }
+  body #MainContent .accordings_container .accordion ul {
+    padding: 0 0 calc(24 * var(--fu)) calc(36 * var(--fu));
+  }
+  body #MainContent .accordings_container .accordion li {
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: left;
+    color: #41413f;
+  }
+
+  /* Ingredients: cards 506 wide from x64, 16 apart, 60 below the accordions; image 506x631 #B9B9B9;
+     name Acumin 36 bold (35 below), INCI Acumin 28 (13 below), tags Acumin 28 with a 29 circle plus,
+     38 apart; description Acumin 24 #41413F */
+  body #MainContent .product-ingredients_wrapper {
+    margin: 0;
+    padding: calc(60 * var(--fu)) 0 0;
+  }
+  body #MainContent .product-ingredients-main_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .product-ingredients-carousel {
+    padding-inline: calc(64 * var(--fu));
+    grid-auto-columns: calc(506 * var(--fu));
+    gap: calc(16 * var(--fu));
+    scroll-padding-inline: calc(64 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .product-ingredient_wrapper {
+    gap: 0;
+    scroll-snap-align: start;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-image_container {
+    width: calc(506 * var(--fu));
+    height: calc(631 * var(--fu));
+    background-color: #b9b9b9;
+    overflow: hidden;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-info_container {
+    padding-top: calc(35 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-name {
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #0b0b0b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-inci {
+    margin-top: calc(13 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefits_container {
+    margin-top: calc(16 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(9 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit {
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit .icon-button {
+    width: calc(29 * var(--fu));
+    height: calc(29 * var(--fu));
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #1d1d1b;
+    border-radius: 50%;
+    background: transparent;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit svg {
+    width: calc(15 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-benefit p {
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #1d1d1b;
+  }
+  body #MainContent .product-ingredients-carousel .ingredient-desc {
+    margin-top: calc(24 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #41413f;
+  }
+
+  /* Best sellers on product pages: same as the homepage block; "VIEW ALL" 12 here */
+  body.template-product #MainContent .products-hero_link {
+    font-size: calc(12 * var(--fu));
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+  /* Routines on product pages: 593 high, smaller cards (title Poppins 20, text 13, price 16, old 14) */
+  body.template-product #MainContent .routines-slider__content {
+    padding-bottom: calc(41 * var(--fu));
+  }
+
+  /* Get in touch: title Acumin 36 bold #1D1D1B (top 50), text Acumin 24/31 (-0.02em) 35 below;
+     fields 691x93 outline #1D1D1B, 26 apart, placeholder Acumin 31.5 #545451, 34 below the text;
+     message 692x241; SENT 689x110 #0B0B0A, Acumin 39.4; bottom 48 */
+  body #MainContent .get-in-touch__section {
+    margin: 0;
+    padding: calc(50 * var(--fu)) calc(38 * var(--fu)) calc(48 * var(--fu));
+  }
+  body #MainContent .get-in-touch__wrapper {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container {
+    gap: 0;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__wrapper .hearder-container p {
+    margin-top: calc(35 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__form {
+    margin-top: calc(34 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(26 * var(--fu));
+  }
+  body #MainContent .get-in-touch__form .avure-input,
+  body #MainContent .get-in-touch__form .avure-area {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding: 0 calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+    color: #1d1d1b;
+  }
+  body #MainContent .get-in-touch__form .avure-area {
+    height: calc(241 * var(--fu));
+    padding-block: calc(25 * var(--fu));
+  }
+  body #MainContent .get-in-touch__form ::placeholder {
+    color: #545451;
+  }
+  body #MainContent .get-in-touch__form .avure-button {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    margin-top: calc(-1 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+
+  /* ------------------------------------------------------------------ 4. All products, Routines & Duos, By concern
+     (All_products.md, Routines_&_Duos.md, By_Concern.md) */
+
+  /* Page heads: title Acumin 48 (-1.88px) #1D1D1B with the 16 dot (x34 -> text x58), 57-66 below the nav;
+     description Acumin 20/22 #41413F 12-20 below. The breadcrumb is not in the mobile design. */
+  body #MainContent .all-collections .breadcrumb,
+  body #MainContent .routines-duos .breadcrumb,
+  body #MainContent .concern-page .breadcrumb,
+  body #MainContent .all-collections__header nav,
+  body #MainContent .routines-duos__header nav {
+    display: none;
+  }
+  body #MainContent .all-collections,
+  body #MainContent .routines-duos,
+  body #MainContent .concern-page {
+    width: 100%;
+    margin: 0;
+    gap: 0;
+  }
+  body #MainContent .all-collections {
+    padding: calc(66 * var(--fu)) calc(34 * var(--fu)) calc(50 * var(--fu));
+  }
+  body #MainContent .routines-duos {
+    padding: calc(57 * var(--fu)) calc(36 * var(--fu)) calc(24 * var(--fu));
+  }
+  body #MainContent .concern-page {
+    padding: calc(57 * var(--fu)) calc(34 * var(--fu)) 0;
+  }
+  body #MainContent .all-collections__header,
+  body #MainContent .routines-duos__header,
+  body #MainContent .concern-page__header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+  body #MainContent .all-collections__title,
+  body #MainContent .routines-duos__title,
+  body #MainContent .concern-page__title {
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--fu));
+    margin: 0;
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.88 * var(--fu));
+    text-transform: none;
+    color: #1d1d1b;
+  }
+  body #MainContent .all-collections__title .title-dot,
+  body #MainContent .routines-duos__title .title-dot,
+  body #MainContent .concern-page__title-dot {
+    flex: 0 0 auto;
+    width: calc(16 * var(--fu));
+    height: calc(16 * var(--fu));
+    border-radius: 50%;
+    background-color: #0b0b0a;
+  }
+  body #MainContent .all-collections__header > h2:empty,
+  body #MainContent .routines-duos__header > h2:empty {
+    display: none;
+  }
+  body #MainContent .all-collections__header > h2 span:empty,
+  body #MainContent .routines-duos__header > h2 span:empty {
+    display: none;
+  }
+  body #MainContent .all-collections__header > p,
+  body #MainContent .routines-duos__header > p {
+    margin-top: calc(20 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    line-height: calc(22 * var(--fu));
+    letter-spacing: 0;
+    color: #41413f;
+  }
+  body #MainContent .routines-duos__header > p {
+    margin-top: calc(12 * var(--fu));
+  }
+
+  /* Product grids (all products, concern page): 2 columns of 341, 18 apart, rows 46 apart;
+     every card's text block is the 2-line height (26 + 56 + 8 + 20 + 23 + 24 = 157) */
+  body #MainContent .all-collections .all-collections__products,
+  body #MainContent .concern-page__products {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, calc(341 * var(--fu))));
+    justify-content: space-between;
+    column-gap: calc(18 * var(--fu));
+    row-gap: calc(46 * var(--fu));
+  }
+  body #MainContent .all-collections .product-card_container .product-image_container,
+  body #MainContent .concern-page__products .product-card_container .product-image_container {
+    aspect-ratio: 341 / 469;
+  }
+  body #MainContent .all-collections .product-card_container .product-info,
+  body #MainContent .concern-page__products .product-card_container .product-info {
+    min-height: calc(157 * var(--fu));
+    padding-top: calc(26 * var(--fu));
+    justify-content: flex-start;
+  }
+  /* step groups (all products): "01. CLEANSE" JetBrains Mono 48 bold (-3.88px); 53 below the head,
+     cards 21 below; next group 51 after the last row */
+  body #MainContent .all-collections__collection {
+    width: 100%;
+    margin-top: calc(53 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .all-collections__collection + .all-collections__collection {
+    margin-top: calc(51 * var(--fu));
+  }
+  body #MainContent .all-collections__collection .collection__title {
+    margin: 0 0 calc(21 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(48 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: calc(-3.88 * var(--fu));
+    text-align: left;
+    color: #1d1d1b;
+  }
+  body #MainContent .all-collections__collection .collection__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Routines & Duos page: full-width cards 696 (image 460 #E6E6E5), 48 apart, 48 below the head;
+     cart 60 (23 from the top, 20 from the right), badge Acumin 18.1 at x+32;
+     name Poppins 24/600 41 below, text Acumin 16/16 #41413F 7 below, price Poppins 24 + old 20/300 17 below */
+  body #MainContent .routines-duos__products {
+    width: 100%;
+    margin-top: calc(48 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(48 * var(--fu));
+  }
+  body #MainContent .routines-card_container {
+    width: 100%;
+    gap: 0;
+  }
+  body #MainContent .routines-card-image_container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: calc(460 * var(--fu));
+    aspect-ratio: auto;
+    background-color: #e6e6e5;
+  }
+  body #MainContent .routines-card-image_container .routines-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .routines-card_header {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 1;
+    padding: calc(23 * var(--fu)) calc(20 * var(--fu)) 0 calc(32 * var(--fu));
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  body #MainContent .routines-card_header .badge-title {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(18.1 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  body #MainContent .routines-card_header .shopping-cart-add_container {
+    width: calc(60 * var(--fu));
+    height: calc(60 * var(--fu));
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: calc(14.3 * var(--fu));
+    background-color: #d8e5f0;
+  }
+  body #MainContent .routines-card_header .shopping-cart-add_container svg {
+    width: calc(34 * var(--fu));
+    height: calc(34 * var(--fu));
+  }
+  body #MainContent .routines-card_header .shopping-cart-add_container svg path {
+    fill: var(--color-primary);
+  }
+  body #MainContent .routines-card-info {
+    padding: calc(41 * var(--fu)) calc(6 * var(--fu)) 0;
+    gap: 0;
+  }
+  body #MainContent .routines-card_title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: calc(8 * var(--fu));
+  }
+  body #MainContent .routines-card_title {
+    font-family: var(--font-poppins);
+    font-size: calc(24 * var(--fu));
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .routines-card-info .rating {
+    gap: calc(3 * var(--fu));
+  }
+  body #MainContent .routines-card-info .rating svg {
+    width: calc(16 * var(--fu));
+    height: calc(15 * var(--fu));
+  }
+  body #MainContent .routines-card_description {
+    margin-top: calc(7 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(16 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #41413f;
+  }
+  body #MainContent .routines-card-info .price {
+    margin-top: calc(17 * var(--fu));
+    font-family: var(--font-poppins);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #1d1d1b;
+  }
+  body #MainContent .routines-card-info .compare-at-price {
+    margin-left: calc(10 * var(--fu));
+    font-family: var(--font-poppins);
+    font-size: calc(20 * var(--fu));
+    font-weight: 300;
+    color: #a5a5a1;
+  }
+
+  /* By concern page: concern name Acumin 40 (-1.44px) #0B0B0A 16 below the title, text Acumin 20/22 12 below,
+     cards 48 below; the card label is the step in JetBrains Mono 18.1 bold */
+  body #MainContent .concern-page__subtitle {
+    margin-top: calc(16 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: none;
+    color: #0b0b0a;
+  }
+  body #MainContent .concern-page__description {
+    margin-top: calc(12 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    line-height: calc(22 * var(--fu));
+    letter-spacing: 0;
+    color: #41413f;
+  }
+  body #MainContent .concern-page__products {
+    margin-top: calc(48 * var(--fu));
+  }
+  body #MainContent .concern-page__products .badge-title {
+    font-family: var(--text-font-accent);
+    font-weight: 700;
+  }
+
+  /* FAQs: eyebrow JBM 20/500 centred (104 above), title Acumin 36 (-1.44px) uppercase 15 below,
+     questions Acumin 28 (-1.44px) from x64, rows 68 apart, 48 below; answers Acumin 24 #41413F; bottom 49 */
+  body #MainContent .faqs-wrapper {
+    margin: 0;
+    padding: calc(104 * var(--fu)) calc(64 * var(--fu)) calc(29 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .faqs-wrapper .faqs-header {
+    gap: 0;
+    text-align: center;
+  }
+  body #MainContent .faqs-wrapper .faqs-eyebrow {
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .faqs-wrapper .faqs-heading {
+    margin-top: calc(15 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .faqs-wrapper .accordings_container {
+    margin-top: calc(48 * var(--fu));
+  }
+  body #MainContent .faqs-wrapper .accordings_container .accordion-title {
+    padding-block: calc(20 * var(--fu));
+  }
+  body #MainContent .faqs-wrapper .accordings_container .accordion ul {
+    padding: 0 0 calc(20 * var(--fu));
+  }
+
+  /* ------------------------------------------------------------------ 5. About us, Pharmacist collaboration, Pharmacist form
+     (About_Us.md, Pharmacist_Collaboration.md, Pharma_Formulaire*.md). Text sizes: section settings. */
+
+  /* About: hero 768x701; "ABOUT US" JBM 20/500 #F9FAF9 centred (top 53), title Acumin 36 (-1.44px) uppercase 15 below */
+  body #MainContent .section-about {
+    gap: 0;
+  }
+  body #MainContent .section-about > .about-container {
+    position: relative;
+    height: calc(701 * var(--fu));
+  }
+  body #MainContent .section-about .about-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  body #MainContent .section-about .about-content {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: calc(53 * var(--fu)) calc(64 * var(--fu)) 0;
+    justify-content: flex-start;
+    gap: calc(15 * var(--fu));
+  }
+  body #MainContent .section-about .about-label {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    color: #f9faf9;
+  }
+  body #MainContent .section-about .about-heading {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    color: #f9faf9;
+  }
+  /* "//SKINCARE FOR SENSITIVE SKIN." JBM 20/500 (52 below the hero), "ABOUT AVURE" Acumin 36 15 below;
+     accordion titles Acumin 40 (-1.44px) from x64, rows 88 apart, 48 below; icon 20 at 74 from the right;
+     answers Acumin 24 #41413F; bottom 50 */
+  body #MainContent .about-us-values__container {
+    width: 100%;
+    margin: 0;
+    padding: calc(52 * var(--fu)) calc(74 * var(--fu)) calc(26 * var(--fu)) calc(64 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .about-us-values__container > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(15 * var(--fu));
+    text-align: center;
+  }
+  body #MainContent .about-us-values__slogen {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values_lable {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values__container .accordings_container {
+    margin-top: calc(48 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion-title {
+    padding: calc(24 * var(--fu)) 0;
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #1d1d1b;
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion-icon {
+    width: calc(20 * var(--fu));
+    height: calc(20 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion > ul {
+    padding: 0 0 calc(24 * var(--fu));
+  }
+  body #MainContent .about-us-values__container .accordings_container .accordion > ul li {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #41413f;
+    text-align: left;
+  }
+
+  /* Pharmacist collaboration: image 768x961, text below: eyebrow JBM 20/500 #1D1D1B (52 below),
+     title Acumin 36 (-1.44px) uppercase 27 below, text Acumin 24/26 #0B0B0A 11 below, CTA 640x110 #0B0B0A 49 below */
+  body #MainContent .pharma-colab__hero {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body #MainContent .pharma-colab__hero .pharma-colab__image {
+    position: static;
+    width: 100%;
+    max-height: none;
+    height: calc(961 * var(--fu));
+    object-fit: cover;
+  }
+  body #MainContent .pharma-colab__content {
+    position: static;
+    width: 100%;
+    margin: 0;
+    padding: calc(52 * var(--fu)) calc(64 * var(--fu)) 0;
+    gap: 0;
+    align-items: center;
+    text-align: center;
+    color: #1d1d1b;
+    background: none;
+  }
+  body #MainContent .pharma-colab__eyebrow {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .pharma-colab__heading {
+    margin-top: calc(27 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .pharma-colab__description {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .pharma-colab__content .btton-wrrapper {
+    width: calc(640 * var(--fu));
+    margin-top: calc(49 * var(--fu));
+  }
+  body #MainContent .pharma-colab__content .pharma-colab__cta {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+  /* claims: JBM 40 (-3px) #0B0B0A, labels Acumin 22 (-0.44px) 17 below; 112 below the CTA */
+  body #MainContent .claims-wrapper {
+    margin: 0;
+    padding: calc(112 * var(--fu)) calc(37 * var(--fu)) 0;
+  }
+  body #MainContent .claims-container {
+    width: 100%;
+    justify-content: space-around;
+    gap: 0;
+  }
+  body #MainContent .claim-item__container {
+    gap: calc(17 * var(--fu));
+  }
+  body #MainContent .claims-wrapper .stat-number {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .claims-wrapper .stat-text {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  /* FAQs without a head here: questions start 77 below the claims; no bottom space */
+  body.template-page--pharmacist-colaboration #MainContent .faqs-wrapper {
+    padding-top: calc(57 * var(--fu));
+    padding-bottom: 0;
+  }
+  body.template-page--pharmacist-colaboration #MainContent .faqs-wrapper .accordings_container {
+    margin-top: 0;
+  }
+
+  /* Pharmacist form: eyebrow JBM 24/500, title Acumin 36 (-1.44px) uppercase 35 below, text Acumin 24/26 11 below;
+     fields 638x93 outline #1D1D1B from x65, 14 apart, 38 below; placeholder Acumin 31.5 #545451 at +31;
+     dropdown caret 19x11 39 from the right; message 638x225; CTA 640x110 49 below */
+  body.template-page--pharmacist-form #MainContent .get-in-touch__section {
+    margin: 0;
+    padding: calc(53 * var(--fu)) calc(65 * var(--fu)) calc(64 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__wrapper {
+    width: 100%;
+    height: auto;
+    gap: 0;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container {
+    flex-shrink: 0;
+    height: auto;
+    padding: 0;
+    gap: 0;
+    text-align: center;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-combo-box {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: 0;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container h2 {
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container h1 {
+    margin-top: calc(35 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .header-container p {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form {
+    margin-top: calc(38 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    gap: calc(14 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-input,
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-top {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding: 0 calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+    color: #1d1d1b;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-top {
+    display: flex;
+    align-items: center;
+    padding-right: calc(39 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-input {
+    flex: 1;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .combo-icon {
+    width: calc(19 * var(--fu));
+    height: calc(11 * var(--fu));
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-area {
+    width: 100%;
+    height: calc(225 * var(--fu));
+    padding: calc(25 * var(--fu)) calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form ::placeholder {
+    color: #545451;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch__form .avure-button {
+    width: calc(640 * var(--fu));
+    height: calc(110 * var(--fu));
+    margin: calc(35 * var(--fu)) calc(-1 * var(--fu)) 0;
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+  /* success: full-bleed photo, title Acumin 56 (-1.44px) #F9FAF9 uppercase, text Acumin 28/31 #F4F5F4,
+     BACK HOME 640x110 #F9FAF9 with #1D1D1B text */
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .text-container h1 {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #f9faf9;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .text-container p {
+    margin-top: calc(14 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #f4f5f4;
+  }
+  body.template-page--pharmacist-form #MainContent .get-in-touch-success__overlay .back-home__btn {
+    width: calc(640 * var(--fu));
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #f9faf9;
+    color: #1d1d1b;
+  }
+
+  /* ------------------------------------------------------------------ 6. Skin diagnostic, quiz, results, cart, checkout
+     (Skin_diagnostic.md, Diagnostic_*.md, Cart.md, Chekout.md) */
+
+  /* Diagnostic landing: image 768x1189, then eyebrow JBM 20/500 (52 below), title Acumin 36 (-1.44px) uppercase
+     27 below, text Acumin 24/26 #0B0B0A 11 below, CTA 689x110 #0B0B0A 49 below; stats 112 below; FAQ 77 below */
+  body.template-page--diagnostics #MainContent .diagnostics__hero {
+    position: static;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__image {
+    position: static;
+    width: 100%;
+    max-height: none;
+    height: calc(1189 * var(--fu));
+    object-fit: cover;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__content {
+    position: static;
+    width: 100%;
+    margin: 0;
+    padding: calc(52 * var(--fu)) calc(39 * var(--fu)) 0;
+    gap: 0;
+    align-items: center;
+    text-align: center;
+    background: none;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__eyebrow {
+    margin: 0;
+    font-family: var(--text-font-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__heading {
+    margin-top: calc(27 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__description {
+    margin-top: calc(11 * var(--fu));
+    padding-inline: calc(31 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__button-wrapper {
+    width: 100%;
+    margin-top: calc(49 * var(--fu));
+  }
+  body.template-page--diagnostics #MainContent .diagnostics__button-wrapper .avure-button {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+  body #MainContent .diagnostic_stats-wrapper {
+    margin: 0;
+    padding: calc(112 * var(--fu)) calc(37 * var(--fu)) 0;
+  }
+  body #MainContent .diagnostic_stats-container {
+    width: 100%;
+    margin: 0;
+    justify-content: space-around;
+    gap: 0;
+  }
+  body #MainContent .diagnostic_stats-wrapper .stat-item__container {
+    gap: calc(17 * var(--fu));
+  }
+  body #MainContent .diagnostic_stats-wrapper .stat-number {
+    font-family: var(--text-font-accent);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .diagnostic_stats-wrapper .stat-text {
+    font-family: var(--text-font-primary);
+    font-weight: 400;
+    color: #0b0b0a;
+  }
+  body #MainContent .diagnostics-faqs {
+    margin: 0;
+    padding: calc(57 * var(--fu)) calc(64 * var(--fu)) 0;
+  }
+  body #MainContent .diagnostics-faqs .diagnostics-faqs__accordions {
+    width: 100%;
+    margin: 0;
+  }
+  body #MainContent .diagnostics-faqs .accordion-title {
+    padding-block: calc(20 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #1d1d1b;
+  }
+  body #MainContent .diagnostics-faqs .accordion li {
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: 1.2;
+    text-align: left;
+    color: #41413f;
+  }
+  body #MainContent .diagnostics-faqs .accordion ul {
+    padding: 0 0 calc(20 * var(--fu));
+  }
+
+  /* Quiz screens: progress 12 high #1D1D1B from x64 (no track); eyebrow JBM 24/500 65 below;
+     question Acumin 36 (-1.44px) uppercase, hint Acumin 24 #0B0B0A 8 below, answers 39 below:
+     pills 69 high, radius 15.5, 1px #272726, Acumin 36 (-1.44px), 17 apart; selected #1D1D1B / #F9FAF9;
+     "WHY THIS QUESTION" JBM 32 (-1.44px) #272726, text JBM 20/500 22 #41413F (x78);
+     PREVIOUS 317x107 outline, NEXT 320x110 #0B0B0A, Acumin 39.4, 13 apart, 47 from the bottom */
+  body #MainContent .skin-quiz {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  body #MainContent .skin-quiz__view--quiz,
+  body #MainContent .skin-quiz__view--final {
+    width: 100%;
+    min-height: calc(1519 * var(--fu));
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 calc(47 * var(--fu));
+  }
+  body #MainContent .skin-quiz__view--quiz[hidden],
+  body #MainContent .skin-quiz__view--final[hidden] {
+    display: none;
+  }
+  body #MainContent .skin-quiz__progress {
+    width: calc(640 * var(--fu));
+    height: calc(12 * var(--fu));
+    margin: 0 calc(64 * var(--fu));
+    border-radius: 0;
+    background: transparent;
+  }
+  body #MainContent .skin-quiz__progress > span {
+    height: 100%;
+    border-radius: 0;
+    background-color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__view--quiz > .skin-quiz__eyebrow,
+  body #MainContent .skin-quiz__view--final > .skin-quiz__eyebrow {
+    margin: calc(65 * var(--fu)) 0 0;
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__step {
+    margin-block: auto;
+    padding: calc(48 * var(--fu)) calc(36 * var(--fu));
+  }
+  body #MainContent .skin-quiz__question {
+    width: 100%;
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-align: center;
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__subtitle {
+    margin-top: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: center;
+    color: #0b0b0a;
+  }
+  body #MainContent .skin-quiz__chips {
+    margin-top: calc(39 * var(--fu));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: calc(17 * var(--fu));
+  }
+  body #MainContent .skin-quiz__chip {
+    min-height: calc(69 * var(--fu));
+    padding: 0 calc(16 * var(--fu));
+    border: 1px solid #272726;
+    border-radius: calc(15.5 * var(--fu));
+    background: transparent;
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    color: #272726;
+  }
+  body #MainContent .skin-quiz__chip[aria-pressed='true'] {
+    border-color: #1d1d1b;
+    border-radius: calc(16 * var(--fu));
+    background-color: #1d1d1b;
+    color: #f9faf9;
+  }
+  body #MainContent .skin-quiz__footer {
+    padding: 0 calc(59 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .skin-quiz__error {
+    font-family: var(--text-font-primary);
+    font-size: calc(22 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ff2c14;
+  }
+  body #MainContent .skin-quiz__why {
+    padding: 0 calc(18 * var(--fu));
+    text-align: center;
+  }
+  body #MainContent .skin-quiz__why-title {
+    font-family: var(--text-font-accent);
+    font-size: calc(32 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: uppercase;
+    color: #272726;
+  }
+  body #MainContent .skin-quiz__why-text {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 500;
+    line-height: calc(22 * var(--fu));
+    letter-spacing: 0;
+    color: #41413f;
+  }
+  body #MainContent .skin-quiz__nav {
+    margin-top: calc(169 * var(--fu));
+    display: flex;
+    align-items: center;
+    gap: calc(13 * var(--fu));
+  }
+  body #MainContent .skin-quiz__nav .avure-outline-button,
+  body #MainContent .skin-quiz__nav .avure-button {
+    flex: 0 0 auto;
+    width: calc(317 * var(--fu));
+    height: calc(107 * var(--fu));
+    padding: 0;
+    font-size: calc(39.4 * var(--fu));
+  }
+  body #MainContent .skin-quiz__nav .avure-outline-button {
+    border: 1px solid #0b0b0a;
+    color: #0b0b0a;
+    background: transparent;
+  }
+  body #MainContent .skin-quiz__nav .avure-button {
+    width: calc(320 * var(--fu));
+    height: calc(110 * var(--fu));
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+  }
+  /* final: title + text centred, phone field 638x93 from x65 (Acumin 31.5 #545451), consent JBM 20/500 */
+  body #MainContent .skin-quiz__view--final .skin-quiz__question {
+    margin-top: auto;
+    padding: 0 calc(36 * var(--fu));
+  }
+  body #MainContent .skin-quiz__view--final form,
+  body #MainContent .skin-quiz__view--final .skin-quiz__form {
+    padding: 0 calc(65 * var(--fu));
+  }
+  body #MainContent .skin-quiz__field {
+    width: 100%;
+    height: calc(93 * var(--fu));
+    padding: 0 calc(31 * var(--fu));
+    border: 1px solid #1d1d1b;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: calc(12 * var(--fu));
+  }
+  body #MainContent .skin-quiz__field input {
+    flex: 1;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body #MainContent .skin-quiz__prefix {
+    font-family: var(--text-font-primary);
+    font-size: calc(31.5 * var(--fu));
+    color: #545451;
+  }
+  body #MainContent .skin-quiz__consent {
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 500;
+    line-height: calc(22 * var(--fu));
+    text-align: center;
+    color: #41413f;
+  }
+  /* analysing: full-bleed photo; eyebrow JBM 24/500 #F9FAF9, title Acumin 36 uppercase, text Acumin 28/31 #F4F5F4 */
+  body #MainContent .skin-quiz__analyse-content .skin-quiz__eyebrow {
+    font-family: var(--text-font-accent);
+    font-size: calc(24 * var(--fu));
+    font-weight: 500;
+    color: #f9faf9;
+  }
+  body #MainContent .skin-quiz__analyse-content .skin-quiz__question,
+  body #MainContent .skin-quiz__analyse-content h2 {
+    font-size: calc(36 * var(--fu));
+    color: #f9faf9;
+  }
+  body #MainContent .skin-quiz__analyse-text {
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: calc(31 * var(--fu));
+    color: #f4f5f4;
+  }
+
+  /* Results: image 768x768; "Your Skin Profile" script 96 #1D1D1B 50 below; intro Acumin 24/26 #0B0B0A centred
+     with [Read More] bold; summary box 702x200 1px #0B0B0A 50 below: labels JBM 32 bold (-0.06em) #0B0B0A at +13,
+     values Acumin 24/26 at x367 (no bullets) */
+  body #MainContent .skin-quiz__results-image {
+    width: 100%;
+    height: calc(768 * var(--fu));
+    max-height: none;
+    object-fit: cover;
+  }
+  body #MainContent .skin-quiz__results {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 calc(33 * var(--fu));
+  }
+  body #MainContent .skin-quiz__profile-title {
+    margin-top: calc(50 * var(--fu));
+    white-space: nowrap;
+    font-size: calc(96 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__intro {
+    margin-top: calc(8 * var(--fu));
+    padding-inline: calc(56 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    font-weight: 400;
+    line-height: calc(26 * var(--fu));
+    color: #0b0b0a;
+  }
+  body #MainContent .skin-quiz__read-more {
+    font-weight: 700;
+    color: #0b0b0a;
+  }
+  body #MainContent .skin-quiz__summary {
+    margin-top: calc(50 * var(--fu));
+    border: 1px solid #0b0b0a;
+  }
+  body #MainContent .skin-quiz__summary th,
+  body #MainContent .skin-quiz__summary td {
+    padding: calc(24 * var(--fu)) calc(13 * var(--fu));
+    border: 0;
+  }
+  body #MainContent .skin-quiz__summary th {
+    width: calc(334 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(32 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    color: #0b0b0a;
+  }
+  body #MainContent .skin-quiz__summary ul {
+    padding: 0;
+    list-style: none;
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: calc(26 * var(--fu));
+    color: #0b0b0a;
+  }
+  /* routine head: eyebrow JBM 16/500, title Acumin 40 (-1.44px) uppercase, subtitle Acumin 20 #41413F; left at x64 */
+  body #MainContent .skin-quiz__routine-head {
+    margin-top: calc(100 * var(--fu));
+    padding-inline: calc(31 * var(--fu));
+    text-align: left;
+  }
+  body #MainContent .skin-quiz__routine-head .skin-quiz__eyebrow {
+    margin: 0;
+    text-align: left;
+    font-family: var(--text-font-accent);
+    font-size: calc(16 * var(--fu));
+    font-weight: 500;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__section-title {
+    margin-top: calc(18 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__section-subtitle {
+    margin-top: calc(10 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    color: #41413f;
+  }
+  /* product cards: image 211x263 #111111 from x55, text 30 right of it; name Acumin 28 bold (-0.02em),
+     sub Acumin 20 #292929, pills 27 high r13.5 #E6E6E5 Acumin 16, text Acumin 14/15, Add 32 high
+     (#003865 / #D8E5F0, "Added" reversed); cards 38 apart, 37 below the head */
+  body #MainContent .skin-quiz__cards {
+    margin-top: calc(37 * var(--fu));
+    padding-inline: calc(22 * var(--fu));
+    gap: calc(38 * var(--fu));
+  }
+  body #MainContent .skin-quiz__card {
+    grid-template-columns: calc(211 * var(--fu)) minmax(0, 1fr);
+    gap: calc(30 * var(--fu));
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .skin-quiz__card:last-child {
+    border: 0;
+  }
+  body #MainContent .skin-quiz__card-media {
+    width: calc(211 * var(--fu));
+    height: calc(263 * var(--fu));
+    aspect-ratio: auto;
+    border-radius: 0;
+    background-color: #111111;
+  }
+  body #MainContent .skin-quiz__card-body {
+    padding-top: calc(18 * var(--fu));
+    gap: 0;
+  }
+  body #MainContent .skin-quiz__card-title {
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body #MainContent .skin-quiz__card-sub {
+    margin-top: calc(9 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  body #MainContent .skin-quiz__card-tags {
+    margin-top: calc(14 * var(--fu));
+    gap: calc(10 * var(--fu));
+  }
+  body #MainContent .skin-quiz__pill {
+    height: calc(27 * var(--fu));
+    padding: 0 calc(8 * var(--fu));
+    display: inline-flex;
+    align-items: center;
+    border-radius: calc(13.5 * var(--fu));
+    background-color: #e6e6e5;
+    font-family: var(--text-font-primary);
+    font-size: calc(16 * var(--fu));
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__card-text {
+    margin-top: calc(35 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(14 * var(--fu));
+    line-height: calc(15 * var(--fu));
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__card-foot {
+    margin-top: calc(35 * var(--fu));
+    justify-content: flex-start;
+    gap: calc(16 * var(--fu));
+  }
+  body #MainContent .skin-quiz__card-price {
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    color: #292929;
+  }
+  body #MainContent .skin-quiz__card-add {
+    min-height: 0;
+    height: calc(32 * var(--fu));
+    padding: 0 calc(8 * var(--fu));
+    border-radius: 0;
+    background-color: #003865;
+    color: #d8e5f0;
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    text-transform: none;
+  }
+  body #MainContent .skin-quiz__card-add.is-added {
+    background-color: #d8e5f0;
+    color: #003865;
+  }
+  /* routine box 670x423 1px #1D1D1B (x49), 57 below the cards: "YOUR ROUTINE" Acumin 36 (-1.44px),
+     "Avure[003]" Acumin 28 38 below, text Acumin 24/26 #272726 7 below, JBM 20/800 shipping 40 below,
+     CTA 636x106 #0B0B0A Acumin 36 47 below; padding 24 17 25 */
+  body #MainContent .skin-quiz__box {
+    margin: calc(57 * var(--fu)) calc(16 * var(--fu)) 0;
+    padding: calc(24 * var(--fu)) calc(17 * var(--fu)) calc(25 * var(--fu));
+    border: 1px solid #1d1d1b;
+    gap: 0;
+  }
+  body #MainContent .skin-quiz__box-eyebrow {
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__box-title {
+    margin-top: calc(38 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__box-title sup {
+    margin: 0;
+    font-family: var(--text-font-primary);
+    font-size: 1em;
+    font-weight: 400;
+    vertical-align: baseline;
+  }
+  body #MainContent .skin-quiz__box-text {
+    max-width: none;
+    margin-top: calc(7 * var(--fu));
+    padding-inline: calc(37 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: calc(26 * var(--fu));
+    color: #272726;
+  }
+  body #MainContent .skin-quiz__box-shipping {
+    margin-top: calc(40 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #272726;
+  }
+  body #MainContent .skin-quiz__box .avure-button {
+    width: calc(636 * var(--fu));
+    height: calc(106 * var(--fu));
+    min-height: 0;
+    margin-top: calc(47 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(36 * var(--fu));
+  }
+  body #MainContent .skin-quiz__wide-image {
+    height: calc(680 * var(--fu));
+    max-height: none;
+    margin-top: calc(49 * var(--fu));
+  }
+  /* panels: titles Acumin 36 (-1.44px) uppercase from x64, rows 80 apart; [MORNING] JBM 28 bold (-1px);
+     steps Acumin 24 #272726 from x100 */
+  body #MainContent .skin-quiz__panel {
+    border: 0;
+  }
+  body #MainContent .skin-quiz__panel > summary {
+    padding: calc(22 * var(--fu)) calc(31 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(36 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: calc(-1.44 * var(--fu));
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__panel-body {
+    padding: 0 calc(31 * var(--fu)) calc(22 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: 1.2;
+    color: #272726;
+  }
+  body #MainContent .skin-quiz__panel-body h4 {
+    font-family: var(--text-font-accent);
+    font-size: calc(28 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: calc(-1 * var(--fu));
+    text-transform: uppercase;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__steps {
+    padding-left: calc(36 * var(--fu));
+  }
+  /* skin profile: eyebrow JBM 20/500 at x48, titles Acumin 36, item labels Acumin 28 (x90, bulleted),
+     text Acumin 24 #272726 */
+  body #MainContent .skin-quiz__profile {
+    padding-inline: calc(17 * var(--fu));
+  }
+  body #MainContent .skin-quiz__profile > .skin-quiz__eyebrow {
+    margin: calc(52 * var(--fu)) 0 calc(27 * var(--fu));
+    font-family: var(--text-font-accent);
+    font-size: calc(20 * var(--fu));
+    font-weight: 500;
+    text-align: left;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__profile-list {
+    padding-left: calc(42 * var(--fu));
+    gap: calc(24 * var(--fu));
+  }
+  body #MainContent .skin-quiz__profile-label {
+    font-family: var(--text-font-primary);
+    font-size: calc(28 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    color: #1d1d1b;
+  }
+  body #MainContent .skin-quiz__profile-list p:not(.skin-quiz__profile-label) {
+    margin-left: calc(-42 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: 1.2;
+    color: #272726;
+  }
+
+  /* Cart drawer (Cart.md): head 110 high (bag 48 at x48, "BAG (3)" Acumin 48 -0.04em, close 25);
+     free-shipping line Acumin 24; items: image 211x263 #111111 at x55, details 30 to the right,
+     name Acumin 32 bold (-0.02em), sub Acumin 24 #292929, sizes 72x32 r8, price Acumin 24, stepper 29 r7,
+     "Remove" Acumin 18.8; 38 apart; CHECKOUT 640x110 #0B0B0A, note Acumin 20 #545451 */
+  body:not(#_) .cart-drawer__panel {
+    width: 100%;
+    padding: 0;
+  }
+  body:not(#_) .cart-drawer__panel > * {
+    width: 100%;
+  }
+  body:not(#_) .cart-header__container {
+    flex-shrink: 0;
+    height: calc(110 * var(--fu));
+    min-height: calc(110 * var(--fu));
+    padding: 0 calc(60 * var(--fu)) 0 calc(48 * var(--fu));
+    align-items: center;
+  }
+  body:not(#_) .cart-drawer__heading {
+    font-family: var(--text-font-primary);
+    font-size: calc(48 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #0b0b0b;
+  }
+  body:not(#_) .cart-header__container svg:not(.close-icon) {
+    width: calc(48 * var(--fu));
+    height: calc(48 * var(--fu));
+  }
+  body:not(#_) .cart-drawer__close {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+  }
+  body:not(#_) .cart-drawer__close svg {
+    width: calc(25 * var(--fu));
+    height: calc(25 * var(--fu));
+  }
+  body:not(#_) .cart-shipping-progress {
+    padding: 0 calc(55 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    color: #1d1d1b;
+  }
+  body:not(#_) .cart-drawer__items {
+    padding: calc(57 * var(--fu)) calc(55 * var(--fu)) 0;
+    gap: calc(38 * var(--fu));
+  }
+  body:not(#_) .cart-drawer__item {
+    grid-template-columns: calc(211 * var(--fu)) minmax(0, 1fr);
+    gap: calc(30 * var(--fu));
+    padding: 0;
+    border: 0;
+  }
+  body:not(#_) .cart-drawer__image {
+    width: calc(211 * var(--fu));
+    height: calc(263 * var(--fu));
+    aspect-ratio: auto;
+    border-radius: 0;
+    background-color: #111111;
+    object-fit: cover;
+  }
+  body:not(#_) .cart-drawer__details {
+    padding-top: calc(16 * var(--fu));
+    gap: 0;
+  }
+  body:not(#_) .cart-drawer__title {
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0b0b0b;
+  }
+  body:not(#_) .cart-drawer__description {
+    margin-top: calc(11 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #292929;
+  }
+  body:not(#_) .cart-drawer__variants {
+    margin-top: calc(16 * var(--fu));
+    gap: calc(12 * var(--fu));
+  }
+  body:not(#_) .cart-drawer__variant {
+    min-width: calc(72 * var(--fu));
+    height: calc(32 * var(--fu));
+    padding: 0 calc(7 * var(--fu));
+    border: 1px solid #272726;
+    border-radius: calc(8 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    line-height: 1;
+    color: #292929;
+    background: transparent;
+  }
+  body:not(#_) .cart-drawer__variant.is-selected {
+    background-color: #272726;
+    color: #f9faf9;
+  }
+  body:not(#_) .cart-drawer__prices {
+    margin-top: calc(32 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(24 * var(--fu));
+    letter-spacing: -0.02em;
+    color: #292929;
+  }
+  body:not(#_) .cart-drawer__qty {
+    margin-top: calc(36 * var(--fu));
+    justify-content: space-between;
+  }
+  body:not(#_) .cart-drawer__stepper {
+    gap: calc(23 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(30 * var(--fu));
+    color: #292929;
+  }
+  body:not(#_) .cart-drawer__step {
+    width: calc(29 * var(--fu));
+    height: calc(29 * var(--fu));
+    padding: 0;
+    border: 1px solid #545451;
+    border-radius: calc(7 * var(--fu));
+    background: transparent;
+    color: #545451;
+  }
+  body:not(#_) .cart-drawer__remove {
+    font-family: var(--text-font-primary);
+    font-size: calc(18.8 * var(--fu));
+    color: #292929;
+  }
+  body:not(#_) .cart-drawer__footer {
+    padding: calc(40 * var(--fu)) calc(64 * var(--fu)) calc(48 * var(--fu));
+    gap: calc(25 * var(--fu));
+  }
+  body:not(#_) .cart-drawer__checkout {
+    width: 100%;
+    height: calc(110 * var(--fu));
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-family: var(--text-font-primary);
+    font-size: calc(39.4 * var(--fu));
+    font-weight: 600;
+  }
+  body:not(#_) .cart-drawer__note {
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    text-align: center;
+    color: #545451;
+  }
+
+  /* Checkout (Chekout.md): head "YOUR BAG (3)" Acumin 40 (-0.04em) centred, back arrow 23x20 at x58;
+     group titles Acumin 38 bold #0B0B0A at x39; fields 687x93-94 1px #0B0B0A from x40, 18 apart,
+     placeholder Acumin 32 #545451 at +19; error Acumin 20 #FF2C14; checkboxes 33 with Acumin 32 #545451;
+     VALIDATE 640x110 #0B0B0A */
+  body #MainContent .checkout-info {
+    padding: 0 calc(40 * var(--fu)) calc(64 * var(--fu));
+  }
+  body #MainContent .checkout-info__header {
+    height: calc(110 * var(--fu));
+    margin: 0 calc(-40 * var(--fu));
+    padding: 0 calc(58 * var(--fu));
+    align-items: center;
+  }
+  body #MainContent .checkout-info__header svg {
+    width: calc(23 * var(--fu));
+    height: calc(20 * var(--fu));
+  }
+  body #MainContent .checkout-info__header h1 {
+    font-family: var(--text-font-primary);
+    font-size: calc(40 * var(--fu));
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #0b0b0b;
+  }
+  body #MainContent .checkout-info__form h2 {
+    margin: calc(39 * var(--fu)) 0 calc(11 * var(--fu)) calc(-1 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(38 * var(--fu));
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #0b0b0a;
+  }
+  body #MainContent .checkout-info__form {
+    gap: calc(18 * var(--fu));
+  }
+  body #MainContent .checkout-info__form .avure-input,
+  body #MainContent .checkout-info__form .combo-top,
+  body #MainContent .checkout-info__form .avure-area {
+    width: 100%;
+    height: calc(94 * var(--fu));
+    padding: 0 calc(19 * var(--fu));
+    border: 1px solid #0b0b0a;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+    color: #0b0b0a;
+  }
+  body #MainContent .avure-combo-box {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: 0;
+  }
+  body #MainContent .checkout-info__form .combo-top {
+    display: flex;
+    align-items: center;
+  }
+  body #MainContent .checkout-info__form .combo-input {
+    flex: 1;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--text-font-primary);
+  }
+  body #MainContent .checkout-info__form .combo-icon {
+    width: calc(17 * var(--fu));
+    height: calc(10 * var(--fu));
+  }
+  body #MainContent .checkout-info__form ::placeholder {
+    color: #545451;
+  }
+  body #MainContent .checkout-info__form .field__error {
+    font-family: var(--text-font-primary);
+    font-size: calc(20 * var(--fu));
+    color: #ff2c14;
+  }
+  body #MainContent .checkout-info__form .check {
+    gap: calc(19 * var(--fu));
+    padding-left: calc(15 * var(--fu));
+    font-family: var(--text-font-primary);
+    font-size: calc(32 * var(--fu));
+    color: #545451;
+  }
+  body #MainContent .checkout-info__form .check__box {
+    width: calc(33 * var(--fu));
+    height: calc(33 * var(--fu));
+  }
+  body #MainContent .checkout-info__form .avure-button {
+    width: calc(640 * var(--fu));
+    height: calc(110 * var(--fu));
+    margin: calc(70 * var(--fu)) auto 0;
+    padding: 0;
+    border: 0;
+    background-color: #0b0b0a;
+    color: #f9faf9;
+    font-size: calc(39.4 * var(--fu));
+  }
+
+  /* Short footer (contact-social) on light pages: "FOLLOW US" Acumin 31.5 bold #0B0B0A, socials 48 (23 apart),
+     email Acumin 27.6, copyright 19.7 #1D1D1B. Sizes: contact-social settings. */
+  body #MainContent .site-footer {
+    background-color: #f9faf9;
+    color: #0b0b0a;
+  }
+  body #MainContent .site-footer__title,
+  body #MainContent .site-footer__email {
+    color: #0b0b0a;
+  }
+  body #MainContent .site-footer__bottom {
+    color: #1d1d1b;
+  }
+}

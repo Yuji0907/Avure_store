@@ -106,11 +106,14 @@
     text-align: {{ section.settings.description_alignment }};
   }
 
-  /* Figma mobile (768 frame): fonts and weights, phones only */
-  @media (max-width: 767px) {
-    #shopify-section-{{ section.id }} .science-avure_subheading { font-family: var(--text-font-accent); font-weight: 600; text-transform: uppercase; }
-    #shopify-section-{{ section.id }} .science-avure_heading { font-family: var(--text-font-primary); font-weight: 400; }
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .science-avure_subheading { font-size: 11px; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .science-avure_heading { font-size: 24px; }
+    #shopify-section-{{ section.id }} .science-avure_description { font-size: 13px; letter-spacing: -0.08em; line-height: 1.4; }
   }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -147,7 +150,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 22,
+      "default": 16,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -168,7 +171,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -188,7 +191,7 @@
       "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 48,
+      "default": 40,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -229,7 +232,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 26,
+      "default": 20,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -240,7 +243,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": -8
+      "default": 0
     },
     {
       "type": "range",
@@ -250,7 +253,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 110
     },
     {
       "type": "text_alignment",

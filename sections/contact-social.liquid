@@ -160,6 +160,14 @@
     line-height: {{ section.settings.copyright_line_height | divided_by: 100.0 }};
     text-align: {{ section.settings.copyright_alignment }};
   }
+
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .site-footer__title { line-height: 1.1; }
+    #shopify-section-{{ section.id }} .site-footer__bottom p { font-size: 11px; line-height: 1.4; }
+  }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -235,7 +243,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -290,7 +298,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 22,
+      "default": 20,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -311,7 +319,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",

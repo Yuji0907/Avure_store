@@ -256,6 +256,18 @@
     letter-spacing: {{ section.settings.success_button_letter_spacing | divided_by: 100.0 }}em;
     line-height: {{ section.settings.success_button_line_height | divided_by: 100.0 }};
   }
+
+  /* auto:freeze-start: tablet/desktop keep their pre-Figma sizes; these settings now hold
+     Figma mobile values (768 frame), so changing them only affects phones. */
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .header-container h2 { font-size: 11px; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .header-container h1 { font-size: 24px; letter-spacing: 0em; line-height: 1.1; }
+    #shopify-section-{{ section.id }} .header-container p { font-size: 13px; line-height: 1.4; }
+    #shopify-section-{{ section.id }} .get-in-touch-success__overlay .text-container h1 { font-size: 24px; letter-spacing: 0em; line-height: 1.1; }
+    #shopify-section-{{ section.id }} .get-in-touch-success__overlay .text-container p { line-height: 1.4; }
+    #shopify-section-{{ section.id }} .get-in-touch-success__overlay .back-home__btn { font-size: 12px; line-height: 1.1; }
+  }
+  /* auto:freeze-end */
 {% endstyle %}
 
 {% schema %}
@@ -310,7 +322,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 22,
+      "default": 24,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -331,7 +343,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -351,7 +363,7 @@
       "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 48,
+      "default": 36,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -362,7 +374,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -4
     },
     {
       "type": "range",
@@ -372,7 +384,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -392,7 +404,7 @@
       "max": 80,
       "step": 1,
       "unit": "px",
-      "default": 26,
+      "default": 24,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -413,7 +425,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 110
     },
     {
       "type": "text_alignment",
@@ -433,7 +445,7 @@
       "max": 220,
       "step": 2,
       "unit": "px",
-      "default": 48,
+      "default": 56,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -444,7 +456,7 @@
       "min": -10,
       "max": 30,
       "step": 1,
-      "default": 0
+      "default": -3
     },
     {
       "type": "range",
@@ -454,7 +466,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     },
     {
       "type": "text_alignment",
@@ -495,7 +507,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 140
+      "default": 110
     },
     {
       "type": "text_alignment",
@@ -515,7 +527,7 @@
       "max": 144,
       "step": 2,
       "unit": "px",
-      "default": 24,
+      "default": 40,
       "info": "Figma px (768px mobile frame). Scales with the screen width on phones."
     },
     {
@@ -536,7 +548,7 @@
       "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 110
+      "default": 100
     }
   ],
   "presets": [

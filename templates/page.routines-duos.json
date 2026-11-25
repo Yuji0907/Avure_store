@@ -17,7 +17,10 @@
     "concern_intro": {
       "type": "shop-by-concern-intro",
       "name": "shop by concern intro",
-      "settings": {}
+      "settings": {
+        "card_title_size": 20,
+        "card_title_line_height": 100
+      }
     }
   },
   "order": [
