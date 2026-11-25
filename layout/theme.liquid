@@ -1,6 +1,69 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#003865">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>
+      {{- page_title -}}
+      {%- if current_tags %} – {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+    </title>
+    {%- if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif %}
+
+    {%- if settings.favicon != blank %}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif %}
+
+    {%- comment -%}
+      Open Graph / Twitter. page_image is the product, collection or article image when there is one;
+      otherwise the "Social sharing image" theme setting is used.
+    {%- endcomment -%}
+    {%- liquid
+      assign og_title = page_title | default: shop.name
+      assign og_description = page_description | default: shop.description | default: shop.name
+      assign og_image = page_image | default: settings.share_image
+      assign og_type = 'website'
+      if request.page_type == 'product'
+        assign og_type = 'product'
+      elsif request.page_type == 'article'
+        assign og_type = 'article'
+      endif
+    -%}
+    <meta property="og:site_name" content="{{ shop.name | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ og_title | escape }}">
+    <meta property="og:type" content="{{ og_type }}">
+    <meta property="og:description" content="{{ og_description | escape }}">
+    {%- if og_image != blank %}
+      {%- liquid
+        assign og_image_url = og_image | image_url: width: 1200
+        assign og_url_start = og_image_url | slice: 0, 2
+        if og_url_start == '//'
+          assign og_image_url = 'https:' | append: og_image_url
+        elsif og_image_url contains '://'
+        else
+          assign og_image_url = request.origin | append: og_image_url
+        endif
+      -%}
+      <meta property="og:image" content="{{ og_image_url }}">
+      <meta property="og:image:secure_url" content="{{ og_image_url }}">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
+    {%- endif %}
+    {%- if request.page_type == 'product' %}
+      <meta property="og:price:amount" content="{{ product.price | divided_by: 100.0 | round: 2 }}">
+      <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+    {%- endif %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ og_title | escape }}">
+    <meta name="twitter:description" content="{{ og_description | escape }}">
+
     {% render 'reset' %}
     {% render 'fonts' %}
     {% render 'css-variables' %}

@@ -16,7 +16,16 @@
     { "type": "header", "content": "Logo" },
     { "type": "image_picker", "id": "brand_logo", "label": "Logo" },
     { "type": "image_picker", "id": "brand_logo_light", "label": "Logo (for dark backgrounds)" },
-    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 160 }
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 160 },
+
+    { "type": "header", "content": "Browser & sharing" },
+    { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Square image, at least 32 × 32px." },
+    {
+      "type": "image_picker",
+      "id": "share_image",
+      "label": "Social sharing image",
+      "info": "Shown when a page without its own image is shared on social media or messaging apps. 1200 × 628px works best."
+    }
   ]
 }
 ]
