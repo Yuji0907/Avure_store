@@ -89,6 +89,28 @@
     {%- endunless -%}
 
     
+    <style>
+      /* iOS: hide the big native play icon on background videos */
+      video[autoplay]::-webkit-media-controls-start-playback-button,
+      video[autoplay]::-webkit-media-controls { display: none !important; -webkit-appearance: none; }
+    </style>
+    <script>
+      /* Background videos: force muted inline autoplay; if iOS blocks it (Low Power Mode), start on first touch/scroll */
+      (function () {
+        function vids() { return document.querySelectorAll('video[autoplay]'); }
+        function playAll() {
+          vids().forEach(function (v) {
+            v.muted = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.controls = false;
+            if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          });
+        }
+        document.addEventListener('DOMContentLoaded', playAll);
+        ['touchstart', 'click', 'scroll'].forEach(function (e) {
+          window.addEventListener(e, playAll, { passive: true, once: true });
+        });
+        document.addEventListener('visibilitychange', function () { if (!document.hidden) playAll(); });
+      })();
+    </script>
   </body>
   <script src="{{ 'cart.js' | asset_url }}" defer></script>
 </html>

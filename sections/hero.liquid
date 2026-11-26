@@ -3,7 +3,7 @@
     {%- if section.settings.video != blank -%}
       {{
         section.settings.video
-        | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'hero-video'
+        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'auto', class: 'hero-video'
       }}
     {%- else -%}
       <video class="hero-video" autoplay muted loop playsinline>

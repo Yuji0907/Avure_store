@@ -1,7 +1,7 @@
 <section class="section-skin-type">
   <div class="skin-type-container">
     {% if section.settings.video != blank %}
-      {{ section.settings.video | video_tag: controls: false, playsinline: false }}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'skin-type__video' }}
     {% else %}
       <video autoplay muted loop playsinline class="skin-type__video">
         <source src="{{ 'skincare_type.mp4' | asset_url }}" type="video/mp4">
