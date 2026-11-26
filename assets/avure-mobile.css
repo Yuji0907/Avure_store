@@ -713,6 +713,10 @@
     width: calc(212 * var(--fu));
     margin-top: calc(42 * var(--fu));
   }
+  body #MainContent .section-skin-type .skin-care-btton__wrrapper > a {
+    display: block;
+    width: 100%;
+  }
   body #MainContent .section-skin-type .skin-type-btn {
     width: 100%;
     height: calc(54 * var(--fu));
