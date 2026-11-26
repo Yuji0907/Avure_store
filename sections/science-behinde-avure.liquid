@@ -19,11 +19,14 @@
   .science-behind-avure_wrapper {
     width: 100%;
     display: grid;
+    /* minmax(0,1fr): keep the column at screen width so the carousel scrolls instead of overflowing */
+    grid-template-columns: minmax(0, 1fr);
     place-items: center;
     margin-block: calc(128 * var(--fu)) calc(64 * var(--fu));
   }
   .science-behind-avure_container {
     width: 90%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
