@@ -2148,7 +2148,8 @@
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 0;
+    /* room under PREVIOUS/NEXT so bottom bars (Safari toolbar, Shopify preview bar) never cover them */
+    padding: 0 0 calc(96px + env(safe-area-inset-bottom, 0px));
   }
   body #MainContent .skin-quiz__view--quiz,
   body #MainContent .skin-quiz__view--final {
